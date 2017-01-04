@@ -1,8 +1,7 @@
-# SuperiorCraft
-### How to contribute
-If you would like to contribute (can improve/organize code, documentation, etc..) please open a pull request.
-### A short message
-Hello MCers,
-This is storage for all things Superior Craft MC related, such as modpacks, textures, downloads, etc.
-Please note, some things may be bugged, such as a texture pack!
-We use EclipseNeon, Anaconda Navigator, and other programs.
+# Superior Craft
+
+### What is Superior Craft?
+Superior Craft is a minecraft server that includes a robust and very straight-forward api that anyone can use with the only dependency: bukkit.
+
+### How can I join the server?
+The server is still in dev so it is not always on but if you do want to play, the ip is 100.15.201.107
