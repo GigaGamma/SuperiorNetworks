@@ -8,11 +8,13 @@ The server is still in dev so it is not always on but if you do want to play, th
 
 ### Servers
 There are many servers on SuperiorCraft. Here is a list:
-Trollcraft (WIP, worldname "trollcraft"), Diagon Alley and The Legacy (WIP, worldname "diagonalley"), 
-Factions With A Twist (WIP):
-Creative Yellow Plots,
-Creative Purple,
-TNT Wars, the Trolls Awaken, 
-Pokemon Awakened Amethest
+- Trollcraft (WIP, worldname "trollcraft")
+- Diagon Alley and The Legacy (WIP, worldname "diagonalley")
+- Factions With A Twist (WIP)
+- Creative Yellow Plots
+- Creative Purple
+- TNT Wars
+- The Trolls Awaken
+- Pokemon Awakened Amethest
 
 - Have Fun!
