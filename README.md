@@ -17,4 +17,4 @@ There are many servers on SuperiorCraft. Here is a list:
 - The Trolls Awaken
 - Pokemon Awakened Amethest
 
-- Have Fun!
+\- Have Fun!
