@@ -1,0 +1,127 @@
+main: com.superiorcraft.main.Main
+name: SuperiorCraft
+version: 1.0
+author: SuperiorCraft Development
+description: Example
+commands:
+  cchat:
+    description: Server Announcment
+    usage: /cchat message
+    permission: myplugin.cchat
+    permission-message: You don't have the myplugin.cchat permission.
+  nick:
+    description: Nicknaming
+    usage: /nick <name>
+    permission: myplugin.nick
+    permission-message: You don't have the myplugin.nick permission.
+  fly:
+    description: Flight
+    usage: /fly
+    permission: myplugin.fly
+    permission-message: You don't have the myplugin.fly permission.
+  heal:
+    description: Regain health
+    usage: /heal
+    permission: myplugin.heal
+    permission-message: You don't have the myplugin.heal permission.
+  eat:
+    description: Regain hunger points
+    usage: /eat
+    permission: myplugin.eat
+    permission-message: You don't have the myplugin.eat permission.
+  healthy:
+    description: Regain hunger and health points
+    usage: /healthy
+    permission: myplugin.healthy
+    permission-message: You don't have the myplugin.healthy permission.
+  warp:
+    description: Create and go to waypoints
+    usage: /warp <add:remove:Waypoint name> [...]
+  cloak:
+    description: Cloak yourself
+    usage: /cloak
+    permission: myplugin.cloak
+    permission-message: You don't have the myplugin.cloak permission.
+  uncloak:
+    description: Uncloak another player
+    usage: /uncloak <player>
+    permission: myplugin.uncloak
+    permission-message: You don't have the myplugin.uncloak permission.
+  list:
+    description: List all players
+    usage: /list
+    permission: myplugin.list
+    permission-message: You don't have the myplugin.list permission.
+  docommand:
+    description: Do command
+    usage: /docommand <player> <command>
+    permission: myplugin.docommand
+    permission-message: You don't have the myplugin.docommand permission.
+  invsee:
+    description: See players inventory
+    usage: /invsee <player>
+    permission: myplugin.invsee
+    permission-message: You don't have the myplugin.invsee permission.
+  mute:
+    description: Mute player
+    usage: /mute <player>
+    permission: myplugin.mute
+    permission-message: You don't have the myplugin.mute permission.
+  unmute:
+    description: Unmute player
+    usage: /unmute <player>
+    permission: myplugin.unmute
+    permission-message: You don't have the myplugin.unmute permission.
+  mutelist:
+    description: Mute list
+    usage: /mutelist
+    permission: myplugin.mutelist
+    permission-message: You don't have the myplugin.mutelist permission.
+  holo:
+    description: Holograms
+    usage: /holo
+    permission: myplugin.holo
+    permission-message: You don't have the myplugin.holo permission.
+  kit:
+    description: Kit
+    usage: /kit
+  worlds:
+    description: Worlds
+    usage: /worlds <add:remove:goto> [...]
+    permission: myplugin.worlds
+    permission-message: You don't have the myplugin.worlds permission.
+  game:
+    description: Game Controller
+    usage: /game <join:leave> [...]
+    permission: myplugin.game
+    permission-message: You don't have the myplugin.game permission.
+  rank:
+    description: Rank Controller
+    usage: /rank <player> <ranktype> <rank>
+    permission: myplugin.rank
+    permission-message: You don't have the myplugin.rank permission.
+  myml:
+    description: MenuYML
+    usage: /myml <[file]:edit:reload> [...]
+    permission: myplugin.myml
+    permission-message: You don't have the myplugin.myml permission.
+  helicopter:
+    description: heli
+    usage: /helicopter
+    permission: myplugin.heli
+    permission-message: You don't have the myplugin.heli permission.
+  getitem:
+    description: getitem
+    usage: /getitem
+    permission: myplugin.getitem
+    permission-message: You don't have the myplugin.getitem permission.
+  getblock:
+    description: getblock
+    usage: /getblock
+    permission: myplugin.getblock
+    permission-message: You don't have the myplugin.getblock permission.
+  velo:
+    description: Velocity
+    usage: /velo
+    permission: myplugin.velo
+    permission-message: You don't have the myplugin.velo permission.
