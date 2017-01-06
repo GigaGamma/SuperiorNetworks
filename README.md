@@ -56,4 +56,8 @@ Entrusted Ranks:
 - Co-Owner for well... co-owners (only ThePenguinGamerz, BlueJayFilms, Branstein)
 - Owner is well the owner (SuperAuguste)
 
+Other Ranks:
+Ranks for specific servers can be found on the server info page of the specified server.
+Kit ranks JUST include a kit. They are found on the server info page of the server the kit is for.
+
 \- Have Fun!
