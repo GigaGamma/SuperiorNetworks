@@ -1,4 +1,4 @@
-package com.superiorcraft.trollcraft;
+package com.superiorcraft.Forge;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.superiorcraft.main.Main;
+import com.superiorcraft.trollcraft.PowerCrystal;
 
 public class CustomItemLoader implements Listener, CommandExecutor {
 	

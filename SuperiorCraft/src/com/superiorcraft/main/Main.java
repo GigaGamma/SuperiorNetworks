@@ -73,9 +73,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import com.superiorcraft.Forge.CustomBlockLoader;
+import com.superiorcraft.Forge.CustomItemLoader;
 import com.superiorcraft.NMS.NMS;
-import com.superiorcraft.trollcraft.CustomBlockLoader;
-import com.superiorcraft.trollcraft.CustomItemLoader;
 import com.superiorcraft.trollcraft.GhostBlock;
  
 public class Main extends JavaPlugin implements Listener {

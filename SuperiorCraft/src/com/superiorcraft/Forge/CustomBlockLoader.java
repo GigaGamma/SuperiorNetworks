@@ -1,4 +1,4 @@
-package com.superiorcraft.trollcraft;
+package com.superiorcraft.Forge;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +26,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.superiorcraft.main.Main;
+import com.superiorcraft.trollcraft.BlockBreaker;
+import com.superiorcraft.trollcraft.GhostBlock;
+import com.superiorcraft.trollcraft.Keycode;
+import com.superiorcraft.trollcraft.SlickDoor;
+import com.superiorcraft.trollcraft.SlickDoorFrame;
 
 public class CustomBlockLoader implements Listener, CommandExecutor {
 	

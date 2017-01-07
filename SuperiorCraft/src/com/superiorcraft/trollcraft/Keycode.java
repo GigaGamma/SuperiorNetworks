@@ -18,6 +18,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.superiorcraft.Forge.CustomBlockLoader;
 import com.superiorcraft.main.Menu;
 
 public class Keycode extends CustomBlockLoader implements Listener {

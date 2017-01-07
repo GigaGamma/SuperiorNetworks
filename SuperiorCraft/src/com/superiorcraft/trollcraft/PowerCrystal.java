@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import com.superiorcraft.Forge.CustomItemLoader;
+
 public class PowerCrystal extends CustomItemLoader {
 
 	public PowerCrystal(ItemStack item, String id) {
