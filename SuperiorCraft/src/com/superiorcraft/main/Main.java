@@ -293,6 +293,14 @@ public class Main extends JavaPlugin implements Listener {
     						}
     						if (bm.getBaseColor() != DyeColor.valueOf(inBlockWars.get(p).toUpperCase()) && bwfct.containsKey(p) && bwfct.get(p) > 100) {
     							bwfct.remove(p);
+    							for (Entity e : p.getNearbyEntities(2, 2, 2)) {
+    								if (e.getName().equals("flag")) {
+    									for (String tag : e.getScoreboardTags()) {
+    										e.removeScoreboardTag(tag);
+    									}
+    									e.addScoreboardTag(inBlockWars.get(p));
+    								}
+    							}
     							for (Player p2 : Bukkit.getOnlinePlayers()) {
         							if (inBlockWars.containsKey(p2)) {
         								p2.sendTitle(ChatColor.GREEN + "+1 Flag", "For the " + ChatColor.valueOf(inBlockWars.get(p).toUpperCase()) + inBlockWars.get(p).substring(0, 1).toUpperCase() + inBlockWars.get(p).substring(1).toLowerCase() + " Team " + ChatColor.RESET);
@@ -343,7 +351,7 @@ public class Main extends JavaPlugin implements Listener {
     
     @EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent e) {
-		if (e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName()) && e.getCurrentItem().getType() != Material.AIR && e.getCurrentItem().getType() != Material.STAINED_GLASS_PANE) {
+		if (e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName()) && e.getCurrentItem().getType() != Material.AIR && e.getCurrentItem().getType() != Material.STAINED_GLASS_PANE && wm1.inv.getItem(e.getSlot()) != null && wm1.inv.getItem(e.getSlot()).isSimilar(e.getCurrentItem())) {
 			e.getWhoClicked().getInventory().setItem(0, e.getCurrentItem());
 			e.getWhoClicked().getInventory().setItem(7, new ItemStack(Material.FIREWORK_CHARGE, 64));
 			wm1.inv.setItem(e.getSlot(), e.getCurrentItem());
@@ -353,19 +361,28 @@ public class Main extends JavaPlugin implements Listener {
 			//e.getWhoClicked().setGameMode(GameMode.ADVENTURE);
 		}
 		
-		else if (e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName()) && e.getCurrentItem().getType() != Material.AIR && e.getCurrentItem().getType() != Material.STAINED_GLASS_PANE) {
+		else if (e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName()) && e.getCurrentItem().getType() != Material.AIR && e.getCurrentItem().getType() != Material.STAINED_GLASS_PANE && wm2.inv.getItem(e.getSlot()) != null && wm2.inv.getItem(e.getSlot()).isSimilar(e.getCurrentItem())) {
 			e.getWhoClicked().getInventory().setItem(1, e.getCurrentItem());
 			e.getWhoClicked().getInventory().setItem(8, new ItemStack(Material.GHAST_TEAR, 64));
 			wm2.inv.setItem(e.getSlot(), e.getCurrentItem());
 			e.getWhoClicked().closeInventory();
 			//e.getWhoClicked().setGameMode(GameMode.ADVENTURE);
 		}
-		else if ((e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName()) || e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName())) && e.getCurrentItem().getType() != Material.AIR && e.getCurrentItem().getType() != Material.STAINED_GLASS_PANE) {
+		/*else if ((e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName()) || e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName())) && e.getCurrentItem().getType() != Material.AIR && e.getCurrentItem().getType() != Material.STAINED_GLASS_PANE) {
 			e.setCancelled(true);
 			e.getWhoClicked().closeInventory();
-		}
-		else if ((e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName()) || e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName())) && e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) {
+		}*/
+		else if ((e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName()) || e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName()))) {
 			e.setCancelled(true);
+		}
+		else if (e.getInventory().getName().equalsIgnoreCase("Flags")) {
+			e.setCancelled(true);
+			if (e.getCurrentItem().getData().getData() == DyeColor.valueOf(inBlockWars.get(e.getWhoClicked()).toUpperCase()).getWoolData()) {
+				//e.getWhoClicked().sendMessage(e.getCurrentItem().getItemMeta().getLore().get(0));
+				Location l = new Location(e.getWhoClicked().getWorld(), Double.valueOf(e.getCurrentItem().getItemMeta().getLore().get(0)), Double.valueOf(e.getCurrentItem().getItemMeta().getLore().get(1)), Double.valueOf(e.getCurrentItem().getItemMeta().getLore().get(2)));
+			
+				e.getWhoClicked().teleport(l);
+			}
 		}
 		else if (e.getInventory().getName().equalsIgnoreCase(gselect.inv.getName())) {
 			if (e.getCurrentItem().getItemMeta().getDisplayName() == null) {
@@ -1381,6 +1398,45 @@ public class Main extends JavaPlugin implements Listener {
         	
         	player.setFlying(false);
         	player.setGliding(true);
+        	
+        	return true;
+        }
+        
+        else if (command.getName().equals("cp")) {
+        	Player player = (Player) sender;
+        	int tf = 0;
+        	int ttf = 0;
+        	
+        	Menu m = new Menu("Flags", 9);
+        	
+        	for (Entity e : player.getWorld().getEntities()) {
+        		if (e.getName().equals("flag")) {
+        			ttf++;
+        			BlockState bs = e.getLocation().getBlock().getState();
+					Banner bm = (Banner) bs;
+        			if (bm.getBaseColor() == DyeColor.valueOf(inBlockWars.get(player).toUpperCase())) {
+        				tf++;
+        			}
+        			ItemStack wool = new ItemStack(Material.WOOL, 1, bm.getBaseColor().getWoolData());
+        			
+        			ItemMeta woolm = wool.getItemMeta();
+        			
+        			//player.sendMessage(String.valueOf(e.getLocation().getX()));
+        			//woolm.getLore().add("A");
+        			ArrayList<String> wlore = new ArrayList<String>();
+        			wlore.add(String.valueOf(e.getLocation().getX()));
+        			wlore.add(String.valueOf(e.getLocation().getY()));
+        			wlore.add(String.valueOf(e.getLocation().getZ()));
+        			
+        			woolm.setLore(wlore);
+        			wool.setItemMeta(woolm);
+        			
+        			m.inv.addItem(wool);
+        		}
+        	}
+        	
+        	player.sendMessage(ChatColor.GRAY + "The " + ChatColor.valueOf(inBlockWars.get(player).toUpperCase()) + inBlockWars.get(player) + " team" + ChatColor.GRAY + " has " + tf + " out of " + ttf + " flags in there possession");
+        	player.openInventory(m.inv);
         	
         	return true;
         }

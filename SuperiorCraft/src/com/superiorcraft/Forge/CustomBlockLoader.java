@@ -84,10 +84,15 @@ public class CustomBlockLoader implements Listener, CommandExecutor {
 		CustomBlockLoader bb = new BlockBreaker("&f&lBlock Breaker", "trollcraft:block_breaker");
     	Main.plugin.getServer().getPluginManager().registerEvents(bb, Main.plugin);
     	
-    	// Slick Door Frame
+    	// Keypad
 		
     	CustomBlockLoader kc = new Keycode("&f&lKey Pad", "trollcraft:key_pad");
     	Main.plugin.getServer().getPluginManager().registerEvents(kc, Main.plugin);
+    	
+    	// Flag
+    	
+    	CustomBlockLoader flag = new Flag("&f&lFlag", "ctf:flag");
+    	Main.plugin.getServer().getPluginManager().registerEvents(flag, Main.plugin);
 	}
 	
 	public boolean placeBlock(ArmorStand e, Player p) {

@@ -125,3 +125,6 @@ commands:
     usage: /velo
     permission: superiorcraft.velo
     permission-message: You don't have the superiorcraft.velo permission.
+  cp:
+    description: To the flag!
+    usage: /cp
