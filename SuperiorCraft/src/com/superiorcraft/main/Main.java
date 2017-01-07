@@ -338,7 +338,7 @@ public class Main extends JavaPlugin implements Listener {
     
     @EventHandler
     public void onServerListPing(ServerListPingEvent e) {
-    	e.setMotd("§6§lSuperior§r§c§lCraft   §r§9[ §l1.11.2§r§9 ]§r\n§4§lBlockWarz, §r§3§lmore to come");
+    	e.setMotd("§6§lSuperior§r§c§lCraft   §r§9[ §l" + Bukkit.getVersion().split("MC: ")[1].replace(")", "") + "§r§9 ]§r\n§4§lBlockWarz, §r§3§lmore to come");
     }
     
     @EventHandler
@@ -734,7 +734,7 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
     	Player player = e.getPlayer();
-    	if (!player.hasPermission("myplugin.editworld")) {
+    	if (!player.hasPermission("superiorcraft.editworld")) {
     		e.setCancelled(true);
     		player.sendMessage(ChatColor.RED + "You may not place blocks here");
     	}
@@ -743,7 +743,7 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
     	Player player = e.getPlayer();
-    	if (!player.hasPermission("myplugin.editworld")) {
+    	if (!player.hasPermission("superiorcraft.editworld")) {
     		e.setCancelled(true);
     		player.sendMessage(ChatColor.RED + "You may not break blocks here");
     	}
@@ -1309,9 +1309,9 @@ public class Main extends JavaPlugin implements Listener {
         			attachment.setPermission("minecraft.command.stop", false);
         			attachment.setPermission("bukkit.command.reload", false);
         			
-        			attachment.setPermission("myplugin.editworld", false);
-        			//attachment.setPermission("myplugin.rank", false);
-        			//attachment.unsetPermission("myplugin.rank");
+        			attachment.setPermission("superiorcraft.editworld", false);
+        			//attachment.setPermission("superiorcraft.rank", false);
+        			//attachment.unsetPermission("superiorcraft.rank");
         			//getPlayer(args[0]).sendMessage("a");
         			
         			getConfig().set("players." + args[0] + ".name", ("&6&l" + getPlayer(args[0]).getName() + "&r").replaceAll("&", "§"));
