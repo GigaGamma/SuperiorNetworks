@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,9 +14,12 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,7 +36,9 @@ import com.superiorcraft.trollcraft.Keycode;
 import com.superiorcraft.trollcraft.SlickDoor;
 import com.superiorcraft.trollcraft.SlickDoorFrame;
 
-public class CustomBlockLoader implements Listener, CommandExecutor {
+public class CustomBlockLoader implements Listener, CommandExecutor, TabCompleter {
+	
+	public static ArrayList<CustomBlockLoader> blocks = new ArrayList<CustomBlockLoader>();
 	
 	public String name;
 	public String id;
@@ -42,6 +48,9 @@ public class CustomBlockLoader implements Listener, CommandExecutor {
 		
 		this.name = name.replace('&', '§');
 		this.id = id;
+		
+		System.out.println("Item Init: " + id);
+		CustomBlockLoader.blocks.add(this);
 	}
 	
 	public void load() {
@@ -93,6 +102,59 @@ public class CustomBlockLoader implements Listener, CommandExecutor {
     	
     	CustomBlockLoader flag = new Flag("&f&lFlag", "ctf:flag");
     	Main.plugin.getServer().getPluginManager().registerEvents(flag, Main.plugin);
+    	
+    	/* MicroBlocks
+    	
+    	CustomBlockLoader mb = new MicroBlocks("&f&lMicro Block", "forge:micro_block");
+    	Main.plugin.getServer().getPluginManager().registerEvents(mb, Main.plugin);
+    	
+    	Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+    		@Override
+    		public void run() {
+    			for (World w : Bukkit.getWorlds()) {
+    				for (Entity en : w.getEntities()) {
+    					if (en.getType() == EntityType.FALLING_BLOCK) {
+    						en.setTicksLived(1);
+    					}
+    				}
+    			}
+    			
+    			for (Player p : Bukkit.getOnlinePlayers()) {
+    				if (p.isSneaking()) {
+    					for (Entity en : p.getNearbyEntities(0.1, 0.1, 0.1)) {
+    						
+    						if (en.getName().equals(mb.name)) {
+    							if (en.getPassenger() != null) {
+    								en.getPassenger().remove();
+    							}
+    							try {
+    								FallingBlock fb = (FallingBlock) en.getLocation().getWorld().spawnFallingBlock(en.getLocation().add(0.5, 1, 0.5), p.getItemInHand().getType(), p.getItemInHand().getData().getData());
+    								fb.setGravity(false);
+    							
+    								fb.setInvulnerable(true);
+    							
+    								//ws.setPassenger(fb);
+    								en.setPassenger(fb);
+    							}
+    							catch (Exception e) {
+    								en.remove();
+    								
+    								ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+    								
+    								ItemMeta bmeta = block.getItemMeta();
+    								
+    								bmeta.setDisplayName(mb.name);
+    								
+    								block.setItemMeta(bmeta);
+    								
+    								p.getInventory().addItem(block);
+    							}
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}, 0, 0);*/
 	}
 	
 	public boolean placeBlock(ArmorStand e, Player p) {
@@ -207,13 +269,48 @@ public class CustomBlockLoader implements Listener, CommandExecutor {
 		if (command.getName().equalsIgnoreCase("getblock")) {
         	Player player = (Player) sender;
         	
-			giveItem(args[0], player);
+			//giveItem(args[0], player);
+        	for (CustomBlockLoader cbl : blocks) {
+        		if (cbl.id.equals(args[0])) {
+        			ItemStack block = new ItemStack(Material.MONSTER_EGG, 64);
+        			
+        			ItemMeta bmeta = block.getItemMeta();
+        				
+        			bmeta.setDisplayName(cbl.name);
+        				
+        			block.setItemMeta(bmeta);
+        				
+        			player.getInventory().addItem(block);
+        		}
+        	}
 			
 			return true;
 		}
 		
 		return false;
 	}
+	
+	@Override
+    public List<String> onTabComplete(CommandSender sender,
+            Command command,
+            String label,
+            String[] args) {
+    	if (command.getName().equalsIgnoreCase("getblock")) {
+        	ArrayList<String> auto = new ArrayList<String>();
+        	
+        	for (CustomBlockLoader cbl : blocks) {
+        		if (cbl.id.startsWith(args[0])) {
+        			auto.add(cbl.id);
+        		}
+        	}
+        	
+        	return auto;
+    	}
+    	
+    	ArrayList<String> auto = new ArrayList<String>();
+
+    	return auto;
+    }
 	
 	@SuppressWarnings("deprecation")
 	public static void particle(Location l, Entity e, Effect ef, Material param) {

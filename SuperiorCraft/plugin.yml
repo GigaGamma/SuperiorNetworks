@@ -128,3 +128,8 @@ commands:
   cp:
     description: To the flag!
     usage: /cp
+  echest:
+    description: Ender Chest
+    usage: /echest
+    permission: superiorcraft.echest
+    permission-message: You don't have the superiorcraft.echest permission.

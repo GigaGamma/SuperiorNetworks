@@ -37,6 +37,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockRedstoneEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -862,7 +863,7 @@ public class Main extends JavaPlugin implements Listener {
     
 	@EventHandler
     public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
-		// Handle any command
+		//System.out.println("a");
     }
 	
 	public void createHologram(Location l, String text, int time) {
@@ -1437,6 +1438,14 @@ public class Main extends JavaPlugin implements Listener {
         	
         	player.sendMessage(ChatColor.GRAY + "The " + ChatColor.valueOf(inBlockWars.get(player).toUpperCase()) + inBlockWars.get(player) + " team" + ChatColor.GRAY + " has " + tf + " out of " + ttf + " flags in there possession");
         	player.openInventory(m.inv);
+        	
+        	return true;
+        }
+        
+        else if (command.getName().equals("echest")) {
+        	Player player = (Player) sender;
+        	
+        	player.openInventory(player.getEnderChest());
         	
         	return true;
         }
