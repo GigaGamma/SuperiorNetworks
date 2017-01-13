@@ -15,7 +15,7 @@
 - Obscurus Books	
 - Ollivanders	
 - Potage's Cauldron Shop *COMPLETE*
-- Quality Quidditch Supplies	
+- Quality Quidditch Supplies *COMPLETE*	
 - Rosa Lee Teabag	
 - Scribbulus Writing Instruments	
 - Second-Hand Bookshop	
