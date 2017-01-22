@@ -284,7 +284,9 @@ public class LongRangeWeapon implements Listener {
     						p.setSilent(silent);
     						p.setCustomName(name);
     					}
-    					e.getPlayer().getInventory().removeItem(new ItemStack[] {new ItemStack(ammo, 1) });
+    					if (!e.getPlayer().hasPermission("superiorcraft.noammo")) {
+    						e.getPlayer().getInventory().removeItem(new ItemStack[] {new ItemStack(ammo, 1) });
+    					}
     					for (Player p : Bukkit.getServer().getOnlinePlayers()) {
     						if (type.equalsIgnoreCase("sniper")) {
     							p.playSound(e.getPlayer().getLocation(), Sound.BLOCK_ANVIL_LAND, 1, 1);

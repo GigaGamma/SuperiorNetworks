@@ -24,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -106,55 +107,12 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     	/* MicroBlocks
     	
     	CustomBlockLoader mb = new MicroBlocks("&f&lMicro Block", "forge:micro_block");
-    	Main.plugin.getServer().getPluginManager().registerEvents(mb, Main.plugin);
+    	Main.plugin.getServer().getPluginManager().registerEvents(mb, Main.plugin);*/
     	
-    	Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
-    		@Override
-    		public void run() {
-    			for (World w : Bukkit.getWorlds()) {
-    				for (Entity en : w.getEntities()) {
-    					if (en.getType() == EntityType.FALLING_BLOCK) {
-    						en.setTicksLived(1);
-    					}
-    				}
-    			}
-    			
-    			for (Player p : Bukkit.getOnlinePlayers()) {
-    				if (p.isSneaking()) {
-    					for (Entity en : p.getNearbyEntities(0.1, 0.1, 0.1)) {
-    						
-    						if (en.getName().equals(mb.name)) {
-    							if (en.getPassenger() != null) {
-    								en.getPassenger().remove();
-    							}
-    							try {
-    								FallingBlock fb = (FallingBlock) en.getLocation().getWorld().spawnFallingBlock(en.getLocation().add(0.5, 1, 0.5), p.getItemInHand().getType(), p.getItemInHand().getData().getData());
-    								fb.setGravity(false);
-    							
-    								fb.setInvulnerable(true);
-    							
-    								//ws.setPassenger(fb);
-    								en.setPassenger(fb);
-    							}
-    							catch (Exception e) {
-    								en.remove();
-    								
-    								ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
-    								
-    								ItemMeta bmeta = block.getItemMeta();
-    								
-    								bmeta.setDisplayName(mb.name);
-    								
-    								block.setItemMeta(bmeta);
-    								
-    								p.getInventory().addItem(block);
-    							}
-    						}
-    					}
-    				}
-    			}
-    		}
-    	}, 0, 0);*/
+    	// Uranium Ore
+    	
+    	CustomBlockLoader urore = new UraniumOre("&f&lUranium Ore", "forge:uranium_ore");
+    	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
 	}
 	
 	public boolean placeBlock(ArmorStand e, Player p) {
@@ -165,10 +123,10 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		return true;
 	}
 	
-	public void removeBlock(PlayerInteractEvent e) {
-		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+	public void removeBlock(BlockBreakEvent e) {
+		//if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
+				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
 					en.remove();
 					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
 					
@@ -183,7 +141,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 					e.getPlayer().getInventory().addItem(block);
 				}
 			}
-		}
+		//}
 	}
 	
 	public void onInteract(PlayerInteractEvent e) {
@@ -211,6 +169,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 			block.setCustomName(name);
 			block.setMarker(true);
 			block.setVisible(false);
+			block.addScoreboardTag("cblock");
 			if (placeBlock(block, e.getPlayer()) == false) {
 				block.remove();
 				//e.getPlayer().sendMessage("a");
@@ -227,7 +186,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 			}
 		}
 		
-		removeBlock(e);
+		
 		onInteract(e);
 		
 		/*else if (e.getPlayer().isSneaking()) {
@@ -246,6 +205,12 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 				}
 			} 
 		}*/
+	}
+	
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e) {
+		removeBlock(e);
+		//System.out.println("a");
 	}
 	
 	public void giveItem(String name, Player player) {

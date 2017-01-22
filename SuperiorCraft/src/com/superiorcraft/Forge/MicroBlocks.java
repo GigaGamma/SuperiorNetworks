@@ -1,4 +1,4 @@
-package com.superiorcraft.Forge;
+/*package com.superiorcraft.Forge;
 
 import java.util.HashSet;
 
@@ -84,7 +84,9 @@ public class MicroBlocks extends CustomBlockLoader {
 						if (en.getPassenger() != null) {en.getPassenger().remove();}
 						//en.teleport(e.getPlayer());
 						
+						//en.getPassenger().teleport(en.getLocation().add(-0.1, 0, 0));
 						en.teleport(en.getLocation().add(-0.1, 0, 0));
+						
 						e.setCancelled(true);
 					}
 				}
@@ -164,4 +166,4 @@ public class MicroBlocks extends CustomBlockLoader {
 		onInteract(e);
 	}
 	
-}
+}*/

@@ -75,6 +75,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.superiorcraft.Forge.CustomBlockLoader;
+import com.superiorcraft.Forge.CustomBlockTexture;
 import com.superiorcraft.Forge.CustomItemLoader;
 import com.superiorcraft.NMS.NMS;
 import com.superiorcraft.trollcraft.GhostBlock;
@@ -1163,7 +1164,15 @@ public class Main extends JavaPlugin implements Listener {
         
         else if (command.getName().equalsIgnoreCase("holo")) {
         	Player player = (Player) sender;
-        	createHologram(player.getLocation(), "test", 10);
+        	//createHologram(player.getLocation(), "test", 10);
+        	
+        	CustomBlockTexture t = new CustomBlockTexture();
+        	
+        	t.setLayerPrimary(CustomBlockTexture.STONE, "7237230", "");
+        	t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
+        	
+        	t.placeBlock(player.getLocation());
+        	
         	return true;
         }
         
