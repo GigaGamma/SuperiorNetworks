@@ -133,3 +133,8 @@ commands:
     usage: /echest
     permission: superiorcraft.echest
     permission-message: You don't have the superiorcraft.echest permission.
+  gui:
+    description: GUI
+    usage: /gui [display:...]
+    permission: superiorcraft.gui
+    permission-message: You don't have the superiorcraft.gui permission.

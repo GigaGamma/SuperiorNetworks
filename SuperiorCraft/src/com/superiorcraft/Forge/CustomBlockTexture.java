@@ -9,6 +9,7 @@ public class CustomBlockTexture {
 	public static final int IRON_BLOCK = 3;
 	public static final int IRON_ORE = 20;
 	public static final int LAPIS_ORE = 21;
+	public static final int DAYLIGHT_TOP = 16;
 	
 	public String line1n = "id:minecraft:leather_boots,Count:1,Damage:(damage),tag:{Unbreakable:1,display:{color:(color)}(extra)}";
 	public String line1 = "";

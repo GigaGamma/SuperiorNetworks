@@ -1168,8 +1168,8 @@ public class Main extends JavaPlugin implements Listener {
         	
         	CustomBlockTexture t = new CustomBlockTexture();
         	
-        	t.setLayerPrimary(CustomBlockTexture.STONE, "7237230", "");
-        	t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
+        	t.setLayerPrimary(36, "7237230", "");
+        	//t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
         	
         	t.placeBlock(player.getLocation());
         	
@@ -1458,7 +1458,29 @@ public class Main extends JavaPlugin implements Listener {
         	
         	return true;
         }
-        
+
+        if (command.getName().equalsIgnoreCase("gui")) {
+        	Player player = (Player) sender;
+        	
+        	if (args[0].equalsIgnoreCase("getblock")) {
+        		Menu m = new Menu("Blocks", 27);
+        		
+        		for (CustomBlockLoader cbl : CustomBlockLoader.blocks) {
+        			ItemStack it = new ItemStack(Material.MONSTER_EGG, 64);
+        			ItemMeta itm = it.getItemMeta();
+        		
+        			itm.setDisplayName(cbl.name);
+        		
+        			it.setItemMeta(itm);
+        			
+        			if (!cbl.name.equalsIgnoreCase("blockloader")) m.inv.addItem(it);
+        		}
+        	
+        		player.openInventory(m.inv);
+        	}
+        	
+        	return true;
+        }
         
         return false;
     }

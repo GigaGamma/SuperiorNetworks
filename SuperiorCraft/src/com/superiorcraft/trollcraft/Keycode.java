@@ -3,6 +3,7 @@ package com.superiorcraft.trollcraft;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,6 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.superiorcraft.Forge.CustomBlockLoader;
+import com.superiorcraft.Forge.CustomBlockTexture;
+import com.superiorcraft.main.Main;
 import com.superiorcraft.main.Menu;
 
 public class Keycode extends CustomBlockLoader implements Listener {
@@ -34,8 +37,22 @@ public class Keycode extends CustomBlockLoader implements Listener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean placeBlock(ArmorStand e, Player p) {
-		e.getWorld().getBlockAt(e.getLocation()).setType(Material.DISPENSER);
-		e.getWorld().getBlockAt(e.getLocation()).setData((byte) 0);
+		
+		CustomBlockTexture t = new CustomBlockTexture();
+    	
+    	t.setLayerPrimary(CustomBlockTexture.IRON_BLOCK, "16777215", "");
+    	t.setLayerSecondary(CustomBlockTexture.DAYLIGHT_TOP, "0", "");
+    	
+    	Location l = new Location(e.getWorld(), e.getLocation().getBlockX(), e.getLocation().getBlockY(), e.getLocation().getBlockZ());
+    	
+    	Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+
+			@Override
+			public void run() {
+				t.placeBlock(e.getLocation());
+			}
+    		
+    	}, 2);
 		
 		e.addScoreboardTag("c0000");
 		
