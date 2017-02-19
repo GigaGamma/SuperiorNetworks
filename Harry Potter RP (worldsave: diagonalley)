@@ -1,0 +1,40 @@
+#dont use spaces when naming the brooms. Use underscore instead.
+  #Ex. name: Name_with_spaces
+  #use a $ to declare a color or formatting code
+  #Ex. $9 = blue text
+  #for more color and formatting codes go to http://minecraft.gamepedia.com/Color_codes
+  #don't touch the durability it is not a feature yet
+  broom1:
+    name: $9Cleansweep_One
+    speed: 0.5
+    durability: 100
+    # wood shovel
+    item: 269
+      
+  broom2:
+    name: $9Comet_140
+    speed: 0.8
+    durability: 100
+    # stone shovel
+    item: 273
+      
+  broom3:
+    name: $9Nimbus_2000
+    speed: 1.0
+    durability: 100
+    # iron shovel
+    item: 256
+      
+  broom4:
+    name: $9Nimbus_2001
+    speed: 1.1
+    durability: 100
+    # gold shovel
+    item: 284
+      
+  broom5:
+    name: $9Firebolt
+    speed: 1.5
+    durability: 100
+    # diamond shovel
+    item: 277
