@@ -13,6 +13,7 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -27,12 +28,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.superiorcraft.main.Main;
-import com.superiorcraft.trollcraft.PowerCrystal;
 
-public class CustomItemLoader implements Listener, CommandExecutor {
+public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter {
+	
+	public static ArrayList<CustomItemLoader> items = new ArrayList<CustomItemLoader>();
 	
 	public String id;
 	public ItemStack item;
+	public String name;
 	
 	public CustomItemLoader(ItemStack item, String id) {
 		super();
@@ -42,7 +45,7 @@ public class CustomItemLoader implements Listener, CommandExecutor {
 	}
 	
 	public void load() {
-		// Ghost Block
+		// Power Crystal
 		
 		ItemStack pcrys = new ItemStack(Material.DIAMOND);
     	ItemMeta pcrysm = pcrys.getItemMeta();
@@ -53,20 +56,33 @@ public class CustomItemLoader implements Listener, CommandExecutor {
        	pcrys.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
     	pcrys.setItemMeta(pcrysm);
 		
-		CustomItemLoader pc = new PowerCrystal(pcrys, "trollcraft:power_crystal");
+		CustomItemLoader pc = new PowerCrystal(pcrys, "forge:power_crystal");
+		items.add(pc);
 		Main.plugin.getServer().getPluginManager().registerEvents(pc, Main.plugin);
+		
+		// Uranium Ingot
+		
+		ItemStack uing = new ItemStack(Material.EMERALD);
+    	ItemMeta uingm = uing.getItemMeta();
+    	uingm.setDisplayName("&2Uranium Ingot".replace('&', '§'));
+    	ArrayList<String> uingl = new ArrayList<String>();
+    	uingl.add("&2A radioactive material".replace('&', '§'));
+       	uingm.setLore(uingl);
+       	uing.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
+    	uing.setItemMeta(uingm);
+		
+		CustomItemLoader ui = new UraniumIngot(uing, "forge:uranium_ingot");
+		items.add(ui);
+		Main.plugin.getServer().getPluginManager().registerEvents(ui, Main.plugin);
 	}
 	
-	public void giveItem(String name, Player player) {
-		ItemStack block = new ItemStack(Material.MONSTER_EGG, 64);
-			
-		ItemMeta bmeta = block.getItemMeta();
-			
-		bmeta.setDisplayName("&f&l".replace('&', '§') + name.replace('_', ' '));
-			
-		block.setItemMeta(bmeta);
-			
-		player.getInventory().addItem(block);
+	public void giveItem(CustomItemLoader cil, Player player) {
+		player.getInventory().addItem(cil.item);
+	}
+	
+	public void giveItem(CustomItemLoader cil, Player player, int amount) {
+		for (int i = 0; i < amount; i++)
+			player.getInventory().addItem(cil.item);
 	}
 	
 	@Override
@@ -76,17 +92,48 @@ public class CustomItemLoader implements Listener, CommandExecutor {
             String[] args) {
 		
 		if (command.getName().equalsIgnoreCase("getitem")) {
-        	Player player = (Player) sender;
+			Player player = (Player) sender;
+        	for (CustomItemLoader cil : items) {
+        		if (cil.id.equals(args[0])) {
+        			if (args.length >= 2 && args[1] != null) {
+        				cil.giveItem(cil, player, Integer.valueOf(args[1]));
+        			}
+        			
+        			else{
+        				cil.giveItem(cil, player);
+        			}
+        		}
+        	}
         	
-        	if (id.equals(args[0])) {
-        		
-        		player.getInventory().addItem(item);
-			}
+			//giveItem(args[0], player);
+			
 			
 			return true;
 		}
 		
 		return false;
 	}
+	
+	@Override
+    public List<String> onTabComplete(CommandSender sender,
+            Command command,
+            String label,
+            String[] args) {
+    	if (command.getName().equalsIgnoreCase("getitem")) {
+        	ArrayList<String> auto = new ArrayList<String>();
+        	
+        	for (CustomItemLoader cil : items) {
+        		if (cil.id.startsWith(args[0])) {
+        			auto.add(cil.id);
+        		}
+        	}
+        	
+        	return auto;
+    	}
+    	
+    	ArrayList<String> auto = new ArrayList<String>();
+
+    	return auto;
+    }
 	
 }

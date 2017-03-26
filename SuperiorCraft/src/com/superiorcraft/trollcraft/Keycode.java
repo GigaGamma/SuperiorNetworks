@@ -37,23 +37,9 @@ public class Keycode extends CustomBlockLoader implements Listener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean placeBlock(ArmorStand e, Player p) {
-		
-		CustomBlockTexture t = new CustomBlockTexture();
-    	
-    	t.setLayerPrimary(CustomBlockTexture.IRON_BLOCK, "16777215", "");
-    	t.setLayerSecondary(CustomBlockTexture.DAYLIGHT_TOP, "0", "");
-    	
     	Location l = new Location(e.getWorld(), e.getLocation().getBlockX(), e.getLocation().getBlockY(), e.getLocation().getBlockZ());
+		l.getWorld().getBlockAt(l).setType(Material.IRON_BLOCK);
     	
-    	Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
-
-			@Override
-			public void run() {
-				t.placeBlock(e.getLocation());
-			}
-    		
-    	}, 2);
-		
 		e.addScoreboardTag("c0000");
 		
 		return true;
@@ -147,7 +133,7 @@ public class Keycode extends CustomBlockLoader implements Listener {
 			
 			for (String t : plu.get(e.getWhoClicked()).getScoreboardTags()) {
 				
-				if (t.startsWith("c")) {
+				if (t.startsWith("c") && !t.equals("cblock")) {
 					kcode = t.replace("c", "");
 				}
 			}

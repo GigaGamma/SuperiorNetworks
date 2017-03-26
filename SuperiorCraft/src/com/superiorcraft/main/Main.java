@@ -1165,13 +1165,8 @@ public class Main extends JavaPlugin implements Listener {
         else if (command.getName().equalsIgnoreCase("holo")) {
         	Player player = (Player) sender;
         	//createHologram(player.getLocation(), "test", 10);
-        	
-        	CustomBlockTexture t = new CustomBlockTexture();
-        	
-        	t.setLayerPrimary(36, "7237230", "");
-        	//t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
-        	
-        	t.placeBlock(player.getLocation());
+        	CustomBlockTexture a = new CustomBlockTexture();
+        	a.placeBlock(player.getLocation());
         	
         	return true;
         }

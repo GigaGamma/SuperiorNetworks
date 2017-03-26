@@ -8,6 +8,7 @@ import java.util.ListIterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -22,6 +23,7 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -41,6 +43,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 	
 	public static ArrayList<CustomBlockLoader> blocks = new ArrayList<CustomBlockLoader>();
 	
+	public Material material = Material.MONSTER_EGG;
 	public String name;
 	public String id;
 	
@@ -111,7 +114,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     	
     	// Uranium Ore
     	
-    	CustomBlockLoader urore = new UraniumOre("&f&lUranium Ore", "forge:uranium_ore");
+    	CustomBlockLoader urore = new UraniumOre("Uranium Ore", "forge:uranium_ore");
     	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
 	}
 	
@@ -148,10 +151,26 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if (e.getAction() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType().equals(Material.MONSTER_EGG) && e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().equals(name)) {
-			//e.setCancelled(true);
+		if (e.getAction() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType().equals(material) && e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().equals(name)) {
+			if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
+				GameMode gm = e.getPlayer().getGameMode();
+				boolean op = e.getPlayer().isOp();
+				
+				e.getPlayer().setGameMode(GameMode.CREATIVE);
+				e.getPlayer().setOp(true);
+				
+				Main.plugin.getServer().getScheduler().runTaskLater(Main.plugin, new Runnable(){
+					
+					@Override
+					public void run(){
+						e.getPlayer().setGameMode(gm);
+						e.getPlayer().setOp(op);
+					}
+					
+				}, 2L);
+			}
 			
 			if (e.getItem().getAmount() - 1 != 0) {
 				ItemStack it = e.getItem();
@@ -170,6 +189,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 			block.setMarker(true);
 			block.setVisible(false);
 			block.addScoreboardTag("cblock");
+			
 			if (placeBlock(block, e.getPlayer()) == false) {
 				block.remove();
 				//e.getPlayer().sendMessage("a");
@@ -213,12 +233,12 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		//System.out.println("a");
 	}
 	
-	public void giveItem(String name, Player player) {
+	public void giveItem(CustomBlockLoader cbl, Player player) {
 		ItemStack block = new ItemStack(Material.MONSTER_EGG, 64);
-			
+		
 		ItemMeta bmeta = block.getItemMeta();
 			
-		bmeta.setDisplayName("&f&l".replace('&', '§') + name.replace('_', ' '));
+		bmeta.setDisplayName(cbl.name);
 			
 		block.setItemMeta(bmeta);
 			
@@ -233,21 +253,13 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		
 		if (command.getName().equalsIgnoreCase("getblock")) {
         	Player player = (Player) sender;
-        	
-			//giveItem(args[0], player);
         	for (CustomBlockLoader cbl : blocks) {
         		if (cbl.id.equals(args[0])) {
-        			ItemStack block = new ItemStack(Material.MONSTER_EGG, 64);
-        			
-        			ItemMeta bmeta = block.getItemMeta();
-        				
-        			bmeta.setDisplayName(cbl.name);
-        				
-        			block.setItemMeta(bmeta);
-        				
-        			player.getInventory().addItem(block);
+        			cbl.giveItem(cbl, player);
         		}
         	}
+        	
+			//giveItem(args[0], player);
 			
 			return true;
 		}

@@ -2,7 +2,7 @@
 <project name="superiorcraft" default="makejar" basedir=".">
     <target name="makejar" description="Create a jar for the project">
         <mkdir dir="target"></mkdir>
-        <jar destfile="C:/Users/Auguste/Desktop/SpigotServer/plugins/${ant.project.name}.jar">
+        <jar destfile="C:/Users/augus/Documents/SuperiorCraft/plugins/${ant.project.name}.jar">
             <fileset dir="bin"></fileset>
             <fileset file="plugin.yml"></fileset>
         </jar>
