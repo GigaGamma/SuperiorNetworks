@@ -23,6 +23,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 
+import com.superiorcraft.commands.AddMin;
+
 public class LongRangeWeapon implements Listener {
 	
 	private HashMap<Player, Integer> cooldown = new HashMap<Player, Integer>();
@@ -312,19 +314,21 @@ public class LongRangeWeapon implements Listener {
     				meta.setLore(lore);
     				//meta.setDisplayName(ChatColor.BOLD + "Shoe Shiner - " + Integer.toString(x) + " ammo");
     				e.getItem().setItemMeta(meta);
-    				cooldown.put(e.getPlayer(), 1);
-    				Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
-    					@Override
-    					public void run() {
-    						for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-    							if (cooltime > 1) {
-    								p.playSound(e.getPlayer().getLocation(), Sound.BLOCK_ANVIL_DESTROY, 1, 1);
+    				if (!AddMin.noreload.containsKey(e.getPlayer().getName()) || !AddMin.noreload.get(e.getPlayer().getName())) {
+    					cooldown.put(e.getPlayer(), 1);
+    					Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+    						@Override
+    						public void run() {
+    							for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+    								if (cooltime > 1) {
+    									p.playSound(e.getPlayer().getLocation(), Sound.BLOCK_ANVIL_DESTROY, 1, 1);
+    								}
     							}
+    							cooldown.remove(e.getPlayer());
+    							
     						}
-    						cooldown.remove(e.getPlayer());
-
-    					}
-    				}, cooltime * 20);
+    					}, cooltime * 20);
+    				}
     			}
 
     			else {

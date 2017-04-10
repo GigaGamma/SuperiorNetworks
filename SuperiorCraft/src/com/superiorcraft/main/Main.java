@@ -33,6 +33,7 @@ import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -76,8 +77,12 @@ import org.bukkit.util.Vector;
 
 import com.superiorcraft.Forge.CustomBlockLoader;
 import com.superiorcraft.Forge.CustomBlockTexture;
+import com.superiorcraft.Forge.CustomCrafting;
 import com.superiorcraft.Forge.CustomItemLoader;
 import com.superiorcraft.NMS.NMS;
+import com.superiorcraft.city.HoverBike;
+import com.superiorcraft.city.Police;
+import com.superiorcraft.commands.AddMin;
 import com.superiorcraft.trollcraft.GhostBlock;
  
 public class Main extends JavaPlugin implements Listener {
@@ -212,15 +217,23 @@ public class Main extends JavaPlugin implements Listener {
     	
     	getServer().getPluginManager().registerEvents(myml, this);
     	
-    	// Register Helicopter
+    	// Register Hover Bike
     	
-    	Helicopter heli = new Helicopter();
+    	HoverBike hbike = new HoverBike();
     	
-    	getCommand("helicopter").setExecutor(heli);
+    	getCommand("hbike").setExecutor(hbike);
     	
-    	getServer().getPluginManager().registerEvents(heli, this);
+    	getServer().getPluginManager().registerEvents(hbike, this);
     	
-    	// Register Troll Craft
+    	// Register Police
+    	
+    	Police pol = new Police();
+    	
+    	getCommand("police").setExecutor(pol);
+    	
+    	getServer().getPluginManager().registerEvents(pol, this);
+    	
+    	// Register Forge
     	
     	CustomBlockLoader bload = new CustomBlockLoader("BlockLoader", "BlockLoader");
     	getCommand("getblock").setExecutor(bload);
@@ -229,6 +242,15 @@ public class Main extends JavaPlugin implements Listener {
     	CustomItemLoader iload = new CustomItemLoader(null, "ItemLoader");
     	getCommand("getitem").setExecutor(iload);
     	iload.load();
+    	
+    	CustomCrafting ccraft = new CustomCrafting("&6Custom Crafter".replace('&', '§'));
+    	getServer().getPluginManager().registerEvents(ccraft, this);
+    	ccraft.load();
+    	
+    	// Register Commands
+    	
+    	AddMin adm = new AddMin();
+    	getCommand("addmin").setExecutor(adm);
     	
     	// Register Main
     	
@@ -790,7 +812,7 @@ public class Main extends JavaPlugin implements Listener {
     	}*/
     }
     
-    @EventHandler
+	@EventHandler(priority = EventPriority.LOW)
     public void onChat(AsyncPlayerChatEvent event) {
     	if (getConfig().get("players." + event.getPlayer().getName() + ".muted") == "yes") {
     		event.setCancelled(true);
@@ -814,6 +836,13 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
     	Player player = e.getPlayer();
+    	
+    	PermissionAttachment attachment = player.addAttachment(Main.plugin);
+		attachment.setPermission("superiorcraft.noreload", false);
+		
+		for (PermissionAttachmentInfo pio : player.getEffectivePermissions()) {
+			attachment.setPermission(pio.getPermission(), true);
+		}
     	
     	if (getConfig().getString("players." + player.getName() + ".cloaked") != "yes") {
     		if (!player.isOp()) {
@@ -884,6 +913,18 @@ public class Main extends JavaPlugin implements Listener {
 				holo.remove();
 			}
 		}, time * 20);
+	}
+	
+	public void createHologram(Location l, String text) {
+		ArmorStand holo = (ArmorStand) l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
+		
+		holo.setGravity(false);
+		holo.setVisible(false);
+		holo.setCustomName(text);
+		holo.setCustomNameVisible(true);
+		holo.setMarker(true);
+		holo.setAI(false);
+		holo.addScoreboardTag("dindicator");
 	}
 	
 	public void nameTag(String name, String pname) {
@@ -1164,9 +1205,7 @@ public class Main extends JavaPlugin implements Listener {
         
         else if (command.getName().equalsIgnoreCase("holo")) {
         	Player player = (Player) sender;
-        	//createHologram(player.getLocation(), "test", 10);
-        	CustomBlockTexture a = new CustomBlockTexture();
-        	a.placeBlock(player.getLocation());
+        	createHologram(player.getLocation(), String.join(" ", args));
         	
         	return true;
         }
@@ -1280,6 +1319,7 @@ public class Main extends JavaPlugin implements Listener {
                 		bootsMeta.setColor(Color.BLACK);
                 		bootsMeta.setDisplayName(ChatColor.BOLD + "Bullet Proof Boots");
                 		bootsMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
+                		bootsMeta.addEnchant(Enchantment.PROTECTION_FALL, 5, true);
                 		
                 		boots.setItemMeta(bootsMeta);
         				
@@ -1332,6 +1372,7 @@ public class Main extends JavaPlugin implements Listener {
         			attachment.setPermission("bukkit.command.reload", false);
         			
         			attachment.setPermission("superiorcraft.editworld", false);
+        			attachment.setPermission("superiorcraft.addmin", false);
         			//attachment.setPermission("superiorcraft.rank", false);
         			//attachment.unsetPermission("superiorcraft.rank");
         			//getPlayer(args[0]).sendMessage("a");

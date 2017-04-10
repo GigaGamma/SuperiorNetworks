@@ -105,11 +105,11 @@ commands:
     usage: /myml <[file]:edit:reload> [...]
     permission: superiorcraft.myml
     permission-message: You don't have the superiorcraft.myml permission.
-  helicopter:
-    description: heli
-    usage: /helicopter
-    permission: superiorcraft.heli
-    permission-message: You don't have the superiorcraft.heli permission.
+  hbike:
+    description: hbike
+    usage: /hbike
+    permission: superiorcraft.hbike
+    permission-message: You don't have the superiorcraft.hbike permission.
   getitem:
     description: getitem
     usage: /getitem
@@ -138,3 +138,13 @@ commands:
     usage: /gui [display:...]
     permission: superiorcraft.gui
     permission-message: You don't have the superiorcraft.gui permission.
+  addmin:
+    description: Admin control made simple
+    usage: /addmin
+    permission: superiorcraft.addmin
+    permission-message: You don't have the superiorcraft.addmin permission.
+  police:
+    description: That's the sign of da police
+    usage: /police
+    permission: superiorcraft.police
+    permission-message: You don't have the superiorcraft.police permission.

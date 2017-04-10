@@ -5,6 +5,7 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -27,16 +28,27 @@ public class CustomBlockTexture {
 		primary = new CustomLayer(texture, color);
 	}
 	
+	public void setLayerPrimary(int texture, Color color, boolean glowing) {
+		primary = new CustomLayer(texture, color, glowing);
+	}
+	
 	public void setLayerSecondary(int texture, Color color) {
 		secondary = new CustomLayer(texture, color);
+	}
+	
+	public void setLayerSecondary(int texture, Color color, boolean glowing) {
+		secondary = new CustomLayer(texture, color, glowing);
 	}
 	
 	public void setLayerThird(int texture, Color color) {
 		third = new CustomLayer(texture, color);
 	}
 	
+	public void setLayerThird(int texture, Color color, boolean glowing) {
+		third = new CustomLayer(texture, color, glowing);
+	}
+	
 	public ArmorStand placeBlock(Location l) {
-		System.out.println(primary.texture);
 		ArmorStand block = (ArmorStand) l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
 		block.setSmall(true);
 		block.setGravity(false);
@@ -51,6 +63,9 @@ public class CustomBlockTexture {
 		LeatherArmorMeta am = (LeatherArmorMeta) a.getItemMeta();
 		am.setColor(primary.color);
 		am.setUnbreakable(true);
+		if (primary.glowing) {
+			am.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
+		}
 		a.setItemMeta(am);
 		block.setHelmet(a);
 		
@@ -60,6 +75,10 @@ public class CustomBlockTexture {
 			LeatherArmorMeta bm = (LeatherArmorMeta) b.getItemMeta();
 			bm.setColor(secondary.color);
 			bm.setUnbreakable(true);
+			if (secondary.glowing) {
+				System.out.println("H");
+				bm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
+			}
 			b.setItemMeta(bm);
 			block.setItemInHand(b);
 		}

@@ -1,23 +1,27 @@
 package com.superiorcraft.Forge;
 
-import java.util.HashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.ShapedRecipe;
 
-import com.superiorcraft.main.Main;
-
-public class UraniumOre extends CustomBlockLoader {
+public class UraniumFuelRod extends CustomBlockLoader {
 	
-	public UraniumOre(String name, String id) {
+	public UraniumFuelRod(String name, String id) {
 		super(name, id);
 		//material = Material.COMMAND;
 	}
@@ -26,8 +30,8 @@ public class UraniumOre extends CustomBlockLoader {
 	public boolean placeBlock(ArmorStand e, Player p) {
 		CustomBlockTexture t = new CustomBlockTexture();
     	
-    	t.setLayerPrimary(CustomBlockTexture.STONE, Color.GRAY);
-    	t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, Color.GREEN);
+    	t.setLayerPrimary(CustomBlockTexture.IRON_BLOCK, Color.fromRGB(0, 20, 0));
+    	t.setLayerSecondary(CustomBlockTexture.DAYLIGHT_TOP, Color.GREEN, true);
     	
     	t.placeBlock(e.getLocation().add(0, 0.125, -0.375));
     	e.getLocation().getBlock().setType(Material.SLIME_BLOCK);
@@ -54,9 +58,9 @@ public class UraniumOre extends CustomBlockLoader {
 			    	t.setLayerPrimary(CustomBlockTexture.STONE, "7237230", "");
 			    	t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
 			    	t.giveBlock(e.getPlayer(), name);*/
-					for (CustomItemLoader cil : CustomItemLoader.items) {
-						if (cil instanceof UraniumIngot) {
-							cil.giveItem(cil, e.getPlayer());
+					for (CustomBlockLoader cbl : CustomBlockLoader.blocks) {
+						if (cbl instanceof UraniumFuelRod) {
+							cbl.giveItem(cbl, e.getPlayer());
 						}
 					}
 				}

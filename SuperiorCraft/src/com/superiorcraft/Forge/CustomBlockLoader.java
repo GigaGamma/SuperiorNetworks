@@ -32,6 +32,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.superiorcraft.city.StopBlock;
 import com.superiorcraft.main.Main;
 import com.superiorcraft.trollcraft.BlockBreaker;
 import com.superiorcraft.trollcraft.GhostBlock;
@@ -116,6 +117,16 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     	
     	CustomBlockLoader urore = new UraniumOre("Uranium Ore", "forge:uranium_ore");
     	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
+    	
+    	// Uranium Fuel Rod
+    
+    	CustomBlockLoader ufrore = new UraniumFuelRod("Uranium Fuel Rod", "forge:uranium_fuel_rod");
+    	Main.plugin.getServer().getPluginManager().registerEvents(ufrore, Main.plugin);
+    	
+    	// Stop Block
+    	
+    	CustomBlockLoader hbsb = new StopBlock("Stop Block", "city:stop_block");
+    	Main.plugin.getServer().getPluginManager().registerEvents(hbsb, Main.plugin);
 	}
 	
 	public boolean placeBlock(ArmorStand e, Player p) {
@@ -151,7 +162,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		
 	}
 	
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler()
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType().equals(material) && e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().equals(name)) {
 			if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
@@ -233,8 +244,50 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		//System.out.println("a");
 	}
 	
+	public ItemStack getItem() {
+		ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+		
+		ItemMeta bmeta = block.getItemMeta();
+			
+		bmeta.setDisplayName(name);
+			
+		block.setItemMeta(bmeta);
+			
+		return block;
+	}
+	
+	public ItemStack getItem(String id) {
+		for (CustomBlockLoader cbl : blocks) {
+    		if (cbl.id.equals(id)) {
+    			ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+    			
+    			ItemMeta bmeta = block.getItemMeta();
+    				
+    			bmeta.setDisplayName(name);
+    				
+    			block.setItemMeta(bmeta);
+    				
+    			return block;
+    		}
+    	}
+		
+		return null;
+	}
+	
 	public void giveItem(CustomBlockLoader cbl, Player player) {
-		ItemStack block = new ItemStack(Material.MONSTER_EGG, 64);
+		ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+		
+		ItemMeta bmeta = block.getItemMeta();
+			
+		bmeta.setDisplayName(cbl.name);
+			
+		block.setItemMeta(bmeta);
+			
+		player.getInventory().addItem(block);
+	}
+	
+	public void giveItem(CustomBlockLoader cbl, Player player, int amount) {
+		ItemStack block = new ItemStack(Material.MONSTER_EGG, amount);
 		
 		ItemMeta bmeta = block.getItemMeta();
 			
@@ -255,7 +308,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
         	Player player = (Player) sender;
         	for (CustomBlockLoader cbl : blocks) {
         		if (cbl.id.equals(args[0])) {
-        			cbl.giveItem(cbl, player);
+        			cbl.giveItem(cbl, player, 64);
         		}
         	}
         	
