@@ -37,7 +37,7 @@ public class SlickDoor extends CustomBlockLoader implements Listener {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
 				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
 					opened.add(en);
-					for (Entity en2 : en.getNearbyEntities(1.5, 1.5, 1.5)) {
+					for (Entity en2 : en.getNearbyEntities(2.5, 2.5, 2.5)) {
 						if (en2.getCustomName() != null && en2.getCustomName().contains("Slick Door Frame") && !opened.contains(en2)) {
 							opened.add(en2);
 							Material old = e.getPlayer().getWorld().getBlockAt(en2.getLocation().add(-0.5, 0, -0.5)).getType();
@@ -64,6 +64,7 @@ public class SlickDoor extends CustomBlockLoader implements Listener {
     					}
     				}, 3 * 20);
 					
+					e.setCancelled(true);
 				}
 			}
 		}

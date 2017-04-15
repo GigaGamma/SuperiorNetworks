@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Pig;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -42,7 +43,15 @@ public class StopBlock extends CustomBlockLoader {
 						if (ent.getCustomName() != null && ent.getCustomName().equals("HoverBike")) {
 							for (String tag : ent.getScoreboardTags()) {
 								if (tag.startsWith("speed:") && Integer.valueOf(tag.split(":")[1]) > 18) {
-									p.sendMessage("BEEP BOP");
+									Police.create(p.getLocation().add(-10, 2, -10), p);
+									p.sendMessage("&6[Warning] Don't go past stops!".replace('&', '§'));
+									p.sendMessage("&9[Police] Pull over!".replace('&', '§'));
+									
+									for (Entity pli : p.getNearbyEntities(50, 50, 50)) {
+										if (pli.getCustomName() != null && pli.getCustomName().equals("Officer")) {
+											((PigZombie) pli).setTarget(p);
+										}
+									}
 								}
 								else {
 									((Pig) ent).removePotionEffect(PotionEffectType.SPEED);

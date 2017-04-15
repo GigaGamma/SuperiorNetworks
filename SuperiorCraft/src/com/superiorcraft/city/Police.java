@@ -31,6 +31,7 @@ import net.minecraft.server.v1_11_R1.EntityEvoker.e;
 public class Police implements CommandExecutor, Listener {
 	
 	public String[] police_target = {"target", "player"};
+	public String[] police_patrol = {"patrol"};
 	
 	private static Player getPlayer(String player) {
 		for(Player ps : Bukkit.getOnlinePlayers()){
@@ -42,11 +43,10 @@ public class Police implements CommandExecutor, Listener {
 		return null;
 	}
 	
-	public void create(Location l, Player p) {
+	public static PigZombie create(Location l) {
 		PigZombie police = (PigZombie) l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
 		Pig hov = (Pig) l.getWorld().spawnEntity(l, EntityType.PIG);
 		
-		police.setTarget(p);
 		police.setMaxHealth(80);
 		police.setHealth(80);
 		
@@ -95,8 +95,21 @@ public class Police implements CommandExecutor, Listener {
 		police.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, true, false));
 		hov.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 4, true, false));
 		
-		hov.setTarget(p);
 		hov.setPassenger(police);
+		
+		police.setCustomName("Officer");
+		police.setCustomNameVisible(true);
+		police.addScoreboardTag("law");
+		
+		
+		return police;
+	}
+	
+	public static PigZombie create(Location l, Player p) {
+		PigZombie a = create(l);
+		a.setTarget(p);
+		
+		return a;
 	}
 	
 	@Override
@@ -106,6 +119,9 @@ public class Police implements CommandExecutor, Listener {
 			
 			if (CommandConstruct.match(args, police_target)) {			
 				create(player.getLocation().add(-10, 2, -10), getPlayer(args[1]));
+			}
+			else if (CommandConstruct.match(args, police_patrol)) {
+				create(player.getLocation().add(-10, 2, -10));
 			}
 			
 			return true;

@@ -40,8 +40,8 @@ public class HoverBike implements CommandExecutor, Listener {
 		hov.setGravity(true);
 		hov.setSilent(true);
 		
-		hov.setMaxHealth(20);
-		hov.setHealth(20);
+		hov.setMaxHealth(100);
+		hov.setHealth(100);
 		
 		return hov;
 	}

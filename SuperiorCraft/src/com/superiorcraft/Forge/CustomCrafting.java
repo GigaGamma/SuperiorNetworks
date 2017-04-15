@@ -45,6 +45,11 @@ public class CustomCrafting implements Listener {
 				e.getInventory().clear();
 			}*/
 		}
+		else if (e.getInventory().getName().contains("Custom Craft")) {
+			if (customCrafter.check(e.getInventory().getContents())) {
+				e.getPlayer().sendMessage("This is already a Custom Crafter");
+			}
+		}
  	}
 	
 }
