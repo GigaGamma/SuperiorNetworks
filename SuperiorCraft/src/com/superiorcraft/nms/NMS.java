@@ -1,4 +1,4 @@
-package com.superiorcraft.NMS;
+package com.superiorcraft.nms;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

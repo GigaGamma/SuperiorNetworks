@@ -13,7 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.Forge.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlockLoader;
 import com.superiorcraft.main.Main;
 
 public class SlickDoorFrame extends CustomBlockLoader implements Listener {

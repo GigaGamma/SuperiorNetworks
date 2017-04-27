@@ -19,8 +19,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.Forge.CustomBlockLoader;
-import com.superiorcraft.Forge.CustomBlockTexture;
+import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlockTexture;
 import com.superiorcraft.main.Main;
 import com.superiorcraft.main.Menu;
 

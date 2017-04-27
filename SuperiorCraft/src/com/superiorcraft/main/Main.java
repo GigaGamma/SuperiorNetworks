@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -75,17 +77,19 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import com.superiorcraft.Forge.CustomBlockLoader;
-import com.superiorcraft.Forge.CustomBlockTexture;
-import com.superiorcraft.Forge.CustomCrafting;
-import com.superiorcraft.Forge.CustomItemLoader;
-import com.superiorcraft.NMS.NMS;
+import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlockTexture;
+import com.superiorcraft.api.CustomCrafting;
+import com.superiorcraft.api.CustomItemLoader;
 import com.superiorcraft.city.HoverBike;
 import com.superiorcraft.city.Police;
 import com.superiorcraft.commands.AddMin;
+import com.superiorcraft.nms.NMS;
 import com.superiorcraft.trollcraft.GhostBlock;
  
 public class Main extends JavaPlugin implements Listener {
+	
+	private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
 	public static Main plugin;
 	private ArrayList<Player> cloaked = new ArrayList<Player>();
@@ -102,265 +106,267 @@ public class Main extends JavaPlugin implements Listener {
 	
     @Override
     public void onEnable() {
-    	plugin = this;
-    	
-    	wm1 = new Menu("Main Weapon Selection", 36);
-    	wm2 = new Menu("Side Weapon Selection", 36);
-    	gselect = new Menu("&8&lGame Selection".replace('&', '§'), 45);
-    	gmode1s = new Menu("&8Creative Selection".replace('&', '§'), 9);
-    	
-    	/* Lobby Selection */
-    	
-    	ItemStack lobsl = new ItemStack(Material.OBSIDIAN);
-    	ItemMeta lobslmeta = lobsl.getItemMeta();
-    	
-    	lobslmeta.setDisplayName("&5&lLobby".replace('&', '§'));
-    	
-    	lobsl.setItemMeta(lobslmeta);
-    	
-    	gselect.addItem(lobsl, 10);
-    	
-    	/* Creative Selection */
-    	
-    	ItemStack gmode1 = new ItemStack(Material.BRICK);
-    	ItemMeta gmode1meta = gmode1.getItemMeta();
-    	
-    	gmode1meta.setDisplayName("&f&lCreative".replace('&', '§'));
-    	
-    	gmode1.setItemMeta(gmode1meta);
-    	
-    	gselect.addItem(gmode1, 11);
-    	
-    	/* Troll Craft Selection */
-    	
-    	ItemStack trollsl = new ItemStack(Material.COMMAND);
-    	ItemMeta trollslmeta = gmode1.getItemMeta();
-    	
-    	trollslmeta.setDisplayName("&4&lTroll Craft".replace('&', '§'));
-    	
-    	trollsl.setItemMeta(trollslmeta);
-    	
-    	gselect.addItem(trollsl, 12);
-    	
-    	/* PixelMon */
-    	
-    	ItemStack pixelsl = new ItemStack(Material.SKULL_ITEM);
-    	ItemMeta pixelslmeta = gmode1.getItemMeta();
-    	
-    	pixelslmeta.setDisplayName("&4&lPixel&r&f&lmon".replace('&', '§'));
-    	
-    	pixelsl.setItemMeta(pixelslmeta);
-    	
-    	gselect.addItem(pixelsl, 13);
-    	
-    	/* Creative Server Selection */
-    	
-    	ItemStack gmode1g = new ItemStack(Material.WOOL, 1, DyeColor.YELLOW.getWoolData());
-    	ItemMeta gmode1gmeta = gmode1g.getItemMeta();
-    	
-    	gmode1gmeta.setDisplayName("&e&lYellow Server".replace('&', '§'));
-    	
-    	gmode1g.setItemMeta(gmode1gmeta);
-    	
-    	gmode1s.addItem(gmode1g, 1);
-    	
-    	//Register Weapons
-    	
-    	ItemStack wpl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
-    	ItemMeta wpl1m = wpl1.getItemMeta();
-    	
-    	wpl1m.setDisplayName("&f&lAssaults".replace('&', '§'));
-    	
-    	wpl1.setItemMeta(wpl1m);
-    	wm1.inv.setItem(0, wpl1);
-    	
-    	ItemStack wpl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
-    	ItemMeta wpl2m = wpl2.getItemMeta();
-    	
-    	wpl2m.setDisplayName("&f&lSnipers".replace('&', '§'));
-    	
-    	wpl2.setItemMeta(wpl2m);
-    	wm1.inv.setItem(9, wpl2);
-    	
-    	ItemStack wpl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
-    	ItemMeta wpl3m = wpl3.getItemMeta();
-    	
-    	wpl3m.setDisplayName("&f&lShotguns".replace('&', '§'));
-    	
-    	wpl3.setItemMeta(wpl3m);
-    	wm1.inv.setItem(18, wpl3);
-    	
-    	ItemStack wpl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
-    	ItemMeta wpl4m = wpl4.getItemMeta();
-    	
-    	wpl4m.setDisplayName("&f&lSpecials".replace('&', '§'));
-    	
-    	wpl4.setItemMeta(wpl4m);
-    	wm1.inv.setItem(27, wpl4);
-    	
-    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_HOE, "\"Woody\"", Material.FIREWORK_CHARGE, "The \"Wood Pecker\"", "Sniper", 0, 4, true, 1, false, 1, "Arrow", new PotionEffect(PotionEffectType.POISON, 300, 0, true, false)), this);
-    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.DIAMOND_HOE, "Shoe Shiner", Material.FIREWORK_CHARGE, "Dirty with DOOM", "Sniper", 20, 2, true), this);
-    	
-    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_AXE, "AttackMe 1", Material.FIREWORK_CHARGE, "Actually please don't attack me...", "Assault", 2, 0, false), this);
-    	
-    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SPADE, "The Pin cushion", Material.FIREWORK_CHARGE, "Made by Grandma", "Shotgun", 2, 0, false, 1, false, 3), this);
-    	
-    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "Sprocket", Material.FIREWORK_CHARGE, "Flaming Balls of fire", "Special", 20, 5, false, 1, false, 1, "Rocket"), this);
-    	
-    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "6-Coup", Material.GHAST_TEAR, "A little old...", "Side", -3.2, 0, false, 1, false, 1), this);
-    	
-    	// Register MYML
-    	
-    	MYML myml = new MYML();
-    	
-    	getCommand("myml").setExecutor(myml);
-    	
-    	getServer().getPluginManager().registerEvents(myml, this);
-    	
-    	// Register Hover Bike
-    	
-    	HoverBike hbike = new HoverBike();
-    	
-    	getCommand("hbike").setExecutor(hbike);
-    	
-    	getServer().getPluginManager().registerEvents(hbike, this);
-    	
-    	// Register Police
-    	
-    	Police pol = new Police();
-    	
-    	getCommand("police").setExecutor(pol);
-    	
-    	getServer().getPluginManager().registerEvents(pol, this);
-    	
-    	// Register Forge
-    	
-    	CustomBlockLoader bload = new CustomBlockLoader("BlockLoader", "BlockLoader");
-    	getCommand("getblock").setExecutor(bload);
-    	bload.load();
-    	
-    	CustomItemLoader iload = new CustomItemLoader(null, "ItemLoader");
-    	getCommand("getitem").setExecutor(iload);
-    	iload.load();
-    	
-    	CustomCrafting ccraft = new CustomCrafting("&6Custom Crafter".replace('&', '§'));
-    	getServer().getPluginManager().registerEvents(ccraft, this);
-    	ccraft.load();
-    	
-    	// Register Commands
-    	
-    	AddMin adm = new AddMin();
-    	getCommand("addmin").setExecutor(adm);
-    	
-    	// Register Main
-    	
-    	getServer().getPluginManager().registerEvents(this, this);
-    	
-    	Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-    		@Override
-    		public void run() {
-    			for (World world : Bukkit.getWorlds()) {
-    				for (Entity entity : world.getEntities()) {
-    					if (entity instanceof Arrow) {
-    						Arrow arrow = (Arrow) entity;
-    						if (arrow.isOnGround()) {
-    							arrow.remove();
-    						}
-    					}
-    				}
-    			}
-    			
-    			for (Player p : Bukkit.getOnlinePlayers()) {
-    				/*if (p.isSneaking() && !p.isFlying() && !inStealthMode.contains(p)) {
-    					p.sendMessage(ChatColor.GRAY + "You are now in stealth mode");
-    					inStealthMode.add(p);
-    				}
-    				else if (!p.isSneaking() && inStealthMode.contains(p)) {
-    					p.sendMessage(ChatColor.GRAY + "You are no longer in stealth mode");
-    					p.removePotionEffect(PotionEffectType.INVISIBILITY);
-    					p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-    					inStealthMode.remove(p);
-    				}
-    				else if (inStealthMode.contains(p)) {
-    					p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 200, 0, true, false));
-    					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 2, true, false));
-    				}*/
-    				if (inBlockWars.containsKey(p)) {
-    					if (p.getLocation().getBlock().getType() != Material.STANDING_BANNER) {
-    						if (bwfct.containsKey(p)) {
-    							bwfct.remove(p);
-    						}
-    					}
-    					if (p.isSneaking() && p.getLocation().getBlock().getType() == Material.STANDING_BANNER) {
-    						BlockState bs = p.getLocation().getBlock().getState();
-    						Banner bm = (Banner) bs;
-    						if (!bwfct.containsKey(p) && bm.getBaseColor() != DyeColor.valueOf(inBlockWars.get(p).toUpperCase())) {
-    							bwfct.put(p, 0);
-    						}
-    						if (bwfct.containsKey(p)) {
-    							int v = bwfct.get(p);
-    							bwfct.remove(p);
-    							//System.out.println((v / 50) * 10);
-    							ArrayList<Integer> marks = new ArrayList<Integer>();
-    							marks.add(25);
-    							marks.add(50);
-    							marks.add(75);
-    							
-    							if (marks.contains(v)) {
-    								p.sendTitle(ChatColor.GRAY + String.valueOf(v) + "%", null, 3, 3, 3);
-    							}
-    							bwfct.put(p, v + 1);
-    						}
-    						if (bm.getBaseColor() == DyeColor.valueOf(inBlockWars.get(p).toUpperCase())) {
-    							//System.out.println(p.getBedSpawnLocation());
-    							p.setBedSpawnLocation(p.getLocation(), true);
-    						}
-    						if (bm.getBaseColor() != DyeColor.valueOf(inBlockWars.get(p).toUpperCase()) && bwfct.containsKey(p) && bwfct.get(p) > 100) {
-    							bwfct.remove(p);
-    							for (Entity e : p.getNearbyEntities(2, 2, 2)) {
-    								if (e.getName().equals("flag")) {
-    									for (String tag : e.getScoreboardTags()) {
-    										e.removeScoreboardTag(tag);
-    									}
-    									e.addScoreboardTag(inBlockWars.get(p));
-    								}
-    							}
-    							for (Player p2 : Bukkit.getOnlinePlayers()) {
-        							if (inBlockWars.containsKey(p2)) {
-        								p2.sendTitle(ChatColor.GREEN + "+1 Flag", "For the " + ChatColor.valueOf(inBlockWars.get(p).toUpperCase()) + inBlockWars.get(p).substring(0, 1).toUpperCase() + inBlockWars.get(p).substring(1).toLowerCase() + " Team " + ChatColor.RESET);
-        							}
-        						}
-    							bm.setBaseColor(DyeColor.valueOf(inBlockWars.get(p).toUpperCase()));
-        						bs.update();
-    						}
-    						
-    						/*Class<?> pclass = NMS.getClass("PacketPlayOutTitle");
-    						Constructor<?> pcon = pclass.getConstructor(NMS.getClass("PacketPlayOutTitle.EnumTitleAction"))
-    						Object packet = pclass.newInstance(NMS.getClass("PacketPlayOutTitle.EnumTitleAction").);
-    						System.out.println(NMS.getConnection(p));*/
-    						
-    						
-    					}
-    				}
-    			}
-    		}
-    	}, 0, 0);
-    	
-    	if (!(new File(getDataFolder(), "config.yml")).exists()) {
-    		saveDefaultConfig();
-    	}
-    	
-    	
-    	
-    	/*ItemStack pcrys = new ItemStack(Material.DIAMOND);
-    	ItemMeta pcrysm = pcrys.getItemMeta();
-    	pcrysm.setDisplayName("&b&lPower Crystal".replace('&', '§'));
-    	ArrayList<String> pcrysl = new ArrayList<String>();
-    	pcrysl.add("&b&l0 / 100,000 RF".replace('&', '§'));
-       	pcrysm.setLore(pcrysl);
-    	pcrys.setItemMeta(pcrysm);*/
-    	
-    	
+	    	plugin = this;
+	    	logger.setLevel(Level.ALL);
+	    	logger.info("\n---\nStarting SuperiorCraft initialization\n---");
+	    	
+	    	wm1 = new Menu("Main Weapon Selection", 36);
+	    	wm2 = new Menu("Side Weapon Selection", 36);
+	    	gselect = new Menu("&8&lGame Selection".replace('&', '§'), 45);
+	    	gmode1s = new Menu("&8Creative Selection".replace('&', '§'), 9);
+	    	
+	    	/* Lobby Selection */
+	    	
+	    	ItemStack lobsl = new ItemStack(Material.OBSIDIAN);
+	    	ItemMeta lobslmeta = lobsl.getItemMeta();
+	    	
+	    	lobslmeta.setDisplayName("&5&lLobby".replace('&', '§'));
+	    	
+	    	lobsl.setItemMeta(lobslmeta);
+	    	
+	    	gselect.addItem(lobsl, 10);
+	    	
+	    	/* Creative Selection */
+	    	
+	    	ItemStack gmode1 = new ItemStack(Material.BRICK);
+	    	ItemMeta gmode1meta = gmode1.getItemMeta();
+	    	
+	    	gmode1meta.setDisplayName("&f&lCreative".replace('&', '§'));
+	    	
+	    	gmode1.setItemMeta(gmode1meta);
+	    	
+	    	gselect.addItem(gmode1, 11);
+	    	
+	    	/* Troll Craft Selection */
+	    	
+	    	ItemStack trollsl = new ItemStack(Material.COMMAND);
+	    	ItemMeta trollslmeta = gmode1.getItemMeta();
+	    	
+	    	trollslmeta.setDisplayName("&4&lTroll Craft".replace('&', '§'));
+	    	
+	    	trollsl.setItemMeta(trollslmeta);
+	    	
+	    	gselect.addItem(trollsl, 12);
+	    	
+	    	/* PixelMon */
+	    	
+	    	ItemStack pixelsl = new ItemStack(Material.SKULL_ITEM);
+	    	ItemMeta pixelslmeta = gmode1.getItemMeta();
+	    	
+	    	pixelslmeta.setDisplayName("&4&lPixel&r&f&lmon".replace('&', '§'));
+	    	
+	    	pixelsl.setItemMeta(pixelslmeta);
+	    	
+	    	gselect.addItem(pixelsl, 13);
+	    	
+	    	/* Creative Server Selection */
+	    	
+	    	ItemStack gmode1g = new ItemStack(Material.WOOL, 1, DyeColor.YELLOW.getWoolData());
+	    	ItemMeta gmode1gmeta = gmode1g.getItemMeta();
+	    	
+	    	gmode1gmeta.setDisplayName("&e&lYellow Server".replace('&', '§'));
+	    	
+	    	gmode1g.setItemMeta(gmode1gmeta);
+	    	
+	    	gmode1s.addItem(gmode1g, 1);
+	    	
+	    	//Register Weapons
+	    	
+	    	ItemStack wpl1 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
+	    	ItemMeta wpl1m = wpl1.getItemMeta();
+	    	
+	    	wpl1m.setDisplayName("&f&lAssaults".replace('&', '§'));
+	    	
+	    	wpl1.setItemMeta(wpl1m);
+	    	wm1.inv.setItem(0, wpl1);
+	    	
+	    	ItemStack wpl2 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
+	    	ItemMeta wpl2m = wpl2.getItemMeta();
+	    	
+	    	wpl2m.setDisplayName("&f&lSnipers".replace('&', '§'));
+	    	
+	    	wpl2.setItemMeta(wpl2m);
+	    	wm1.inv.setItem(9, wpl2);
+	    	
+	    	ItemStack wpl3 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
+	    	ItemMeta wpl3m = wpl3.getItemMeta();
+	    	
+	    	wpl3m.setDisplayName("&f&lShotguns".replace('&', '§'));
+	    	
+	    	wpl3.setItemMeta(wpl3m);
+	    	wm1.inv.setItem(18, wpl3);
+	    	
+	    	ItemStack wpl4 = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
+	    	ItemMeta wpl4m = wpl4.getItemMeta();
+	    	
+	    	wpl4m.setDisplayName("&f&lSpecials".replace('&', '§'));
+	    	
+	    	wpl4.setItemMeta(wpl4m);
+	    	wm1.inv.setItem(27, wpl4);
+	    	
+	    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_HOE, "\"Woody\"", Material.FIREWORK_CHARGE, "The \"Wood Pecker\"", "Sniper", 0, 4, true, 1, false, 1, "Arrow", new PotionEffect(PotionEffectType.POISON, 300, 0, true, false)), this);
+	    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.DIAMOND_HOE, "Shoe Shiner", Material.FIREWORK_CHARGE, "Dirty with DOOM", "Sniper", 20, 2, true), this);
+	    	
+	    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_AXE, "AttackMe 1", Material.FIREWORK_CHARGE, "Actually please don't attack me...", "Assault", 2, 0, false), this);
+	    	
+	    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SPADE, "The Pin cushion", Material.FIREWORK_CHARGE, "Made by Grandma", "Shotgun", 2, 0, false, 1, false, 3), this);
+	    	
+	    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "Sprocket", Material.FIREWORK_CHARGE, "Flaming Balls of fire", "Special", 20, 5, false, 1, false, 1, "Rocket"), this);
+	    	
+	    	getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "6-Coup", Material.GHAST_TEAR, "A little old...", "Side", -3.2, 0, false, 1, false, 1), this);
+	    	
+	    	// Register MYML
+	    	
+	    	MYML myml = new MYML();
+	    	
+	    	getCommand("myml").setExecutor(myml);
+	    	
+	    	getServer().getPluginManager().registerEvents(myml, this);
+	    	
+	    	// Register Hover Bike
+	    	
+	    	HoverBike hbike = new HoverBike();
+	    	
+	    	getCommand("hbike").setExecutor(hbike);
+	    	
+	    	getServer().getPluginManager().registerEvents(hbike, this);
+	    	
+	    	// Register Police
+	    	
+	    	Police pol = new Police();
+	    	
+	    	getCommand("police").setExecutor(pol);
+	    	
+	    	getServer().getPluginManager().registerEvents(pol, this);
+	    	
+	    	// Register Forge
+	    	
+	    	CustomBlockLoader bload = new CustomBlockLoader("BlockLoader", "BlockLoader");
+	    	getCommand("getblock").setExecutor(bload);
+	    	bload.load();
+	    	
+	    	CustomItemLoader iload = new CustomItemLoader(null, "ItemLoader");
+	    	getCommand("getitem").setExecutor(iload);
+	    	iload.load();
+	    	
+	    	CustomCrafting ccraft = new CustomCrafting("&6Custom Crafter".replace('&', '§'));
+	    	getServer().getPluginManager().registerEvents(ccraft, this);
+	    	ccraft.load();
+	    	
+	    	// Register Commands
+	    	
+	    	AddMin adm = new AddMin();
+	    	getCommand("addmin").setExecutor(adm);
+	    	
+	    	// Register Main
+	    	
+	    	getServer().getPluginManager().registerEvents(this, this);
+	    	
+	    	Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+	    		@Override
+	    		public void run() {
+	    			for (World world : Bukkit.getWorlds()) {
+	    				for (Entity entity : world.getEntities()) {
+	    					if (entity instanceof Arrow) {
+	    						Arrow arrow = (Arrow) entity;
+	    						if (arrow.isOnGround()) {
+	    							arrow.remove();
+	    						}
+	    					}
+	    				}
+	    			}
+	    			
+	    			for (Player p : Bukkit.getOnlinePlayers()) {
+	    				/*if (p.isSneaking() && !p.isFlying() && !inStealthMode.contains(p)) {
+	    					p.sendMessage(ChatColor.GRAY + "You are now in stealth mode");
+	    					inStealthMode.add(p);
+	    				}
+	    				else if (!p.isSneaking() && inStealthMode.contains(p)) {
+	    					p.sendMessage(ChatColor.GRAY + "You are no longer in stealth mode");
+	    					p.removePotionEffect(PotionEffectType.INVISIBILITY);
+	    					p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+	    					inStealthMode.remove(p);
+	    				}
+	    				else if (inStealthMode.contains(p)) {
+	    					p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 200, 0, true, false));
+	    					p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 2, true, false));
+	    				}*/
+	    				if (inBlockWars.containsKey(p)) {
+	    					if (p.getLocation().getBlock().getType() != Material.STANDING_BANNER) {
+	    						if (bwfct.containsKey(p)) {
+	    							bwfct.remove(p);
+	    						}
+	    					}
+	    					if (p.isSneaking() && p.getLocation().getBlock().getType() == Material.STANDING_BANNER) {
+	    						BlockState bs = p.getLocation().getBlock().getState();
+	    						Banner bm = (Banner) bs;
+	    						if (!bwfct.containsKey(p) && bm.getBaseColor() != DyeColor.valueOf(inBlockWars.get(p).toUpperCase())) {
+	    							bwfct.put(p, 0);
+	    						}
+	    						if (bwfct.containsKey(p)) {
+	    							int v = bwfct.get(p);
+	    							bwfct.remove(p);
+	    							//System.out.println((v / 50) * 10);
+	    							ArrayList<Integer> marks = new ArrayList<Integer>();
+	    							marks.add(25);
+	    							marks.add(50);
+	    							marks.add(75);
+	    							
+	    							if (marks.contains(v)) {
+	    								p.sendTitle(ChatColor.GRAY + String.valueOf(v) + "%", null, 3, 3, 3);
+	    							}
+	    							bwfct.put(p, v + 1);
+	    						}
+	    						if (bm.getBaseColor() == DyeColor.valueOf(inBlockWars.get(p).toUpperCase())) {
+	    							//System.out.println(p.getBedSpawnLocation());
+	    							p.setBedSpawnLocation(p.getLocation(), true);
+	    						}
+	    						if (bm.getBaseColor() != DyeColor.valueOf(inBlockWars.get(p).toUpperCase()) && bwfct.containsKey(p) && bwfct.get(p) > 100) {
+	    							bwfct.remove(p);
+	    							for (Entity e : p.getNearbyEntities(2, 2, 2)) {
+	    								if (e.getName().equals("flag")) {
+	    									for (String tag : e.getScoreboardTags()) {
+	    										e.removeScoreboardTag(tag);
+	    									}
+	    									e.addScoreboardTag(inBlockWars.get(p));
+	    								}
+	    							}
+	    							for (Player p2 : Bukkit.getOnlinePlayers()) {
+	        							if (inBlockWars.containsKey(p2)) {
+	        								p2.sendTitle(ChatColor.GREEN + "+1 Flag", "For the " + ChatColor.valueOf(inBlockWars.get(p).toUpperCase()) + inBlockWars.get(p).substring(0, 1).toUpperCase() + inBlockWars.get(p).substring(1).toLowerCase() + " Team " + ChatColor.RESET);
+	        							}
+	        						}
+	    							bm.setBaseColor(DyeColor.valueOf(inBlockWars.get(p).toUpperCase()));
+	        						bs.update();
+	    						}
+	    						
+	    						/*Class<?> pclass = NMS.getClass("PacketPlayOutTitle");
+	    						Constructor<?> pcon = pclass.getConstructor(NMS.getClass("PacketPlayOutTitle.EnumTitleAction"))
+	    						Object packet = pclass.newInstance(NMS.getClass("PacketPlayOutTitle.EnumTitleAction").);
+	    						System.out.println(NMS.getConnection(p));*/
+	    						
+	    						
+	    					}
+	    				}
+	    			}
+	    		}
+	    	}, 0, 0);
+	    	
+	    	if (!(new File(getDataFolder(), "config.yml")).exists()) {
+	    		saveDefaultConfig();
+	    	}
+	    	
+	    	
+	    	
+	    	/*ItemStack pcrys = new ItemStack(Material.DIAMOND);
+	    	ItemMeta pcrysm = pcrys.getItemMeta();
+	    	pcrysm.setDisplayName("&b&lPower Crystal".replace('&', '§'));
+	    	ArrayList<String> pcrysl = new ArrayList<String>();
+	    	pcrysl.add("&b&l0 / 100,000 RF".replace('&', '§'));
+	       	pcrysm.setLore(pcrysl);
+	    	pcrys.setItemMeta(pcrysm);*/
+	    	
+	    	logger.info("\n---\nFinished SuperiorCraft initialization\n---");
     }
    
     @Override

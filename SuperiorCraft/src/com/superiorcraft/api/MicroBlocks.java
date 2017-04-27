@@ -1,3 +1,4 @@
+package com.superiorcraft.api;
 /*package com.superiorcraft.Forge;
 
 import java.util.HashSet;

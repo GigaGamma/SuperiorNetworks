@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.superiorcraft.Forge.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlockLoader;
 import com.superiorcraft.main.Main;
 
 public class StopBlock extends CustomBlockLoader {

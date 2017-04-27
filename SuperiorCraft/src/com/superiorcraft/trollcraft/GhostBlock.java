@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.Forge.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlockLoader;
 
 public class GhostBlock extends CustomBlockLoader implements Listener {
 	

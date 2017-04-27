@@ -1,4 +1,4 @@
-package com.superiorcraft.Forge;
+package com.superiorcraft.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,13 +35,29 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
 	
 	public String id;
 	public ItemStack item;
-	public String name;
 	
 	public CustomItemLoader(ItemStack item, String id) {
 		super();
 		
 		this.id = id.replace('&', '§');
 		this.item = item;
+		
+		System.out.println("Item Init: " + id);
+		items.add(this);
+	}
+	
+	public CustomItemLoader(ItemStack item, String id, String name) {
+		super();
+		
+		this.id = id.replace('&', '§');
+		
+	 	ItemMeta meta = item.getItemMeta();
+	 	meta.setDisplayName(name.replace('&', '§'));
+	 	item.setItemMeta(meta);
+		this.item = item;
+		
+		System.out.println("Item Init: " + id);
+		items.add(this);
 	}
 	
 	public void load() {
@@ -57,7 +73,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
     	pcrys.setItemMeta(pcrysm);
 		
 		CustomItemLoader pc = new PowerCrystal(pcrys, "forge:power_crystal");
-		items.add(pc);
+		
 		Main.plugin.getServer().getPluginManager().registerEvents(pc, Main.plugin);
 		
 		// Uranium Ingot
@@ -72,8 +88,17 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
     	uing.setItemMeta(uingm);
 		
 		CustomItemLoader ui = new UraniumIngot(uing, "forge:uranium_ingot");
-		items.add(ui);
 		Main.plugin.getServer().getPluginManager().registerEvents(ui, Main.plugin);
+	}
+	
+	public static ItemStack getItem(String id) {
+		for (CustomItemLoader cil : items) {
+			if (cil.id.contains(id)) {
+				return cil.item;
+			}
+		}
+		
+		return null;
 	}
 	
 	public void giveItem(CustomItemLoader cil, Player player) {

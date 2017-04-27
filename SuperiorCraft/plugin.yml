@@ -1,8 +1,8 @@
 main: com.superiorcraft.main.Main
 name: SuperiorCraft
-version: 1.0
+version: 3.4.1
 author: SuperiorCraft Development
-description: Example
+description: SuperiorCraft is a server and an API.
 commands:
   cchat:
     description: Server Announcment

@@ -1,4 +1,4 @@
-package com.superiorcraft.Forge;
+package com.superiorcraft.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +54,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		this.name = name.replace('&', '§');
 		this.id = id;
 		
-		System.out.println("Item Init: " + id);
+		System.out.println("Block Init: " + id);
 		CustomBlockLoader.blocks.add(this);
 	}
 	
@@ -242,6 +242,16 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 	public void onBlockBreak(BlockBreakEvent e) {
 		removeBlock(e);
 		//System.out.println("a");
+	}
+	
+	public static ItemStack getBlock(String id) {
+		for (CustomBlockLoader cil : blocks) {
+			if (cil.id.contains(id)) {
+				return cil.getItem();
+			}
+		}
+		
+		return null;
 	}
 	
 	public ItemStack getItem() {

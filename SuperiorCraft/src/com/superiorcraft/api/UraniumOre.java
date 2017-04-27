@@ -1,4 +1,4 @@
-package com.superiorcraft.Forge;
+package com.superiorcraft.api;
 
 import java.util.HashMap;
 
