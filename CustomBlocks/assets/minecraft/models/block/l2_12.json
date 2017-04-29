@@ -1,0 +1,6 @@
+{
+        "parent": "block/colorable_block_all",
+        "textures": {
+            "all": "blocks/l2_12"
+        }
+    }

@@ -1,0 +1,7 @@
+{
+        "parent": "block/colorable_block_top_half",
+        "textures": {
+            "top": "blocks/l3_2_2",
+            "sides": "blocks/l3_2_1"
+        }
+    }
