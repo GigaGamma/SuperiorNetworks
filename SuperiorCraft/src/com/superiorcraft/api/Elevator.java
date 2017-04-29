@@ -44,7 +44,6 @@ public class Elevator extends CustomBlockLoader {
 			if (e.getLocation().getY() < en.getLocation().getY() && e.getLocation().distance(en.getLocation()) < bd) {
 				bd = e.getLocation().distance(en.getLocation());
 				be = en;
-				//p.sendMessage(String.valueOf(en.getLocation().getY() + " : " + String.valueOf(e.getLocation().distance(en.getLocation()))));
 			}
 		}
 		
