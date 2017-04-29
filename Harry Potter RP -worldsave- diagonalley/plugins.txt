@@ -1,2 +1,0 @@
-Brooms Plugin:
-Ollivanders (100/170 spells from Harry Potter canon, cast with their in-canon incantations, Wandmaking and wandlore, Spellbooks that let you pass on your knowledge and power, Cat post to let you send messages and items to your friends, Configuration that allows you to turn the plugin on or off for your world or regions, Only one command, Vanishing Cabinets, Floo Powder and Floo Network, Chat Dropoff, Deathly Hallows, Apparition. Portkeys, Horcruxes, Divination): https://dev.bukkit.org/projects/ollivanders 
