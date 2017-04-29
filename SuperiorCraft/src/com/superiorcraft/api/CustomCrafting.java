@@ -37,7 +37,10 @@ public class CustomCrafting implements Listener {
 	
 	public void load() {
 		customCrafter = new CustomCrafter(makeCrafter);
-		List<Recipe> recipes = new ArrayList<>();
+		Registry.addRecipe(customCrafter);
+		Registry.addRecipe(new UraniumFuelRodRecipe(UraniumFuelRodRecipe.recipe));
+		
+		/*List<Recipe> recipes = new ArrayList<>();
 		Bukkit.recipeIterator().forEachRemaining(recipes::add);
 		for (Recipe r : recipes) {
 			if (r instanceof ShapelessRecipe) {
@@ -53,19 +56,17 @@ public class CustomCrafting implements Listener {
 				for (int i = 0; i < ((ShapedRecipe) r).getShape().length; i++) {
 					shape += ((ShapedRecipe) r).getShape()[i];
 				}
-				System.out.println(shape.length());
+				//System.out.println(shape.length());
 				for (int i2 = 0; i2 < shape.length(); i2++) {
 					its[i2] = ((ShapedRecipe) r).getIngredientMap().get(shape.charAt(i2));
-					System.out.print(((ShapedRecipe) r).getIngredientMap().get(shape.charAt(i2)));
+					//System.out.print(((ShapedRecipe) r).getIngredientMap().get(shape.charAt(i2)));
 				}
 				Registry.addRecipe(new InOutRecipe(its, r.getResult()));
 				//System.out.println(((ShapelessRecipe) r).getIngredientList())
-				System.out.println("");
+				//System.out.println("");
 				//System.out.println(r.getResult());
 			}
-		}
-		Registry.addRecipe(customCrafter);
-		Registry.addRecipe(new UraniumFuelRodRecipe(UraniumFuelRodRecipe.recipe));
+		}*/
 	}
 	
 	@EventHandler(priority=EventPriority.HIGHEST)

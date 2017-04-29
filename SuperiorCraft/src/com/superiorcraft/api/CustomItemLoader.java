@@ -72,7 +72,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
        	pcrys.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
     	pcrys.setItemMeta(pcrysm);
 		
-		CustomItemLoader pc = new PowerCrystal(pcrys, "forge:power_crystal");
+		CustomItemLoader pc = new PowerCrystal(pcrys, "superiorcraft:power_crystal");
 		
 		Main.plugin.getServer().getPluginManager().registerEvents(pc, Main.plugin);
 		
@@ -87,7 +87,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
        	uing.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
     	uing.setItemMeta(uingm);
 		
-		CustomItemLoader ui = new UraniumIngot(uing, "forge:uranium_ingot");
+		CustomItemLoader ui = new UraniumIngot(uing, "superiorcraft:uranium_ingot");
 		Main.plugin.getServer().getPluginManager().registerEvents(ui, Main.plugin);
 	}
 	

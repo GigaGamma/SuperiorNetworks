@@ -35,7 +35,7 @@ public class HoverBike implements CommandExecutor, Listener {
 		hov.addScoreboardTag("speed:10");
 		hov.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 30, true, false));
 		hov.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false));
-		//hov.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 10, true, false));
+		//hov.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1, true, false));
 		hov.setAI(false);
 		hov.setGravity(true);
 		hov.setSilent(true);

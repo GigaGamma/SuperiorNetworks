@@ -115,12 +115,12 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     	
     	// Uranium Ore
     	
-    	CustomBlockLoader urore = new UraniumOre("Uranium Ore", "forge:uranium_ore");
+    	CustomBlockLoader urore = new UraniumOre("Uranium Ore", "superiorcraft:uranium_ore");
     	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
     	
     	// Uranium Fuel Rod
     
-    	CustomBlockLoader ufrore = new UraniumFuelRod("Uranium Fuel Rod", "forge:uranium_fuel_rod");
+    	CustomBlockLoader ufrore = new UraniumFuelRod("Uranium Fuel Rod", "superiorcraft:uranium_fuel_rod");
     	Main.plugin.getServer().getPluginManager().registerEvents(ufrore, Main.plugin);
     	
     	// Stop Block

@@ -18,14 +18,12 @@ public class InOutRecipe extends CustomCraftingRecipe {
 	
 	@Override
 	public void craft(InventoryCloseEvent e) {
-		System.out.println("A");
 		e.getInventory().clear();
 		e.getInventory().setItem(4, output);
 	}
 	
 	@Override
 	public void craft(InventoryMoveItemEvent e) {
-		System.out.println("A");
 		e.getDestination().clear();
 		e.getDestination().setItem(4, output);
 	}

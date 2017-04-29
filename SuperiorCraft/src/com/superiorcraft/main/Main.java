@@ -64,6 +64,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.material.MaterialData;
@@ -81,6 +82,10 @@ import com.superiorcraft.api.CustomBlockLoader;
 import com.superiorcraft.api.CustomBlockTexture;
 import com.superiorcraft.api.CustomCrafting;
 import com.superiorcraft.api.CustomItemLoader;
+import com.superiorcraft.api.Elevator;
+import com.superiorcraft.api.Registry;
+import com.superiorcraft.api.util.DamageIndicator;
+import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.city.HoverBike;
 import com.superiorcraft.city.Police;
 import com.superiorcraft.commands.AddMin;
@@ -228,7 +233,6 @@ public class Main extends JavaPlugin implements Listener {
 	    	HoverBike hbike = new HoverBike();
 	    	
 	    	getCommand("hbike").setExecutor(hbike);
-	    	
 	    	getServer().getPluginManager().registerEvents(hbike, this);
 	    	
 	    	// Register Police
@@ -245,6 +249,8 @@ public class Main extends JavaPlugin implements Listener {
 	    	getCommand("getblock").setExecutor(bload);
 	    	bload.load();
 	    	
+	    Registry.registerBlock(new Elevator("Elevator", "superiorcraft:elevator"));
+	    	
 	    	CustomItemLoader iload = new CustomItemLoader(null, "ItemLoader");
 	    	getCommand("getitem").setExecutor(iload);
 	    	iload.load();
@@ -257,6 +263,10 @@ public class Main extends JavaPlugin implements Listener {
 	    	
 	    	AddMin adm = new AddMin();
 	    	getCommand("addmin").setExecutor(adm);
+	    	
+	    	// Register Holograms
+	    	Hologram.registerHolograms();
+	    	getServer().getPluginManager().registerEvents(new DamageIndicator(), this);
 	    	
 	    	// Register Main
 	    	
@@ -728,9 +738,6 @@ public class Main extends JavaPlugin implements Listener {
     
     @EventHandler
     public void onEntityDamageEvent(EntityDamageEvent e) {
-    	if (!(e.getEntity() instanceof ArmorStand) && e.getEntityType() != EntityType.ARMOR_STAND && e.getEntityType() != EntityType.DROPPED_ITEM) {
-    		createHologram(e.getEntity().getLocation(), ChatColor.RED + Double.toString(e.getDamage()), 2);
-    	}
     	if (e.getEntity() instanceof Player) {
     		Player player = (Player) e.getEntity();
     		
@@ -901,37 +908,6 @@ public class Main extends JavaPlugin implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
 		//System.out.println("a");
     }
-	
-	public void createHologram(Location l, String text, int time) {
-		ArmorStand holo = (ArmorStand) l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
-		
-		holo.setGravity(false);
-		holo.setVisible(false);
-		holo.setCustomName(text);
-		holo.setCustomNameVisible(true);
-		holo.setMarker(true);
-		holo.setAI(false);
-		holo.addScoreboardTag("dindicator");
-		
-		Bukkit.getScheduler().runTaskLater(this, new Runnable() {
-			@Override
-			public void run() {
-				holo.remove();
-			}
-		}, time * 20);
-	}
-	
-	public void createHologram(Location l, String text) {
-		ArmorStand holo = (ArmorStand) l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
-		
-		holo.setGravity(false);
-		holo.setVisible(false);
-		holo.setCustomName(text);
-		holo.setCustomNameVisible(true);
-		holo.setMarker(true);
-		holo.setAI(false);
-		holo.addScoreboardTag("dindicator");
-	}
 	
 	public void nameTag(String name, String pname) {
 		Player player = getPlayer(pname);
@@ -1210,10 +1186,10 @@ public class Main extends JavaPlugin implements Listener {
         }
         
         else if (command.getName().equalsIgnoreCase("holo")) {
-        	Player player = (Player) sender;
-        	createHologram(player.getLocation(), String.join(" ", args));
-        	
-        	return true;
+        		Player player = (Player) sender;
+			//	createHologram(player.getLocation(), String.join(" ", args));
+			new Hologram(String.join(" ", args), player.getLocation());
+			return true;
         }
         
         else if (command.getName().equalsIgnoreCase("kit")) {
@@ -1328,11 +1304,23 @@ public class Main extends JavaPlugin implements Listener {
                 		bootsMeta.addEnchant(Enchantment.PROTECTION_FALL, 5, true);
                 		
                 		boots.setItemMeta(bootsMeta);
+                		
+                		ItemStack shield = new ItemStack(Material.SHIELD);
+                        
+                    ItemMeta sMeta = shield.getItemMeta();
+                    BlockStateMeta bMeta = (BlockStateMeta) sMeta;
+                    bMeta.addEnchant(Enchantment.DURABILITY, 3, true);
+                    bMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
+                    Banner banner = (Banner) bMeta.getBlockState();
+                    banner.setBaseColor(DyeColor.BLACK);
+                    bMeta.setBlockState(banner);
+                    shield.setItemMeta(bMeta);
         				
                 		player.getInventory().setHelmet(helm);
                 		player.getInventory().setChestplate(chest);
                 		player.getInventory().setLeggings(leg);
                 		player.getInventory().setBoots(boots);
+                		player.getInventory().setItemInOffHand(shield);
         			}
         			else {
         				player.sendMessage(ChatColor.RED + "Argument 3 has to be either red or blue");
