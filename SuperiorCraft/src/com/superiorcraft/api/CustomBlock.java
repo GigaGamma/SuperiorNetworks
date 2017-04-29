@@ -40,38 +40,38 @@ import com.superiorcraft.trollcraft.Keycode;
 import com.superiorcraft.trollcraft.SlickDoor;
 import com.superiorcraft.trollcraft.SlickDoorFrame;
 
-public class CustomBlockLoader implements Listener, CommandExecutor, TabCompleter {
+public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	
-	public static ArrayList<CustomBlockLoader> blocks = new ArrayList<CustomBlockLoader>();
+	public static ArrayList<CustomBlock> blocks = new ArrayList<CustomBlock>();
 	
 	public Material material = Material.MONSTER_EGG;
 	public String name;
 	public String id;
 	
-	public CustomBlockLoader(String name, String id) {
+	public CustomBlock(String name, String id) {
 		super();
 		
 		this.name = name.replace('&', '§');
 		this.id = id;
 		
 		System.out.println("Block Init: " + id);
-		CustomBlockLoader.blocks.add(this);
+		CustomBlock.blocks.add(this);
 	}
 	
 	public void load() {
 		// Ghost Block
 		
-		CustomBlockLoader gb = new GhostBlock("&f&lGhost Block", "trollcraft:ghost_block");
+		CustomBlock gb = new GhostBlock("&f&lGhost Block", "trollcraft:ghost_block");
     	Main.plugin.getServer().getPluginManager().registerEvents(gb, Main.plugin);
     	
 		// Slick Door
 		
-		CustomBlockLoader sd = new SlickDoor("&f&lSlick Door", "trollcraft:slick_door");
+		CustomBlock sd = new SlickDoor("&f&lSlick Door", "trollcraft:slick_door");
     	Main.plugin.getServer().getPluginManager().registerEvents(sd, Main.plugin);
     	
 		// Slick Door Frame
 		
-		CustomBlockLoader sdf = new SlickDoorFrame("&f&lSlick Door Frame", "trollcraft:slick_door_frame");
+		CustomBlock sdf = new SlickDoorFrame("&f&lSlick Door Frame", "trollcraft:slick_door_frame");
     	Main.plugin.getServer().getPluginManager().registerEvents(sdf, Main.plugin);
     	
 		// Block Breaker
@@ -95,17 +95,17 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     		}
     	}, 0L, 2L);
 		
-		CustomBlockLoader bb = new BlockBreaker("&f&lBlock Breaker", "trollcraft:block_breaker");
+		CustomBlock bb = new BlockBreaker("&f&lBlock Breaker", "trollcraft:block_breaker");
     	Main.plugin.getServer().getPluginManager().registerEvents(bb, Main.plugin);
     	
     	// Keypad
 		
-    	CustomBlockLoader kc = new Keycode("&f&lKey Pad", "trollcraft:key_pad");
+    	CustomBlock kc = new Keycode("&f&lKey Pad", "trollcraft:key_pad");
     	Main.plugin.getServer().getPluginManager().registerEvents(kc, Main.plugin);
     	
     	// Flag
     	
-    	CustomBlockLoader flag = new Flag("&f&lFlag", "ctf:flag");
+    	CustomBlock flag = new Flag("&f&lFlag", "ctf:flag");
     	Main.plugin.getServer().getPluginManager().registerEvents(flag, Main.plugin);
     	
     	/* MicroBlocks
@@ -115,17 +115,17 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     	
     	// Uranium Ore
     	
-    	CustomBlockLoader urore = new UraniumOre("Uranium Ore", "superiorcraft:uranium_ore");
+    	CustomBlock urore = new UraniumOre("Uranium Ore", "superiorcraft:uranium_ore");
     	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
     	
     	// Uranium Fuel Rod
     
-    	CustomBlockLoader ufrore = new UraniumFuelRod("Uranium Fuel Rod", "superiorcraft:uranium_fuel_rod");
+    	CustomBlock ufrore = new UraniumFuelRod("Uranium Fuel Rod", "superiorcraft:uranium_fuel_rod");
     	Main.plugin.getServer().getPluginManager().registerEvents(ufrore, Main.plugin);
     	
     	// Stop Block
     	
-    	CustomBlockLoader hbsb = new StopBlock("Stop Block", "city:stop_block");
+    	CustomBlock hbsb = new StopBlock("Stop Block", "city:stop_block");
     	Main.plugin.getServer().getPluginManager().registerEvents(hbsb, Main.plugin);
 	}
 	
@@ -245,7 +245,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 	}
 	
 	public static ItemStack getBlock(String id) {
-		for (CustomBlockLoader cil : blocks) {
+		for (CustomBlock cil : blocks) {
 			if (cil.id.contains(id)) {
 				return cil.getItem();
 			}
@@ -267,7 +267,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 	}
 	
 	public ItemStack getItem(String id) {
-		for (CustomBlockLoader cbl : blocks) {
+		for (CustomBlock cbl : blocks) {
     		if (cbl.id.equals(id)) {
     			ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
     			
@@ -284,7 +284,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		return null;
 	}
 	
-	public void giveItem(CustomBlockLoader cbl, Player player) {
+	public void giveItem(CustomBlock cbl, Player player) {
 		ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
 		
 		ItemMeta bmeta = block.getItemMeta();
@@ -296,7 +296,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		player.getInventory().addItem(block);
 	}
 	
-	public void giveItem(CustomBlockLoader cbl, Player player, int amount) {
+	public void giveItem(CustomBlock cbl, Player player, int amount) {
 		ItemStack block = new ItemStack(Material.MONSTER_EGG, amount);
 		
 		ItemMeta bmeta = block.getItemMeta();
@@ -316,7 +316,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
 		
 		if (command.getName().equalsIgnoreCase("getblock")) {
         	Player player = (Player) sender;
-        	for (CustomBlockLoader cbl : blocks) {
+        	for (CustomBlock cbl : blocks) {
         		if (cbl.id.equals(args[0])) {
         			cbl.giveItem(cbl, player, 64);
         		}
@@ -338,7 +338,7 @@ public class CustomBlockLoader implements Listener, CommandExecutor, TabComplete
     	if (command.getName().equalsIgnoreCase("getblock")) {
         	ArrayList<String> auto = new ArrayList<String>();
         	
-        	for (CustomBlockLoader cbl : blocks) {
+        	for (CustomBlock cbl : blocks) {
         		if (cbl.id.startsWith(args[0])) {
         			auto.add(cbl.id);
         		}

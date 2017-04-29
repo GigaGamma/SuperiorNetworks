@@ -19,7 +19,7 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
-public class UraniumFuelRod extends CustomBlockLoader {
+public class UraniumFuelRod extends CustomBlock {
 	
 	public UraniumFuelRod(String name, String id) {
 		super(name, id);
@@ -58,7 +58,7 @@ public class UraniumFuelRod extends CustomBlockLoader {
 			    	t.setLayerPrimary(CustomBlockTexture.STONE, "7237230", "");
 			    	t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
 			    	t.giveBlock(e.getPlayer(), name);*/
-					for (CustomBlockLoader cbl : CustomBlockLoader.blocks) {
+					for (CustomBlock cbl : CustomBlock.blocks) {
 						if (cbl instanceof UraniumFuelRod) {
 							cbl.giveItem(cbl, e.getPlayer());
 						}

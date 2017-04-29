@@ -9,7 +9,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class Flag extends CustomBlockLoader {
+public class Flag extends CustomBlock {
 
 	public Flag(String name, String id) {
 		super(name, id);

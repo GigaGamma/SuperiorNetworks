@@ -78,10 +78,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlock;
 import com.superiorcraft.api.CustomBlockTexture;
 import com.superiorcraft.api.CustomCrafting;
-import com.superiorcraft.api.CustomItemLoader;
+import com.superiorcraft.api.CustomItem;
 import com.superiorcraft.api.Elevator;
 import com.superiorcraft.api.Registry;
 import com.superiorcraft.api.util.DamageIndicator;
@@ -245,13 +245,13 @@ public class Main extends JavaPlugin implements Listener {
 	    	
 	    	// Register Forge
 	    	
-	    	CustomBlockLoader bload = new CustomBlockLoader("BlockLoader", "BlockLoader");
+	    	CustomBlock bload = new CustomBlock("BlockLoader", "BlockLoader");
 	    	getCommand("getblock").setExecutor(bload);
 	    	bload.load();
 	    	
 	    Registry.registerBlock(new Elevator("Elevator", "superiorcraft:elevator"));
 	    	
-	    	CustomItemLoader iload = new CustomItemLoader(null, "ItemLoader");
+	    	CustomItem iload = new CustomItem(null, "ItemLoader");
 	    	getCommand("getitem").setExecutor(iload);
 	    	iload.load();
 	    	
@@ -1495,7 +1495,7 @@ public class Main extends JavaPlugin implements Listener {
         	if (args[0].equalsIgnoreCase("getblock")) {
         		Menu m = new Menu("Blocks", 27);
         		
-        		for (CustomBlockLoader cbl : CustomBlockLoader.blocks) {
+        		for (CustomBlock cbl : CustomBlock.blocks) {
         			ItemStack it = new ItemStack(Material.MONSTER_EGG, 64);
         			ItemMeta itm = it.getItemMeta();
         		

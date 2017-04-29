@@ -16,10 +16,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlock;
 import com.superiorcraft.main.Main;
 
-public class BlockBreaker extends CustomBlockLoader implements Listener {
+public class BlockBreaker extends CustomBlock implements Listener {
 
 	public BlockBreaker(String name, String id) {
 		super(name, id);

@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
-public class Elevator extends CustomBlockLoader {
+public class Elevator extends CustomBlock {
 
 	public Elevator(String name, String id) {
 		super(name, id);

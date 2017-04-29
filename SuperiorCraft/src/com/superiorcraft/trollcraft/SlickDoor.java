@@ -13,10 +13,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlock;
 import com.superiorcraft.main.Main;
 
-public class SlickDoor extends CustomBlockLoader implements Listener {
+public class SlickDoor extends CustomBlock implements Listener {
 
 	public SlickDoor(String name, String id) {
 		super(name, id);
@@ -43,7 +43,7 @@ public class SlickDoor extends CustomBlockLoader implements Listener {
 							Material old = e.getPlayer().getWorld().getBlockAt(en2.getLocation().add(-0.5, 0, -0.5)).getType();
 							e.getPlayer().getWorld().getBlockAt(en2.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
 							//e.getPlayer().playEffect(en2.getLocation().add(-0.5, 0, -0.5), Effect.STEP_SOUND, old);
-							CustomBlockLoader.particle(en2.getLocation().add(-0.5, 0, -0.5), en2, Effect.STEP_SOUND, old);
+							CustomBlock.particle(en2.getLocation().add(-0.5, 0, -0.5), en2, Effect.STEP_SOUND, old);
 							Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
 		    					@Override
 		    					public void run() {
@@ -55,7 +55,7 @@ public class SlickDoor extends CustomBlockLoader implements Listener {
 					}
 					Material old = e.getClickedBlock().getType();
 					e.getClickedBlock().setType(Material.AIR);
-					CustomBlockLoader.particle(e.getClickedBlock().getLocation(), en, Effect.STEP_SOUND, old);
+					CustomBlock.particle(e.getClickedBlock().getLocation(), en, Effect.STEP_SOUND, old);
 					Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
     					@Override
     					public void run() {

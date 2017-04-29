@@ -29,14 +29,14 @@ import org.bukkit.plugin.Plugin;
 
 import com.superiorcraft.main.Main;
 
-public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter {
+public class CustomItem implements Listener, CommandExecutor, TabCompleter {
 	
-	public static ArrayList<CustomItemLoader> items = new ArrayList<CustomItemLoader>();
+	public static ArrayList<CustomItem> items = new ArrayList<CustomItem>();
 	
 	public String id;
 	public ItemStack item;
 	
-	public CustomItemLoader(ItemStack item, String id) {
+	public CustomItem(ItemStack item, String id) {
 		super();
 		
 		this.id = id.replace('&', '§');
@@ -46,7 +46,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
 		items.add(this);
 	}
 	
-	public CustomItemLoader(ItemStack item, String id, String name) {
+	public CustomItem(ItemStack item, String id, String name) {
 		super();
 		
 		this.id = id.replace('&', '§');
@@ -72,7 +72,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
        	pcrys.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
     	pcrys.setItemMeta(pcrysm);
 		
-		CustomItemLoader pc = new PowerCrystal(pcrys, "superiorcraft:power_crystal");
+		CustomItem pc = new PowerCrystal(pcrys, "superiorcraft:power_crystal");
 		
 		Main.plugin.getServer().getPluginManager().registerEvents(pc, Main.plugin);
 		
@@ -87,12 +87,12 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
        	uing.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
     	uing.setItemMeta(uingm);
 		
-		CustomItemLoader ui = new UraniumIngot(uing, "superiorcraft:uranium_ingot");
+		CustomItem ui = new UraniumIngot(uing, "superiorcraft:uranium_ingot");
 		Main.plugin.getServer().getPluginManager().registerEvents(ui, Main.plugin);
 	}
 	
 	public static ItemStack getItem(String id) {
-		for (CustomItemLoader cil : items) {
+		for (CustomItem cil : items) {
 			if (cil.id.contains(id)) {
 				return cil.item;
 			}
@@ -101,11 +101,11 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
 		return null;
 	}
 	
-	public void giveItem(CustomItemLoader cil, Player player) {
+	public void giveItem(CustomItem cil, Player player) {
 		player.getInventory().addItem(cil.item);
 	}
 	
-	public void giveItem(CustomItemLoader cil, Player player, int amount) {
+	public void giveItem(CustomItem cil, Player player, int amount) {
 		for (int i = 0; i < amount; i++)
 			player.getInventory().addItem(cil.item);
 	}
@@ -118,7 +118,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
 		
 		if (command.getName().equalsIgnoreCase("getitem")) {
 			Player player = (Player) sender;
-        	for (CustomItemLoader cil : items) {
+        	for (CustomItem cil : items) {
         		if (cil.id.equals(args[0])) {
         			if (args.length >= 2 && args[1] != null) {
         				cil.giveItem(cil, player, Integer.valueOf(args[1]));
@@ -147,7 +147,7 @@ public class CustomItemLoader implements Listener, CommandExecutor, TabCompleter
     	if (command.getName().equalsIgnoreCase("getitem")) {
         	ArrayList<String> auto = new ArrayList<String>();
         	
-        	for (CustomItemLoader cil : items) {
+        	for (CustomItem cil : items) {
         		if (cil.id.startsWith(args[0])) {
         			auto.add(cil.id);
         		}

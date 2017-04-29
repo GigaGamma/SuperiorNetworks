@@ -32,7 +32,7 @@ public class CustomCrafting implements Listener {
 	public CustomCrafting(String name) {
 		this.name = name;
 		
-		makeCrafter[4] = CustomItemLoader.getItem("power_crystal");
+		makeCrafter[4] = CustomItem.getItem("power_crystal");
 	}
 	
 	public void load() {

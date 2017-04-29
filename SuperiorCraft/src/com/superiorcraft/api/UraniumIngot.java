@@ -5,7 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
-public class UraniumIngot extends CustomItemLoader {
+public class UraniumIngot extends CustomItem {
 
 	public UraniumIngot(ItemStack item, String id) {
 		super(item, id);

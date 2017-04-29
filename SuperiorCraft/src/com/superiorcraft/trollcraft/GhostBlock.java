@@ -13,9 +13,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlock;
 
-public class GhostBlock extends CustomBlockLoader implements Listener {
+public class GhostBlock extends CustomBlock implements Listener {
 	
 	@SuppressWarnings("deprecation")
 	@Override

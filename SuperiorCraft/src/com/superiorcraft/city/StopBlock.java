@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlock;
 import com.superiorcraft.main.Main;
 
-public class StopBlock extends CustomBlockLoader {
+public class StopBlock extends CustomBlock {
 
 	public StopBlock(String name, String id) {
 		super(name, id);

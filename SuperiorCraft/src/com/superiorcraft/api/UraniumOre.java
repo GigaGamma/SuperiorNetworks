@@ -15,7 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.superiorcraft.main.Main;
 
-public class UraniumOre extends CustomBlockLoader {
+public class UraniumOre extends CustomBlock {
 	
 	public UraniumOre(String name, String id) {
 		super(name, id);
@@ -54,7 +54,7 @@ public class UraniumOre extends CustomBlockLoader {
 			    	t.setLayerPrimary(CustomBlockTexture.STONE, "7237230", "");
 			    	t.setLayerSecondary(CustomBlockTexture.LAPIS_ORE, "6291238", ",ench:[{id:64}]");
 			    	t.giveBlock(e.getPlayer(), name);*/
-					for (CustomItemLoader cil : CustomItemLoader.items) {
+					for (CustomItem cil : CustomItem.items) {
 						if (cil instanceof UraniumIngot) {
 							cil.giveItem(cil, e.getPlayer());
 						}

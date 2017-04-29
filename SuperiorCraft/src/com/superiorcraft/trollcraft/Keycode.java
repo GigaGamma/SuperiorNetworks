@@ -19,12 +19,12 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.api.CustomBlockLoader;
+import com.superiorcraft.api.CustomBlock;
 import com.superiorcraft.api.CustomBlockTexture;
 import com.superiorcraft.main.Main;
 import com.superiorcraft.main.Menu;
 
-public class Keycode extends CustomBlockLoader implements Listener {
+public class Keycode extends CustomBlock implements Listener {
 
 	HashMap<Player, Entity> plu = new HashMap<Player, Entity>();
 	HashMap<Player, Entity> plr = new HashMap<Player, Entity>();
