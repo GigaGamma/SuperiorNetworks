@@ -165,24 +165,6 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	@EventHandler()
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType().equals(material) && e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().equals(name)) {
-			if (e.getPlayer().getGameMode() != GameMode.CREATIVE) {
-				GameMode gm = e.getPlayer().getGameMode();
-				boolean op = e.getPlayer().isOp();
-				
-				e.getPlayer().setGameMode(GameMode.CREATIVE);
-				e.getPlayer().setOp(true);
-				
-				Main.plugin.getServer().getScheduler().runTaskLater(Main.plugin, new Runnable(){
-					
-					@Override
-					public void run(){
-						e.getPlayer().setGameMode(gm);
-						e.getPlayer().setOp(op);
-					}
-					
-				}, 2L);
-			}
-			
 			if (e.getItem().getAmount() - 1 != 0) {
 				ItemStack it = e.getItem();
 				it.setAmount(e.getItem().getAmount() - 1);

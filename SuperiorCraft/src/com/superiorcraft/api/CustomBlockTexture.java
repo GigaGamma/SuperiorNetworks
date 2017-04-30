@@ -20,9 +20,9 @@ public class CustomBlockTexture {
 	public static final int LAPIS_ORE = 21;
 	public static final int DAYLIGHT_TOP = 16;
 	
-	public CustomLayer primary;
-	public CustomLayer secondary;
-	public CustomLayer third;
+	private CustomLayer primary;
+	private CustomLayer secondary;
+	private CustomLayer third;
 	
 	public void setLayerPrimary(int texture, Color color) {
 		primary = new CustomLayer(texture, color);
@@ -48,6 +48,30 @@ public class CustomBlockTexture {
 		third = new CustomLayer(texture, color, glowing);
 	}
 	
+	public CustomLayer getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(CustomLayer primary) {
+		this.primary = primary;
+	}
+
+	public CustomLayer getSecondary() {
+		return secondary;
+	}
+
+	public void setSecondary(CustomLayer secondary) {
+		this.secondary = secondary;
+	}
+
+	public CustomLayer getThird() {
+		return third;
+	}
+
+	public void setThird(CustomLayer third) {
+		this.third = third;
+	}
+
 	public ArmorStand placeBlock(Location l) {
 		ArmorStand block = (ArmorStand) l.getWorld().spawnEntity(l, EntityType.ARMOR_STAND);
 		block.setSmall(true);
