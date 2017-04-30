@@ -47,7 +47,6 @@ public class Elevator extends CustomBlock {
 			}
 		}
 		
-		p.sendMessage(String.valueOf(be.getLocation().getY()));
 		return be;
 	}
 	
