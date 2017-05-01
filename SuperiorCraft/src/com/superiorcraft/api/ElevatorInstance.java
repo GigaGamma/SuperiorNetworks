@@ -7,6 +7,7 @@ import org.bukkit.entity.ArmorStand;
 import com.superiorcraft.api.blocks.ColorableBlock;
 import com.superiorcraft.api.blocks.CustomBlockInstance;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
+import com.superiorcraft.api.util.Colors;
 
 public class ElevatorInstance extends CustomBlockInstance implements ColorableBlock {
 	
@@ -14,7 +15,7 @@ public class ElevatorInstance extends CustomBlockInstance implements ColorableBl
 	
 	public ElevatorInstance(ArmorStand b, ArmorStand t, CustomBlockTexture bt) {
 		super(b, t, bt);
-		setColor(Color.RED);
+		setColor(Colors.BAMBLUE);
 	}
 	
 	@Override
