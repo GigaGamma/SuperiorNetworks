@@ -29,7 +29,6 @@ public class ElevatorInstance extends CustomBlockInstance implements ColorableBl
 		
 		getTexture().setLayerPrimary(CustomBlockTexture.DIAMOND_BLOCK, c);
 		getTexture().setLayerSecondary(CustomBlockTexture.DAYLIGHT_BOTTOM, c);
-		
 		getTexture().placeBlock(l);
 		
 		color = c;
