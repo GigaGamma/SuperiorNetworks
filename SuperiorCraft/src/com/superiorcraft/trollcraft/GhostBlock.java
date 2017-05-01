@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.api.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlock;
 
 public class GhostBlock extends CustomBlock implements Listener {
 	
@@ -64,7 +64,7 @@ public class GhostBlock extends CustomBlock implements Listener {
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent e) {
 		for (Entity en : e.getPlayer().getWorld().getEntities()) {
-			if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().distance(e.getTo()) <= 1) {
+			if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().distance(e.getTo()) <= 1) {
 				Location l = en.getLocation();
 				//e.getPlayer().sendMessage(getPlayerDirection(e.getPlayer()));
 				if (getPlayerDirection(e.getPlayer()).equals("north")) {

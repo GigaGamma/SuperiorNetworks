@@ -19,12 +19,15 @@ import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import com.superiorcraft.api.blocks.CustomBlockTexture;
+import com.superiorcraft.api.blocks.CustomTexturedBlock;
+
 public class UraniumFuelRod extends CustomTexturedBlock {
 	
 	public UraniumFuelRod(String name, String id) {
 		super(name, id);
 		
-		getTexture().setLayerPrimary(CustomBlockTexture.IRON_BLOCK, Color.fromRGB(0, 20, 0));
+		getTexture().setLayerPrimary(CustomBlockTexture.DIAMOND_BLOCK, Color.fromRGB(0, 20, 0));
 		getTexture().setLayerSecondary(CustomBlockTexture.DAYLIGHT_TOP, Color.GREEN, true);
 		
 		setMaterial(Material.GLOWSTONE);

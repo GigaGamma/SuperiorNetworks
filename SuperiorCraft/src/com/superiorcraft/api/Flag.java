@@ -9,6 +9,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.superiorcraft.api.blocks.CustomBlock;
+
 public class Flag extends CustomBlock {
 
 	public Flag(String name, String id) {

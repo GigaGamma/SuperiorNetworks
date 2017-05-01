@@ -13,6 +13,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.superiorcraft.api.blocks.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlockTexture;
+import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.main.Main;
 
 public class UraniumOre extends CustomBlock {
@@ -39,7 +42,7 @@ public class UraniumOre extends CustomBlock {
 	public void removeBlock(BlockBreakEvent e) {
 		//if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
 					for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
 						if (ent.getCustomName().equals("CustomBlock")) {
 							ent.remove();

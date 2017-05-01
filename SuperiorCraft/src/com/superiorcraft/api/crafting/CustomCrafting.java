@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,8 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
+import com.superiorcraft.api.Registry;
+import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.recipes.InOutRecipe;
 import com.superiorcraft.api.recipes.UraniumFuelRodRecipe;
 import com.superiorcraft.main.Main;

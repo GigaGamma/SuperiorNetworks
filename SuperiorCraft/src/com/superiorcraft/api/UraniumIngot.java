@@ -5,6 +5,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 
+import com.superiorcraft.api.items.CustomItem;
+
 public class UraniumIngot extends CustomItem {
 
 	public UraniumIngot(ItemStack item, String id) {

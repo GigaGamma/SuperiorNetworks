@@ -16,7 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.main.Main;
 
 public class BlockBreaker extends CustomBlock implements Listener {
@@ -37,7 +37,7 @@ public class BlockBreaker extends CustomBlock implements Listener {
 	public void onInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
 					Location l = e.getClickedBlock().getLocation();
 					l.add(0, -1, 0);
 					en.getWorld().getBlockAt(l).breakNaturally();

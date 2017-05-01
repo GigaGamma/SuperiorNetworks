@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.items;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +27,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.superiorcraft.api.PowerCrystal;
+import com.superiorcraft.api.UraniumIngot;
 import com.superiorcraft.main.Main;
 
 public class CustomItem implements Listener, CommandExecutor, TabCompleter {

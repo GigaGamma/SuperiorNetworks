@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.blocks;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -11,6 +11,8 @@ public class CustomTexturedBlock extends CustomBlock {
 	
 	private CustomBlockTexture texture;
 	private Material material = Material.STONE;
+	
+	private ArmorStand le;
 	
 	public CustomTexturedBlock(String name, String id) {
 		super(name, id);
@@ -37,18 +39,29 @@ public class CustomTexturedBlock extends CustomBlock {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
+	
+	public ArmorStand getTextureEntity(ArmorStand s) {
+		for (Entity ent : s.getNearbyEntities(0.5, 0.5, 0.5)) {
+			if (ent.getCustomName().equals("CustomBlock")) {
+					return (ArmorStand) ent;
+			}
+		}
+		
+		return null;
+	}
 
 	@Override
 	public boolean placeBlock(ArmorStand e, Player p) {
-		texture.placeBlock(e.getLocation().add(0, 0.125, -0.375));
+		getTexture().placeBlock(e.getLocation().add(0, 0.125, -0.375));
 		e.getLocation().getBlock().setType(material);
+		le = e;
 		return true;
 	}
 	
 	@Override
 	public void removeBlock(BlockBreakEvent e) {
 		for (Entity en : e.getPlayer().getWorld().getEntities()) {
-			if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
+			if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
 				for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
 					if (ent.getCustomName().equals("CustomBlock")) {
 						ent.remove();

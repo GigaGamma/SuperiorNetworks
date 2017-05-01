@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.blocks;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +32,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.superiorcraft.api.ElevatorInstance;
+import com.superiorcraft.api.Flag;
+import com.superiorcraft.api.UraniumFuelRod;
+import com.superiorcraft.api.UraniumOre;
 import com.superiorcraft.city.StopBlock;
 import com.superiorcraft.main.Main;
 import com.superiorcraft.trollcraft.BlockBreaker;
@@ -44,9 +48,9 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	
 	public static ArrayList<CustomBlock> blocks = new ArrayList<CustomBlock>();
 	
-	public Material material = Material.MONSTER_EGG;
-	public String name;
-	public String id;
+	private Material itemMaterial = Material.MONSTER_EGG;
+	private String name;
+	private String id;
 	
 	public CustomBlock(String name, String id) {
 		super();
@@ -58,6 +62,26 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 		CustomBlock.blocks.add(this);
 	}
 	
+	public CustomBlockInstance getInstance(ArmorStand s) {
+		return null;
+	}
+	
+	public void setItemMaterial(Material itemMaterial) {
+		this.itemMaterial = itemMaterial;
+	}
+	
+	public Material getItemMaterial() {
+		return itemMaterial;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
 	public void load() {
 		// Ghost Block
 		
@@ -164,7 +188,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	
 	@EventHandler()
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if (e.getAction() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType().equals(material) && e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().equals(name)) {
+		if (e.getAction() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType().equals(itemMaterial) && e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().equals(name)) {
 			if (e.getItem().getAmount() - 1 != 0) {
 				ItemStack it = e.getItem();
 				it.setAmount(e.getItem().getAmount() - 1);
@@ -187,7 +211,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 				block.remove();
 				//e.getPlayer().sendMessage("a");
 				
-				ItemStack it = new ItemStack(Material.MONSTER_EGG, 1);
+				ItemStack it = new ItemStack(itemMaterial, 1);
 				
 				ItemMeta bmeta = it.getItemMeta();
 				
@@ -196,6 +220,9 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 				it.setItemMeta(bmeta);
 				
 				e.getPlayer().getInventory().addItem(it);
+			}
+			else {
+				getInstance(block);
 			}
 		}
 		
@@ -237,7 +264,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	}
 	
 	public ItemStack getItem() {
-		ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+		ItemStack block = new ItemStack(itemMaterial, 1);
 		
 		ItemMeta bmeta = block.getItemMeta();
 			
@@ -251,7 +278,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	public ItemStack getItem(String id) {
 		for (CustomBlock cbl : blocks) {
     		if (cbl.id.equals(id)) {
-    			ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+    			ItemStack block = new ItemStack(itemMaterial, 1);
     			
     			ItemMeta bmeta = block.getItemMeta();
     				
@@ -267,7 +294,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	}
 	
 	public void giveItem(CustomBlock cbl, Player player) {
-		ItemStack block = new ItemStack(Material.MONSTER_EGG, 1);
+		ItemStack block = new ItemStack(itemMaterial, 1);
 		
 		ItemMeta bmeta = block.getItemMeta();
 			
@@ -279,7 +306,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	}
 	
 	public void giveItem(CustomBlock cbl, Player player, int amount) {
-		ItemStack block = new ItemStack(Material.MONSTER_EGG, amount);
+		ItemStack block = new ItemStack(itemMaterial, amount);
 		
 		ItemMeta bmeta = block.getItemMeta();
 			

@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.blocks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -14,10 +14,12 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class CustomBlockTexture {
 	
+	public static final int WOOD = 8;
 	public static final int STONE = 13;
-	public static final int IRON_BLOCK = 3;
+	public static final int DIAMOND_BLOCK = 3;
 	public static final int IRON_ORE = 20;
 	public static final int LAPIS_ORE = 21;
+	public static final int DAYLIGHT_BOTTOM = 15;
 	public static final int DAYLIGHT_TOP = 16;
 	
 	private CustomLayer primary;

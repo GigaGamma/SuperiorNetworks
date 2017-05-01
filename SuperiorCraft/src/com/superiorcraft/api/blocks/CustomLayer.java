@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.blocks;
 
 import org.bukkit.Color;
 

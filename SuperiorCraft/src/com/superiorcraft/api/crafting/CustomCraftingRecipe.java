@@ -1,4 +1,4 @@
-package com.superiorcraft.api;
+package com.superiorcraft.api.crafting;
 
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;

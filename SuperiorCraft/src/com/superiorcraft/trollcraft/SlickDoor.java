@@ -13,7 +13,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.main.Main;
 
 public class SlickDoor extends CustomBlock implements Listener {
@@ -35,7 +35,7 @@ public class SlickDoor extends CustomBlock implements Listener {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && !e.getPlayer().isSneaking()) {
 			ArrayList<Entity> opened = new ArrayList<Entity>();
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
 					opened.add(en);
 					for (Entity en2 : en.getNearbyEntities(2.5, 2.5, 2.5)) {
 						if (en2.getCustomName() != null && en2.getCustomName().contains("Slick Door Frame") && !opened.contains(en2)) {

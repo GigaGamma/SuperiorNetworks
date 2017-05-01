@@ -19,8 +19,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.api.CustomBlock;
-import com.superiorcraft.api.CustomBlockTexture;
+import com.superiorcraft.api.blocks.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.main.Main;
 import com.superiorcraft.main.Menu;
 
@@ -48,7 +48,7 @@ public class Keycode extends CustomBlock implements Listener {
 	public void onInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
 					
 					Menu m;
 					

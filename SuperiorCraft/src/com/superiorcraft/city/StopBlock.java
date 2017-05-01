@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.superiorcraft.api.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.main.Main;
 
 public class StopBlock extends CustomBlock {
@@ -38,7 +38,7 @@ public class StopBlock extends CustomBlock {
 	public void loop() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
 			for (Entity bl : p.getNearbyEntities(0.5, 2, 0.5)) {
-				if (bl.getCustomName() != null && bl.getCustomName().equals(name)) {
+				if (bl.getCustomName() != null && bl.getCustomName().equals(getName())) {
 					for (Entity ent : p.getNearbyEntities(0.2, 0.2, 0.2)) {
 						if (ent.getCustomName() != null && ent.getCustomName().equals("HoverBike")) {
 							for (String tag : ent.getScoreboardTags()) {

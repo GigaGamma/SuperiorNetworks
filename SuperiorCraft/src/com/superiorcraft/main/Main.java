@@ -78,12 +78,13 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import com.superiorcraft.api.CustomBlock;
-import com.superiorcraft.api.CustomBlockTexture;
-import com.superiorcraft.api.CustomCrafting;
-import com.superiorcraft.api.CustomItem;
 import com.superiorcraft.api.Elevator;
+import com.superiorcraft.api.MagicalWood;
 import com.superiorcraft.api.Registry;
+import com.superiorcraft.api.blocks.CustomBlock;
+import com.superiorcraft.api.blocks.CustomBlockTexture;
+import com.superiorcraft.api.crafting.CustomCrafting;
+import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.city.HoverBike;
@@ -249,7 +250,8 @@ public class Main extends JavaPlugin implements Listener {
 	    	getCommand("getblock").setExecutor(bload);
 	    	bload.load();
 	    	
-	    Registry.registerBlock(new Elevator("Elevator", "superiorcraft:elevator"));
+	    	Registry.registerBlock(new Elevator("Elevator", "superiorcraft:elevator"));
+	    	Registry.registerBlock(new MagicalWood("Magical Wood", "superiorcraft:magical_wood"));
 	    	
 	    	CustomItem iload = new CustomItem(null, "ItemLoader");
 	    	getCommand("getitem").setExecutor(iload);
@@ -1499,11 +1501,11 @@ public class Main extends JavaPlugin implements Listener {
         			ItemStack it = new ItemStack(Material.MONSTER_EGG, 64);
         			ItemMeta itm = it.getItemMeta();
         		
-        			itm.setDisplayName(cbl.name);
+        			itm.setDisplayName(cbl.getName());
         		
         			it.setItemMeta(itm);
         			
-        			if (!cbl.name.equalsIgnoreCase("blockloader")) m.inv.addItem(it);
+        			if (!cbl.getName().equalsIgnoreCase("blockloader")) m.inv.addItem(it);
         		}
         	
         		player.openInventory(m.inv);

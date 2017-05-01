@@ -4,8 +4,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.CustomBlock;
-import com.superiorcraft.api.CustomCraftingRecipe;
+import com.superiorcraft.api.blocks.CustomBlock;
+import com.superiorcraft.api.crafting.CustomCraftingRecipe;
 
 public class InOutRecipe extends CustomCraftingRecipe {
 	
