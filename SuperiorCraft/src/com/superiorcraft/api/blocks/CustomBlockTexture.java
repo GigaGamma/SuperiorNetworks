@@ -106,7 +106,7 @@ public class CustomBlockTexture {
 				bm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
 			}
 			b.setItemMeta(bm);
-			block.setItemInHand(b);
+			block.getEquipment().setItemInMainHand(b);
 		}
 		
 		return block;

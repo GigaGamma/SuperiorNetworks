@@ -1188,9 +1188,15 @@ public class Main extends JavaPlugin implements Listener {
         }
         
         else if (command.getName().equalsIgnoreCase("holo")) {
-        		Player player = (Player) sender;
-			//	createHologram(player.getLocation(), String.join(" ", args));
-			new Hologram(String.join(" ", args), player.getLocation());
+        	Player player = (Player) sender;
+			//createHologram(player.getLocation(), String.join(" ", args));
+			//new Hologram(String.join(" ", args), player.getLocation());
+        	/*ItemStack a = new ItemStack(Material.DIAMOND_SWORD);
+        	a.setDurability((short) 2);
+        	ItemMeta am = a.getItemMeta();
+        	am.setUnbreakable(true);
+        	a.setItemMeta(am);
+        	player.getInventory().addItem(a);*/
 			return true;
         }
         
