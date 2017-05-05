@@ -3,19 +3,25 @@ package com.superiorcraft.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.material.Dye;
 
 import com.superiorcraft.api.blocks.ColorableBlock;
 import com.superiorcraft.api.blocks.CustomBlockInstance;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.blocks.CustomTexturedBlock;
+import com.superiorcraft.main.Main;
 
 public class Elevator extends CustomTexturedBlock {
 	
@@ -28,9 +34,40 @@ public class Elevator extends CustomTexturedBlock {
 		setMaterial(Material.SLIME_BLOCK);
 	}
 	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onInteract(PlayerInteractEvent e, Entity en) {
+		ElevatorInstance ei = ((ElevatorInstance) CustomBlockInstance.getBlockInstance((ArmorStand) en));
+		if (e.getItem() != null && e.getItem().getType() == Material.INK_SACK) {
+			ei.setColor(ei.getColor().mixColors(DyeColor.getByDyeData(e.getItem().getData().getData()).getFireworkColor()));
+		}
+	}
+	
+	public void registerInstances() {
+		for (World w : Bukkit.getServer().getWorlds()) {
+			for (ArmorStand e : w.getEntitiesByClass(ArmorStand.class)) {
+				if (e.getCustomName() != null && e.getCustomName().equals(getName())) {
+					ArmorStand te = null;
+					for (Entity en : e.getNearbyEntities(0.5, 0.5, 0.5)) {
+						if (en.getCustomName() != null && en.getCustomName().equals("CustomBlock")) {
+							te = (ArmorStand) en;
+						}
+					}
+					//CustomBlockTexture t =
+					if (te != null) {
+						CustomBlockInstance.addBlockInstance(new ElevatorInstance(e, te));
+					}
+					System.out.println("Block Instance Init: " + this.getName() + ":" + e.getUniqueId());
+				}
+			}
+		}
+	}
+	
 	@Override
 	public CustomBlockInstance getInstance(ArmorStand s) {
-		return new ElevatorInstance(s, getTextureEntity(s), getTexture());
+		ElevatorInstance ei = new ElevatorInstance(s, getTextureEntity(s), getTexture());
+		Main.plugin.getServer().getPluginManager().registerEvents(ei, Main.plugin);
+		return ei;
 	}
 	
 	public List<Entity> getConnectedElevator(Entity e, Player p) {

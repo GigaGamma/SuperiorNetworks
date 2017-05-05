@@ -26,6 +26,25 @@ public class CustomBlockTexture {
 	private CustomLayer secondary;
 	private CustomLayer third;
 	
+	public static CustomBlockTexture extractTextureFromEntity(ArmorStand e) {
+		CustomBlockTexture t = new CustomBlockTexture();
+		short tex = (short) e.getHelmet().getDurability();
+		Color c = ((LeatherArmorMeta) e.getHelmet().getItemMeta()).getColor();
+		boolean g = e.getHelmet().containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL);
+		t.setLayerPrimary(tex, c, g);
+		
+		if (e.getEquipment().getItemInMainHand() == null) {
+			return t;
+		}
+		
+		short tex2 = (short) e.getEquipment().getItemInMainHand().getDurability();
+		Color c2 = ((LeatherArmorMeta) e.getEquipment().getItemInMainHand().getItemMeta()).getColor();
+		boolean g2 = e.getEquipment().getItemInMainHand().containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL);
+		t.setLayerSecondary(tex2, c2, g2);
+		
+		return t;
+	}
+	
 	public void setLayerPrimary(int texture, Color color) {
 		primary = new CustomLayer(texture, color);
 	}
@@ -85,11 +104,11 @@ public class CustomBlockTexture {
 		block.setMarker(true);
 		
 		ItemStack a = new ItemStack(Material.LEATHER_BOOTS);
-		a.setDurability((short) primary.texture);
+		a.setDurability((short) primary.getTexture());
 		LeatherArmorMeta am = (LeatherArmorMeta) a.getItemMeta();
-		am.setColor(primary.color);
+		am.setColor(primary.getColor());
 		am.setUnbreakable(true);
-		if (primary.glowing) {
+		if (primary.isGlowing()) {
 			am.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
 		}
 		a.setItemMeta(am);
@@ -97,11 +116,11 @@ public class CustomBlockTexture {
 		
 		if (secondary != null) {
 			ItemStack b = new ItemStack(Material.LEATHER_BOOTS);
-			b.setDurability((short) secondary.texture);
+			b.setDurability((short) secondary.getTexture());
 			LeatherArmorMeta bm = (LeatherArmorMeta) b.getItemMeta();
-			bm.setColor(secondary.color);
+			bm.setColor(secondary.getColor());
 			bm.setUnbreakable(true);
-			if (secondary.glowing) {
+			if (secondary.isGlowing()) {
 				System.out.println("H");
 				bm.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 3, true);
 			}

@@ -28,6 +28,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -54,12 +55,33 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	
 	public CustomBlock(String name, String id) {
 		super();
-		
 		this.name = name.replace('&', '§');
 		this.id = id;
 		
+		registerInstances();
 		System.out.println("Block Init: " + id);
+		
 		CustomBlock.blocks.add(this);
+	}
+	
+	public void registerInstances() {
+		for (World w : Bukkit.getServer().getWorlds()) {
+			for (ArmorStand e : w.getEntitiesByClass(ArmorStand.class)) {
+				if (e.getCustomName() != null && e.getCustomName().equals(getName())) {
+					ArmorStand te = null;
+					for (Entity en : e.getNearbyEntities(0.5, 0.5, 0.5)) {
+						if (en.getCustomName() != null && en.getCustomName().equals("CustomBlock")) {
+							te = (ArmorStand) en;
+						}
+					}
+					//CustomBlockTexture t =
+					if (te != null) {
+						CustomBlockInstance.addBlockInstance(new CustomBlockInstance(e));
+					}
+					System.out.println("Block Instance Init: " + this.getName() + ":" + e.getUniqueId());
+				}
+			}
+		}
 	}
 	
 	public CustomBlockInstance getInstance(ArmorStand s) {
@@ -164,7 +186,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	public void removeBlock(BlockBreakEvent e) {
 		//if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(name) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
 					en.remove();
 					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
 					
@@ -182,7 +204,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 		//}
 	}
 	
-	public void onInteract(PlayerInteractEvent e) {
+	public void onInteract(PlayerInteractEvent e, Entity en) {
 		
 	}
 	
@@ -226,8 +248,12 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 			}
 		}
 		
+		for (Entity en : e.getPlayer().getWorld().getEntities()) {
+			if (e.getAction() != null && e.getHand() == EquipmentSlot.HAND && e.getAction() == Action.RIGHT_CLICK_BLOCK && en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
+				onInteract(e, en);
+			}
+		}
 		
-		onInteract(e);
 		
 		/*else if (e.getPlayer().isSneaking()) {
 			for (Entity en : e.getPlayer().getNearbyEntities(0, 0, 0)) {

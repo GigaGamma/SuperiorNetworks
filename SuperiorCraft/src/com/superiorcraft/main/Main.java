@@ -113,6 +113,7 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
 	    	plugin = this;
+	    	Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "[SuperiorCraft] Hello World");
 	    	logger.setLevel(Level.ALL);
 	    	logger.info("\n---\nStarting SuperiorCraft initialization\n---");
 	    	
