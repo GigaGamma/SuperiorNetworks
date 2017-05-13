@@ -1,3 +1,7 @@
+/*
+ *	@author SuperAuguste
+ */
+
 package com.superiorcraft.main;
 
 import java.io.File;
