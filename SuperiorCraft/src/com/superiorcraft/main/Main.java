@@ -90,6 +90,7 @@ import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.city.HoverBike;
 import com.superiorcraft.city.Police;
 import com.superiorcraft.commands.AddMin;
+import com.superiorcraft.logicrace.RoomGenerator;
 import com.superiorcraft.nms.NMS;
 import com.superiorcraft.trollcraft.GhostBlock;
  
@@ -253,6 +254,8 @@ public class Main extends JavaPlugin implements Listener {
 	    	
 	    	Registry.registerBlock(new Elevator("Elevator", "superiorcraft:elevator"));
 	    	Registry.registerBlock(new MagicalWood("Magical Wood", "superiorcraft:magical_wood"));
+	    	
+	    	Registry.registerBlock(new RoomGenerator("Room Generator", "logicrace:room_generator"));
 	    	
 	    	CustomItem iload = new CustomItem(null, "ItemLoader");
 	    	getCommand("getitem").setExecutor(iload);
