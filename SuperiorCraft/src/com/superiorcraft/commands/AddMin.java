@@ -19,6 +19,7 @@ import com.superiorcraft.main.Main;
 public class AddMin implements CommandExecutor, TabCompleter {
 	
 	public String[] troll_fakechat = {"troll", "fakechat", "player"};
+	public String[] troll_fakechat2 = {"troll", "fakechat", "string"};
 	
 	public String[] troll_noreload = {"troll", "noreload"};
 	public static HashMap<String, Boolean> noreload = new HashMap<String, Boolean>();
@@ -58,6 +59,12 @@ public class AddMin implements CommandExecutor, TabCompleter {
 		        Main.plugin.getConfig().set("players." + player.getName() + ".name", Main.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".name"));
 		        Main.plugin.getConfig().set("players." + player.getName() + ".suffix", Main.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".suffix"));
 				player.sendMessage(("&7You are now fakechatting under " +name + "&r&7's name").replace('&', '§'));
+			}
+			
+			else if (CommandConstruct.match(args, troll_fakechat2)) {
+		        Main.plugin.getConfig().set("players." + player.getName() + ".name", args[2].replace('&', '§'));
+		        Main.plugin.getConfig().set("players." + player.getName() + ".suffix", " ");
+				player.sendMessage(("&7You are now fakechatting under " + args[2].replace('&', '§') + "&r&7's name").replace('&', '§'));
 			}
 			
 			else if (CommandConstruct.match(args, troll_noreload)) {
