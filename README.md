@@ -11,6 +11,3 @@ The majority of the CustomBlock textures in the 'Customz' pack was created by Co
 Banner Warz is a game similar to EggWars or Bed Wars. However, instead of the egg or bed, there are 2 banners. One has a pickaxe on it which determines if your mine is open or not. The mine gives you your items. Another has a S on it which represents spawning. If this is destroyed, you can not spawn.
 #### The Logic Race
 The logic race is a multistage brain test that gradually gets harder as you progress. Some are teams and some are singleplayer. It is a decision based game which basically tests your logic.
-#### Prison
-The prison is a game where you start in a mine. It is a 
-
