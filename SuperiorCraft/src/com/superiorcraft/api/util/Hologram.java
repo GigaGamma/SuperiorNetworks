@@ -18,9 +18,12 @@ public class Hologram {
 		holograms.clear();
 		for (World w : Bukkit.getWorlds()) {
 			for (ArmorStand e : w.getEntitiesByClass(ArmorStand.class)) {
-				if (e.getScoreboardTags().contains("hologram")) {
+				if (e.getScoreboardTags().contains("hologram") && !e.getScoreboardTags().contains("dindicator")) {
 					holograms.add(new Hologram(e));
 					System.out.println("Hologram Init: " + e.getCustomName());
+				}
+				else if (e.getScoreboardTags().contains("dindicator")) {
+					e.remove();
 				}
 			}
 		}

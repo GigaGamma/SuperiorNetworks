@@ -27,6 +27,21 @@ public class BlockUtil {
 					cb = cb.getLocation().add(mx, my, mz).getBlock();
 					ub.add(cb);
 					b.add(cb);
+				} else if (cb.getLocation().add(mx, my, mz).getBlock().getType() == m) {
+					break;
+				}
+			}
+			for (int i = 0; i < 100; i++) {
+				int mx = 0;
+				int my = 0;
+				int mz = 1;
+				
+				if (cb.getLocation().add(mx, my, mz).getBlock() != null && !ub.contains(cb.getLocation().add(mx, my, mz).getBlock()) && cb.getLocation().add(mx, my, mz).getBlock().getType() == m) {
+					cb = cb.getLocation().add(mx, my, mz).getBlock();
+					ub.add(cb);
+					b.add(cb);
+				} else if (cb.getLocation().add(mx, my, mz).getBlock().getType() != m) {
+					break;
 				}
 			}
 		}

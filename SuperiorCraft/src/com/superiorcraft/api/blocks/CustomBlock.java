@@ -12,6 +12,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -78,6 +79,9 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 					if (te != null) {
 						CustomBlockInstance.addBlockInstance(new CustomBlockInstance(e));
 					}
+					else {
+					//	new CustomBlockInstance(e);
+					}
 					System.out.println("Block Instance Init: " + this.getName() + ":" + e.getUniqueId());
 				}
 			}
@@ -85,6 +89,16 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	}
 	
 	public CustomBlockInstance getInstance(ArmorStand s) {
+		System.out.println(s.getLocation().add(-0.5, 0, -0.5).getBlock().getType());
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+			@Override
+			public void run() {
+				if (s.getCustomName() != null && s.getCustomName().equals(getName()) && s.getLocation().add(-0.5, 0, -0.5).getBlock().getType() == Material.AIR) {
+					removeBlock(new BlockBreakEvent(s.getLocation().add(-0.5, 0, -0.5).getBlock(), null));
+					//System.out.println("A");
+				}
+			}
+		}, 0, 0);
 		return null;
 	}
 	
@@ -221,7 +235,21 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 				e.getPlayer().getInventory().clear(e.getPlayer().getInventory().first(e.getItem()));
 			}
 			
-			ArmorStand block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5, 1, 0.5), EntityType.ARMOR_STAND);
+			//ArmorStand block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5, 0, 0.5), EntityType.ARMOR_STAND);
+			ArmorStand block = null;
+			if (e.getBlockFace() == BlockFace.UP) {
+				block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5, 1, 0.5), EntityType.ARMOR_STAND);
+			} else if (e.getBlockFace() == BlockFace.DOWN) {
+				block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5, -1, 0.5), EntityType.ARMOR_STAND);
+			} else if (e.getBlockFace() == BlockFace.NORTH) {
+				block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5, 0, 0.5 - 1), EntityType.ARMOR_STAND);
+			} else if (e.getBlockFace() == BlockFace.SOUTH) {
+				block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5, 0, 0.5 + 1), EntityType.ARMOR_STAND);
+			} else if (e.getBlockFace() == BlockFace.EAST) {
+				block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5 + 1, 0, 0.5), EntityType.ARMOR_STAND);
+			} else if (e.getBlockFace() == BlockFace.WEST) {
+				block = (ArmorStand) e.getClickedBlock().getLocation().getWorld().spawnEntity(e.getClickedBlock().getLocation().add(0.5 - 1, 0, 0.5), EntityType.ARMOR_STAND);
+			}
 			block.setSmall(true);
 			block.setGravity(false);
 			block.setCustomName(name);

@@ -12,7 +12,7 @@ public class MagicalWood extends CustomTexturedBlock {
 		super(name, id);
 		
 		getTexture().setLayerPrimary(CustomBlockTexture.WOOD, Color.fromRGB(70, 255, 168), true);
-		setMaterial(Material.ICE);
+		setMaterial(Material.GLASS);
 		setItemMaterial(Material.LOG);
 	}
 

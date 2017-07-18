@@ -60,17 +60,33 @@ public class CustomTexturedBlock extends CustomBlock {
 	
 	@Override
 	public void removeBlock(BlockBreakEvent e) {
-		for (Entity en : e.getPlayer().getWorld().getEntities()) {
-			if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
-				for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
-					if (ent.getCustomName().equals("CustomBlock")) {
-						ent.remove();
-						break;
+		if (e.getPlayer() != null) {
+			for (Entity en : e.getPlayer().getWorld().getEntities()) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
+					for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
+						if (ent.getCustomName().equals("CustomBlock")) {
+							ent.remove();
+							break;
+						}
 					}
+					en.remove();
+					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
+					e.getPlayer().getInventory().addItem(getItem());
 				}
-				en.remove();
-				en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
-				e.getPlayer().getInventory().addItem(getItem());
+			}
+		} else {
+			for (Entity en : e.getBlock().getWorld().getEntities()) {
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
+					for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
+						if (ent.getCustomName().equals("CustomBlock")) {
+							ent.remove();
+							break;
+						}
+					}
+					en.remove();
+					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
+					//e.getPlayer().getInventory().addItem(getItem());
+				}
 			}
 		}
 	}

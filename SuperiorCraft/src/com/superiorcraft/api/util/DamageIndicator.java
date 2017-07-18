@@ -1,5 +1,6 @@
 package com.superiorcraft.api.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -7,15 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import com.superiorcraft.api.crafting.CustomCraftingRecipe;
+import com.superiorcraft.main.Main;
+
 public class DamageIndicator implements Listener {
-	
-	public DamageIndicator() {
-		for (Hologram h : Hologram.holograms) {
-			if (h.getHologram().getScoreboardTags().contains("dindicator")) {
-				h.remove();
-			}
-		}
-	}
 	
 	@EventHandler
     public void onEntityDamageEvent(EntityDamageEvent e) {

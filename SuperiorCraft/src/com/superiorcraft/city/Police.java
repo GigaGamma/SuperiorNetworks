@@ -121,7 +121,7 @@ public class Police implements CommandExecutor, Listener {
 				create(player.getLocation().add(-10, 2, -10), getPlayer(args[1]));
 			}
 			else if (CommandConstruct.match(args, police_patrol)) {
-				create(player.getLocation().add(-10, 2, -10));
+				create(player.getLocation().add(0, 0, 0));
 			}
 			
 			return true;

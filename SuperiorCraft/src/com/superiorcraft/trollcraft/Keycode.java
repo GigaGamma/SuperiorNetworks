@@ -45,7 +45,8 @@ public class Keycode extends CustomBlock implements Listener {
 		return true;
 	}
 	
-	public void onInteract(PlayerInteractEvent e) {
+	public void onInteract(PlayerInteractEvent e, Entity ent) {
+		//e.getPlayer().sendMessage("A");
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
 				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {

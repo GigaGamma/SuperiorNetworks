@@ -16,6 +16,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.material.Dye;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.superiorcraft.api.blocks.ColorableBlock;
 import com.superiorcraft.api.blocks.CustomBlockInstance;
@@ -30,8 +32,8 @@ public class Elevator extends CustomTexturedBlock {
 		
 		getTexture().setLayerPrimary(CustomBlockTexture.DIAMOND_BLOCK, Color.WHITE);
 		getTexture().setLayerSecondary(CustomBlockTexture.DAYLIGHT_BOTTOM, Color.WHITE);
-		
-		setMaterial(Material.SLIME_BLOCK);
+		//setMaterial(Material.SLIME_BLOCK);
+		setMaterial(Material.GLASS);
 	}
 	
 	@SuppressWarnings("deprecation")

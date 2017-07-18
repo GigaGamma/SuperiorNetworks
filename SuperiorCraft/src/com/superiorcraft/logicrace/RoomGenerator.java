@@ -1,5 +1,6 @@
 package com.superiorcraft.logicrace;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 
@@ -15,8 +16,8 @@ public class RoomGenerator extends CustomBlock {
 	
 	@Override
 	public CustomBlockInstance getInstance(ArmorStand s) {
-		System.out.println(s.getLocation().add(0, -1, 0).getBlock().getType());
-		System.out.println(BlockUtil.getBlocksTouching(Material.WOOL, s.getLocation().add(-0.5, -1, -0.5)).size());
+		//System.out.println(s.getLocation().add(0, -1, 0).getBlock().getType());
+		Bukkit.broadcastMessage(String.valueOf(BlockUtil.getBlocksTouching(Material.WOOL, s.getLocation().add(-0.5, -1, -0.5)).size()));
 		return null;
 	}
 

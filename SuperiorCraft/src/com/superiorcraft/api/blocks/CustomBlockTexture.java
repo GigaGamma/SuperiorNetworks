@@ -14,9 +14,13 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class CustomBlockTexture {
 	
+	public static final int CLAY = 2;
 	public static final int WOOD = 8;
 	public static final int STONE = 13;
+	public static final int STONE_OUTLINE = 32;
+	public static final int PURPUR_PILLAR = 28;
 	public static final int DIAMOND_BLOCK = 3;
+	public static final int EMERALD_BLOCK = 17;
 	public static final int IRON_ORE = 20;
 	public static final int LAPIS_ORE = 21;
 	public static final int DAYLIGHT_BOTTOM = 15;
@@ -102,6 +106,7 @@ public class CustomBlockTexture {
 		block.setInvulnerable(true);
 		block.setVisible(false);
 		block.setMarker(true);
+		block.setSilent(true);
 		
 		ItemStack a = new ItemStack(Material.LEATHER_BOOTS);
 		a.setDurability((short) primary.getTexture());

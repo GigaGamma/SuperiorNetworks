@@ -22,6 +22,7 @@ public class ElevatorInstance extends CustomBlockInstance implements ColorableBl
 	public ElevatorInstance(ArmorStand b, ArmorStand t, CustomBlockTexture bt) {
 		super(b, t, bt);
 		setColor(Colors.BAMBLUE);
+		//System.out.println("A");
 	}
 	
 	@Override
