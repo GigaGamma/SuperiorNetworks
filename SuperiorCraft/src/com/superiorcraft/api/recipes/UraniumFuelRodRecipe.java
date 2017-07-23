@@ -6,11 +6,11 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.UraniumFuelRod;
-import com.superiorcraft.api.UraniumIngot;
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.crafting.CustomCraftingRecipe;
 import com.superiorcraft.api.items.CustomItem;
+import com.superiorcraft.api.more.UraniumFuelRod;
+import com.superiorcraft.api.more.UraniumIngot;
 
 public class UraniumFuelRodRecipe extends CustomCraftingRecipe {
 	

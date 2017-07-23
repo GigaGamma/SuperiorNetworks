@@ -13,6 +13,7 @@ import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ShulkerBullet;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -276,13 +277,26 @@ public class LongRangeWeapon implements Listener {
     						p.setKnockbackStrength(knockback);
     						p.setSilent(silent);
     						p.setCustomName(name);
+    						if (wep.name().contains("DIAMOND")) {
+    							p.setVelocity(p.getVelocity().multiply(15));
+    							p.setGlowing(true);
+    						}
     					}
     					
     					else if (proj == "Rocket") {
     						Fireball p = e.getPlayer().launchProjectile(Fireball.class);
     						//ShulkerBullet p = e.getPlayer().launchProjectile(ShulkerBullet.class);
     						p.setYield(0);
-    						p.setIsIncendiary(false);
+    						p.setBounce(true);
+    						p.setIsIncendiary(true);
+    						p.setSilent(silent);
+    						p.setCustomName(name);
+    					}
+    					
+    					else if (proj == "Snowball") {
+    						Snowball p = e.getPlayer().launchProjectile(Snowball.class);
+    						//ShulkerBullet p = e.getPlayer().launchProjectile(ShulkerBullet.class);
+    						p.setGlowing(true);
     						p.setSilent(silent);
     						p.setCustomName(name);
     					}
@@ -352,6 +366,9 @@ public class LongRangeWeapon implements Listener {
     		}
     	}
     	if ((e.getDamager() instanceof Fireball) && (((Fireball) e.getDamager()).getShooter() instanceof Player) && e.getDamager().getCustomName() == name) {
+    		e.setDamage(e.getDamage() + damage);
+    	}
+    	if ((e.getDamager() instanceof Snowball) && (((Snowball) e.getDamager()).getShooter() instanceof Player) && e.getDamager().getCustomName() == name) {
     		e.setDamage(e.getDamage() + damage);
     	}
 

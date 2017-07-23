@@ -36,8 +36,8 @@ import org.bukkit.plugin.Plugin;
 
 import com.superiorcraft.api.ElevatorInstance;
 import com.superiorcraft.api.Flag;
-import com.superiorcraft.api.UraniumFuelRod;
-import com.superiorcraft.api.UraniumOre;
+import com.superiorcraft.api.more.UraniumFuelRod;
+import com.superiorcraft.api.more.UraniumOre;
 import com.superiorcraft.city.StopBlock;
 import com.superiorcraft.main.Main;
 import com.superiorcraft.trollcraft.BlockBreaker;
@@ -82,6 +82,15 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 					else {
 					//	new CustomBlockInstance(e);
 					}
+					Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+						@Override
+						public void run() {
+							if (e.getCustomName() != null && e.getCustomName().equals(getName()) && e.getLocation().add(-0.5, 0, -0.5).getBlock().getType() == Material.AIR) {
+								removeBlock(new BlockBreakEvent(e.getLocation().add(-0.5, 0, -0.5).getBlock(), null));
+								//System.out.println("A");
+							}
+						}
+					}, 0, 0);
 					System.out.println("Block Instance Init: " + this.getName() + ":" + e.getUniqueId());
 				}
 			}
@@ -89,7 +98,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	}
 	
 	public CustomBlockInstance getInstance(ArmorStand s) {
-		System.out.println(s.getLocation().add(-0.5, 0, -0.5).getBlock().getType());
+		//System.out.println(s.getLocation().add(-0.5, 0, -0.5).getBlock().getType());
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
 			@Override
 			public void run() {
@@ -175,12 +184,12 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
     	
     	// Uranium Ore
     	
-    	CustomBlock urore = new UraniumOre("Uranium Ore", "superiorcraft:uranium_ore");
+    	CustomBlock urore = new UraniumOre("Uranium Ore", "more:uranium_ore");
     	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
     	
     	// Uranium Fuel Rod
     
-    	CustomBlock ufrore = new UraniumFuelRod("Uranium Fuel Rod", "superiorcraft:uranium_fuel_rod");
+    	CustomBlock ufrore = new UraniumFuelRod("Uranium Fuel Rod", "more:uranium_fuel_rod");
     	Main.plugin.getServer().getPluginManager().registerEvents(ufrore, Main.plugin);
     	
     	// Stop Block
@@ -198,8 +207,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	}
 	
 	public void removeBlock(BlockBreakEvent e) {
-		//if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			for (Entity en : e.getPlayer().getWorld().getEntities()) {
+			for (Entity en : e.getBlock().getWorld().getEntities()) {
 				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
 					en.remove();
 					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
@@ -212,7 +220,11 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 					
 					block.setItemMeta(bmeta);
 					
-					e.getPlayer().getInventory().addItem(block);
+					if (e.getPlayer() != null && e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+						e.getPlayer().getInventory().addItem(block);
+					} else {
+						e.getBlock().getWorld().dropItemNaturally(en.getLocation().add(-0.5, 0, -0.5), block);
+					}
 				}
 			}
 		//}

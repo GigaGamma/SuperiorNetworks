@@ -19,6 +19,7 @@ public class CustomBlockTexture {
 	public static final int STONE = 13;
 	public static final int STONE_OUTLINE = 32;
 	public static final int PURPUR_PILLAR = 28;
+	public static final int QUARTZ_MAZE = 29;
 	public static final int DIAMOND_BLOCK = 3;
 	public static final int EMERALD_BLOCK = 17;
 	public static final int IRON_ORE = 20;

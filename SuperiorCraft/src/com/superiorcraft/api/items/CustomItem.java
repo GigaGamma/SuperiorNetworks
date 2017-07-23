@@ -28,7 +28,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import com.superiorcraft.api.PowerCrystal;
-import com.superiorcraft.api.UraniumIngot;
+import com.superiorcraft.api.more.UraniumIngot;
 import com.superiorcraft.main.Main;
 
 public class CustomItem implements Listener, CommandExecutor, TabCompleter {
@@ -89,7 +89,7 @@ public class CustomItem implements Listener, CommandExecutor, TabCompleter {
        	uing.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 100);
     	uing.setItemMeta(uingm);
 		
-		CustomItem ui = new UraniumIngot(uing, "superiorcraft:uranium_ingot");
+		CustomItem ui = new UraniumIngot(uing, "more:uranium_ingot");
 		Main.plugin.getServer().getPluginManager().registerEvents(ui, Main.plugin);
 	}
 	

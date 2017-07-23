@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -34,8 +35,10 @@ public class BlockBreaker extends CustomBlock implements Listener {
 		return true;
 	}
 	
+	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			//System.out.println("A");
 			for (Entity en : e.getPlayer().getWorld().getEntities()) {
 				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getClickedBlock().getLocation())) {
 					Location l = e.getClickedBlock().getLocation();

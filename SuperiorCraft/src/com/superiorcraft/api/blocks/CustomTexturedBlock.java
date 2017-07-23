@@ -1,9 +1,12 @@
 package com.superiorcraft.api.blocks;
 
 import org.bukkit.Color;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -54,27 +57,17 @@ public class CustomTexturedBlock extends CustomBlock {
 	public boolean placeBlock(ArmorStand e, Player p) {
 		getTexture().placeBlock(e.getLocation().add(0, 0.125, -0.375));
 		e.getLocation().getBlock().setType(material);
+		if (material.equals(Material.MOB_SPAWNER)) {
+			CreatureSpawner cs = (CreatureSpawner) e.getLocation().getBlock().getState();
+			cs.setSpawnedType(EntityType.DROPPED_ITEM);
+			cs.update();
+		}
 		le = e;
 		return true;
 	}
 	
 	@Override
 	public void removeBlock(BlockBreakEvent e) {
-		if (e.getPlayer() != null) {
-			for (Entity en : e.getPlayer().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
-					for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
-						if (ent.getCustomName().equals("CustomBlock")) {
-							ent.remove();
-							break;
-						}
-					}
-					en.remove();
-					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
-					e.getPlayer().getInventory().addItem(getItem());
-				}
-			}
-		} else {
 			for (Entity en : e.getBlock().getWorld().getEntities()) {
 				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
 					for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
@@ -85,10 +78,13 @@ public class CustomTexturedBlock extends CustomBlock {
 					}
 					en.remove();
 					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
-					//e.getPlayer().getInventory().addItem(getItem());
+					if (e.getPlayer() != null && e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
+						e.getPlayer().getInventory().addItem(getItem());
+					} else {
+						e.getBlock().getWorld().dropItemNaturally(en.getLocation().add(-0.5, 0, -0.5), getItem());
+					}
 				}
 			}
-		}
 	}
 	
 }

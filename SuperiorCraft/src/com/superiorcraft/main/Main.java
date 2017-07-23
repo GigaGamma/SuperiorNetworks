@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,6 +51,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Guardian;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.EventHandler;
@@ -95,6 +97,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.connorlinfoot.actionbarapi.ActionBarAPI;
 import com.superiorcraft.api.ClearGlass;
@@ -106,14 +110,18 @@ import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.items.CustomItem;
+import com.superiorcraft.api.more.PolishedQuartz;
+import com.superiorcraft.api.more.PolishedGold;
 import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.api.util.JarUtils;
+import com.superiorcraft.api.util.JsonReader;
 import com.superiorcraft.api.util.WebUtil;
 import com.superiorcraft.city.HoverBike;
 import com.superiorcraft.city.Police;
 import com.superiorcraft.commands.AddMin;
 import com.superiorcraft.logicrace.RoomGenerator;
+import com.superiorcraft.nms.JsonMessage;
 import com.superiorcraft.nms.NMS;
 import com.superiorcraft.trollcraft.GhostBlock;
 
@@ -267,7 +275,8 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SPADE, "The Pin cushion", Material.FIREWORK_CHARGE, "Made by Grandma", "Shotgun", 2, 0, false, 1, false, 3), this);
 
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "Sprocket", Material.FIREWORK_CHARGE, "Flaming Balls of fire", "Special", 20, 5, false, 1, false, 1, "Rocket"), this);
-
+		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "Snowboom", Material.FIREWORK_CHARGE, "Flaming Balls of ice", "Special", 5, 3, false, 1, false, 1, "Snowball"), this);
+		
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "6-Coup", Material.GHAST_TEAR, "A little old...", "Side", -3.2, 0, false, 1, false, 1), this);
 
 		// Register MYML
@@ -305,6 +314,11 @@ public class Main extends JavaPlugin implements Listener {
 		Registry.registerBlock(new ClearGlass("Clear Glass", "superiorcraft:clear_glass"));
 
 		Registry.registerBlock(new RoomGenerator("Room Generator", "logicrace:room_generator"));
+		
+		// mORE
+		
+		Registry.registerBlock(new PolishedGold("Polished Gold", "more:gold_polished"));
+		Registry.registerBlock(new PolishedQuartz("Polished Quartz", "more:quartz_polished"));
 
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
@@ -330,6 +344,15 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
+				/*try {
+					JSONObject json = JsonReader.readJsonFromUrl("http://localhost:3000/api/ip/192.168.1.19");
+					String did = (String) ((JSONArray) json.get("remotes")).get(0);
+				
+					JSONObject movement = JsonReader.readJsonFromUrl("http://localhost:3000/api/movement/" + did);
+					getPlayer("SuperAuguste").teleport(getPlayer("SuperAuguste").getLocation().add(0, 0, -(((Long)((JSONObject)((JSONObject) movement.get("movement")).get("rotation")).get("gamma")).doubleValue() / 20) ));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}*/
 				for (World world : Bukkit.getWorlds()) {
 					for (Entity entity : world.getEntities()) {
 						if (entity instanceof Arrow) {
@@ -346,6 +369,7 @@ public class Main extends JavaPlugin implements Listener {
 				}
 
 				for (Player p : Bukkit.getOnlinePlayers()) {
+					
 					/*if (p.isSneaking() && !p.isFlying() && !inStealthMode.contains(p)) {
 	    					p.sendMessage(ChatColor.GRAY + "You are now in stealth mode");
 	    					inStealthMode.add(p);
@@ -690,8 +714,14 @@ public class Main extends JavaPlugin implements Listener {
 			if (e.getPlayer().hasPotionEffect(PotionEffectType.SLOW)) {
 				e.getPlayer().removePotionEffect(PotionEffectType.SLOW);
 			}
+			if (e.getPlayer().hasPotionEffect(PotionEffectType.JUMP)) {
+				e.getPlayer().removePotionEffect(PotionEffectType.JUMP);
+				//e.getPlayer().teleport(e.getPlayer().getLocation().add(0, 1, 0));
+			}
 			else {
 				e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100000, 255, true, false));
+				e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 100000, 235, true, false));
+				//e.getPlayer().teleport(e.getPlayer().getLocation().add(0, -0.1, 0));
 			}
 		}
 		/*
@@ -854,12 +884,10 @@ public class Main extends JavaPlugin implements Listener {
 
 	}
 
-	/*@EventHandler
+	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent e) {
-		if (e.getEntity() instanceof Player) {
-			Player player = (Player) e.getEntity();
-
-
+		
+	}/*
 			if (player.getHealth() <= e.getDamage() || player.getHealth() <= 0 || player.getHealth() - e.getDamage() < 1) {
 				//player.setHealth(20);
 				//player.setFoodLevel(20);

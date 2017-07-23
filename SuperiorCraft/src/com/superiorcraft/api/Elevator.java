@@ -12,6 +12,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -68,6 +69,15 @@ public class Elevator extends CustomTexturedBlock {
 	@Override
 	public CustomBlockInstance getInstance(ArmorStand s) {
 		ElevatorInstance ei = new ElevatorInstance(s, getTextureEntity(s), getTexture());
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+			@Override
+			public void run() {
+				if (s.getCustomName() != null && s.getCustomName().equals(getName()) && s.getLocation().add(-0.5, 0, -0.5).getBlock().getType() == Material.AIR) {
+					removeBlock(new BlockBreakEvent(s.getLocation().add(-0.5, 0, -0.5).getBlock(), null));
+					//System.out.println("A");
+				}
+			}
+		}, 0, 0);
 		Main.plugin.getServer().getPluginManager().registerEvents(ei, Main.plugin);
 		return ei;
 	}
