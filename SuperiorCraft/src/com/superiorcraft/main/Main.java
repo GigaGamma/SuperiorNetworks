@@ -111,6 +111,7 @@ import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.more.PolishedQuartz;
+import com.superiorcraft.api.slabs.Slab;
 import com.superiorcraft.api.more.PolishedGold;
 import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
@@ -267,8 +268,8 @@ public class Main extends JavaPlugin implements Listener {
 		wpl4.setItemMeta(wpl4m);
 		wm1.inv.setItem(27, wpl4);
 
-		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_HOE, "\"Woody\"", Material.FIREWORK_CHARGE, "The \"Wood Pecker\"", "Sniper", 0, 4, true, 1, false, 1, "Arrow", new PotionEffect(PotionEffectType.POISON, 300, 0, true, false)), this);
-		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.DIAMOND_HOE, "Shoe Shiner", Material.FIREWORK_CHARGE, "Dirty with DOOM", "Sniper", 20, 2, true), this);
+		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "\"Woody\"", Material.FIREWORK_CHARGE, "The \"Wood Pecker\"", "Sniper", 0, 4, true, 1, false, 1, "Arrow", new PotionEffect(PotionEffectType.POISON, 300, 0, true, false)), this);
+		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.DIAMOND_SWORD, "Shoe Shiner", Material.FIREWORK_CHARGE, "Dirty with DOOM", "Sniper", 20, 2, true), this);
 
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_AXE, "AttackMe 1", Material.FIREWORK_CHARGE, "Actually please don't attack me...", "Assault", 2, 0, false), this);
 
@@ -319,7 +320,10 @@ public class Main extends JavaPlugin implements Listener {
 		
 		Registry.registerBlock(new PolishedGold("Polished Gold", "more:gold_polished"));
 		Registry.registerBlock(new PolishedQuartz("Polished Quartz", "more:quartz_polished"));
-
+		
+		// Slabs
+		Registry.registerBlock(new Slab("Slab", "slab:slab"));
+		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
 		iload.load();
@@ -503,6 +507,8 @@ public class Main extends JavaPlugin implements Listener {
 	    	pcrys.setItemMeta(pcrysm);*/
 
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
+		getServer().createWorld(new WorldCreator("lobby"));
+		
 	}
 	
 	private void addClassPath(final URL url) throws IOException {
@@ -1351,13 +1357,13 @@ public class Main extends JavaPlugin implements Listener {
 			Player player = (Player) sender;
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
-			/*ItemStack a = new ItemStack(Material.DIAMOND_SWORD);
+			ItemStack a = new ItemStack(Material.DIAMOND_SWORD);
         	a.setDurability((short) 2);
         	ItemMeta am = a.getItemMeta();
         	am.setUnbreakable(true);
         	a.setItemMeta(am);
         	player.getInventory().addItem(a);
-			return true;*/
+			return true;
 		}
 
 		else if (command.getName().equalsIgnoreCase("kit")) {

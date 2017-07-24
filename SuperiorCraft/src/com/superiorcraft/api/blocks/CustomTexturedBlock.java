@@ -43,6 +43,14 @@ public class CustomTexturedBlock extends CustomBlock {
 		this.material = material;
 	}
 	
+	public ArmorStand getLe() {
+		return le;
+	}
+
+	public void setLe(ArmorStand le) {
+		this.le = le;
+	}
+
 	public ArmorStand getTextureEntity(ArmorStand s) {
 		for (Entity ent : s.getNearbyEntities(0.5, 0.5, 0.5)) {
 			if (ent.getCustomName().equals("CustomBlock")) {
@@ -56,13 +64,13 @@ public class CustomTexturedBlock extends CustomBlock {
 	@Override
 	public boolean placeBlock(ArmorStand e, Player p) {
 		getTexture().placeBlock(e.getLocation().add(0, 0.125, -0.375));
-		e.getLocation().getBlock().setType(material);
-		if (material.equals(Material.MOB_SPAWNER)) {
+		e.getLocation().getBlock().setType(getMaterial());
+		if (getMaterial().equals(Material.MOB_SPAWNER)) {
 			CreatureSpawner cs = (CreatureSpawner) e.getLocation().getBlock().getState();
 			cs.setSpawnedType(EntityType.DROPPED_ITEM);
 			cs.update();
 		}
-		le = e;
+		setLe(e);
 		return true;
 	}
 	

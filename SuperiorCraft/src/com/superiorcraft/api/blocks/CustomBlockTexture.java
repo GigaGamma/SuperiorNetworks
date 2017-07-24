@@ -26,6 +26,7 @@ public class CustomBlockTexture {
 	public static final int LAPIS_ORE = 21;
 	public static final int DAYLIGHT_BOTTOM = 15;
 	public static final int DAYLIGHT_TOP = 16;
+	public static final int SAND = 11;
 	
 	private CustomLayer primary;
 	private CustomLayer secondary;

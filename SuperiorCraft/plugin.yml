@@ -1,6 +1,6 @@
 main: com.superiorcraft.main.Main
 name: SuperiorCraft
-version: 3.4.1
+version: 3.4.2
 author: SuperiorCraft Development
 description: SuperiorCraft is a server and an API.
 commands:
@@ -140,7 +140,7 @@ commands:
     permission-message: You don't have the superiorcraft.gui permission.
   addmin:
     description: Admin control made simple
-    usage: /addmin
+    usage: /addmin [
     permission: superiorcraft.addmin
     permission-message: You don't have the superiorcraft.addmin permission.
   police:

@@ -237,6 +237,10 @@ public class LongRangeWeapon implements Listener {
 			else if (type.equalsIgnoreCase("sniper")) {
 				for (int i = 1; i < 9; i++) {
 					if (Main.wm1.inv.getItem(i + 9) == null) {
+						item.setDurability((short) 2);
+			        	ItemMeta im = item.getItemMeta();
+			        	im.setUnbreakable(true);
+			        	item.setItemMeta(im);
 						Main.wm1.inv.setItem(i + 9, item);
 						return;
 					}

@@ -26,8 +26,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.superiorcraft.commands.CommandConstruct;
 
-import net.minecraft.server.v1_11_R1.EntityEvoker.e;
-
 public class Police implements CommandExecutor, Listener {
 	
 	public String[] police_target = {"target", "player"};

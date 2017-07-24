@@ -1,6 +1,7 @@
 package com.superiorcraft.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class CommandConstruct {
@@ -32,7 +33,7 @@ public class CommandConstruct {
 					return false;
 				}
 				
-				else if (args[0].equalsIgnoreCase(pattern[0])) {
+				else if (args[i].equalsIgnoreCase(pattern[i])) {
 					
 				}
 				
@@ -45,6 +46,10 @@ public class CommandConstruct {
 		}
 		
 		return false;
+	}
+	
+	public static String getNoArgsMessage() {
+		return ChatColor.RED + "Please, get some /help";
 	}
 	
 }

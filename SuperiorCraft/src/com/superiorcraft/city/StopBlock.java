@@ -9,6 +9,7 @@ import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.main.Main;
@@ -37,7 +38,7 @@ public class StopBlock extends CustomBlock {
 	
 	public void loop() {
 		for (Player p : Bukkit.getOnlinePlayers()) {
-			for (Entity bl : p.getNearbyEntities(0.5, 2, 0.5)) {
+			for (Entity bl : p.getNearbyEntities(0.24, 2, 0.24)) {
 				if (bl.getCustomName() != null && bl.getCustomName().equals(getName())) {
 					for (Entity ent : p.getNearbyEntities(0.2, 0.2, 0.2)) {
 						if (ent.getCustomName() != null && ent.getCustomName().equals("HoverBike")) {
@@ -54,8 +55,13 @@ public class StopBlock extends CustomBlock {
 									}
 								}
 								else {
-									((Pig) ent).removePotionEffect(PotionEffectType.SPEED);
-									((Pig) ent).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255, true, false));
+									if (!ent.getScoreboardTags().contains("stopcooldown")) {
+										((Pig) ent).removePotionEffect(PotionEffectType.SPEED);
+										((Pig) ent).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 255, true, false));
+										((Pig) ent).setVelocity(new Vector(0, 0, 0));
+									} else {
+										ent.getScoreboardTags().remove("stopcooldown");
+									}
 								}
 							}
 						}

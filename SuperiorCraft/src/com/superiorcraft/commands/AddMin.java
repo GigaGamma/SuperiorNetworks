@@ -81,6 +81,8 @@ public class AddMin implements CommandExecutor, TabCompleter {
 				else {
 					player.sendMessage(ChatColor.RED + "NoReload disabled!");
 				}
+			} else {
+				player.sendMessage(CommandConstruct.getNoArgsMessage());
 			}
 			
 			return true;

@@ -143,7 +143,8 @@ public class HoverBike implements CommandExecutor, Listener {
 		for (Entity ent : e.getPlayer().getNearbyEntities(0.2, 0.2, 0.2)) {
 			if (ent.getCustomName() != null && ent.getCustomName().equals("HoverBike")) {
 				Location l = ent.getLocation();
-				if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.CARROT_STICK) {
+				if (e.getAction() != null && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType() == Material.CARROT_STICK) {
+					boolean hadSlow = ((Pig) ent).hasPotionEffect(PotionEffectType.SLOW);
 					((Pig) ent).removePotionEffect(PotionEffectType.SLOW);
 					//System.out.println(e.getPlayer().getLocation().getDirection().getY());
 					if (e.getPlayer().getLocation().getDirection().getY() >= 0.2) {
@@ -153,6 +154,10 @@ public class HoverBike implements CommandExecutor, Listener {
 									e.getPlayer().sendMessage(ChatColor.GRAY + String.valueOf(Integer.valueOf(tag.split(":")[1]) + 1) + " BPH");
 								((Pig) ent).removePotionEffect(PotionEffectType.SPEED);
 								((Pig) ent).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, Integer.valueOf(tag.split(":")[1]) + 1, true, false));
+								((Pig) ent).setVelocity(((Pig) ent).getVelocity().multiply(4));
+								if (hadSlow) {
+									((Pig) ent).addScoreboardTag("stopcooldown");
+								}
 								//e.getPlayer().setTotalExperience(0);
 								ent.addScoreboardTag("speed:" + String.valueOf(Integer.valueOf(tag.split(":")[1]) + 1));
 								ent.getScoreboardTags().remove(tag);
