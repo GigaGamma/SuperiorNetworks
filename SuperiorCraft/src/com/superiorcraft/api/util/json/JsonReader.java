@@ -1,4 +1,4 @@
-package com.superiorcraft.api.util;
+package com.superiorcraft.api.util.json;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -37,12 +37,16 @@ import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
+import org.bukkit.Instrument;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Note;
+import org.bukkit.Note.Tone;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.NoteBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -96,6 +100,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -113,15 +118,19 @@ import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.more.PolishedQuartz;
 import com.superiorcraft.api.slabs.Slab;
 import com.superiorcraft.api.more.PolishedGold;
+import com.superiorcraft.api.util.CameraUtil;
 import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.api.util.JarUtils;
-import com.superiorcraft.api.util.JsonReader;
 import com.superiorcraft.api.util.WebUtil;
+import com.superiorcraft.api.util.json.JsonReader;
+import com.superiorcraft.api.util.json.MultilineMessage;
 import com.superiorcraft.city.HoverBike;
 import com.superiorcraft.city.Police;
 import com.superiorcraft.commands.AddMin;
+import com.superiorcraft.commands.CommandConstruct;
 import com.superiorcraft.logicrace.RoomGenerator;
+import com.superiorcraft.music.MusicPlayer;
 import com.superiorcraft.nms.JsonMessage;
 import com.superiorcraft.nms.NMS;
 import com.superiorcraft.trollcraft.GhostBlock;
@@ -344,7 +353,9 @@ public class Main extends JavaPlugin implements Listener {
 		// Register Main
 
 		getServer().getPluginManager().registerEvents(this, this);
-
+		BukkitTask task = new MusicPlayer.MusicThread().runTaskTimer(this, 0, 10);
+		
+		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
@@ -373,7 +384,12 @@ public class Main extends JavaPlugin implements Listener {
 				}
 
 				for (Player p : Bukkit.getOnlinePlayers()) {
-					
+					if (p.getScoreboardTags().contains("viewingCamera")) {
+						p.setGameMode(GameMode.SPECTATOR);
+						Location l = p.getLocation();
+						l.setYaw(l.getYaw() + 1);
+						p.teleport(l);
+					}
 					/*if (p.isSneaking() && !p.isFlying() && !inStealthMode.contains(p)) {
 	    					p.sendMessage(ChatColor.GRAY + "You are now in stealth mode");
 	    					inStealthMode.add(p);
@@ -496,7 +512,7 @@ public class Main extends JavaPlugin implements Listener {
 			saveDefaultConfig();
 		}
 
-
+		//System.out.println(MusicPlayer.translateMusicFileToNotes("test"));
 
 		/*ItemStack pcrys = new ItemStack(Material.DIAMOND);
 	    	ItemMeta pcrysm = pcrys.getItemMeta();
@@ -505,7 +521,9 @@ public class Main extends JavaPlugin implements Listener {
 	    	pcrysl.add("&b&l0 / 100,000 RF".replace('&', '§'));
 	       	pcrysm.setLore(pcrysl);
 	    	pcrys.setItemMeta(pcrysm);*/
-
+		
+		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
+		//JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] Hello World", "green", "SuperiorCraft is superior", "light_purple", ""), new JsonMessage("[SuperiorCraft] Hello World", "green", "SuperiorCraft is mlg!", "light_purple", "/cloak")});
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
 		getServer().createWorld(new WorldCreator("lobby"));
 		
@@ -655,7 +673,16 @@ public class Main extends JavaPlugin implements Listener {
 
 		else if (e.getAction() == Action.RIGHT_CLICK_AIR && e.getItem().getType() == Material.COMPASS &&  e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().contains("Game Selector")) {
 			gselect.show(e.getPlayer());
-			;    	}
+		}
+		
+		if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getPlayer().isSneaking() && e.getClickedBlock().getType() != null && e.getClickedBlock().getType() == Material.NOTE_BLOCK) {
+			((NoteBlock) e.getClickedBlock().getState()).play(Instrument.GUITAR, Note.natural(1, Tone.A));
+			((NoteBlock) e.getClickedBlock().getState()).play(Instrument.GUITAR, Note.natural(1, Tone.C));
+			
+			JsonMessage.sendJsonMessages(e.getPlayer(), new JsonMessage[] {new JsonMessage("[ ", "green"), new JsonMessage(" ]", "green")});
+			
+			e.setCancelled(true);
+		}
 
 		//if (e.get)
 		/*if (e.getAction() == Action.RIGHT_CLICK_AIR && e.getItem().getType() == Material.IRON_SPADE) {
@@ -1357,13 +1384,14 @@ public class Main extends JavaPlugin implements Listener {
 			Player player = (Player) sender;
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
-			ItemStack a = new ItemStack(Material.DIAMOND_SWORD);
+			/*ItemStack a = new ItemStack(Material.DIAMOND_SWORD);
         	a.setDurability((short) 2);
         	ItemMeta am = a.getItemMeta();
         	am.setUnbreakable(true);
         	a.setItemMeta(am);
         	player.getInventory().addItem(a);
-			return true;
+			return true;*/
+			//CameraUtil.goToNearestCamera(player);
 		}
 
 		else if (command.getName().equalsIgnoreCase("kit")) {
@@ -1674,7 +1702,7 @@ public class Main extends JavaPlugin implements Listener {
 				Menu m = new Menu("Blocks", 27);
 
 				for (CustomBlock cbl : CustomBlock.blocks) {
-					ItemStack it = new ItemStack(Material.MONSTER_EGG, 64);
+					ItemStack it = cbl.getItem();
 					ItemMeta itm = it.getItemMeta();
 
 					itm.setDisplayName(cbl.getName());
@@ -1687,6 +1715,47 @@ public class Main extends JavaPlugin implements Listener {
 				player.openInventory(m.inv);
 			}
 
+			return true;
+		}
+		
+		else if (command.getName().equalsIgnoreCase("camera")) {
+			Player player = (Player) sender;
+			//System.out.println(CommandConstruct.match(args, new String[] {"goto", "string"}));
+			if (CommandConstruct.match(args, new String[] {"list"})) {
+				for (ArmorStand entity : player.getWorld().getEntitiesByClass(ArmorStand.class)) {
+					if (entity.getCustomName() != null && entity.getCustomName().equals("Camera")) {
+						//player.sendMessage(entity.getLocation().toString() + " : " + entity.getUniqueId().toString().split("-")[0]);
+						JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage(entity.getLocation().toString() + " : ", "green", "", "light_purple", ""), new JsonMessage(entity.getUniqueId().toString().split("-")[0], "green", "This is this camera's id", "light_purple", "/camera goto " + entity.getUniqueId().toString().split("-")[0])});
+					}
+				}
+				
+			} 
+			else if (CommandConstruct.match(args, new String[] {"goto", "string"})) {
+				//System.out.println(args[1]);
+				for (ArmorStand entity : player.getWorld().getEntitiesByClass(ArmorStand.class)) {
+					if (entity.getCustomName() != null && entity.getCustomName().equals("Camera") && entity.getUniqueId().toString().split("-")[0].equals(args[1])) {
+						CameraUtil.goToCameraLocation(player, entity.getLocation());
+					}
+				}
+			}
+			else if (CommandConstruct.match(args, new String[] {"stop"})) {
+				if (player.getScoreboardTags().contains("viewingCamera")) {
+					player.removeScoreboardTag("viewingCamera");
+				}
+			}
+			
+			return true;
+		}
+		
+		else if (command.getName().equalsIgnoreCase("spy")) {
+			Player player = (Player) sender;
+			if (CommandConstruct.match(args, new String[] {"info", "player"})) {
+				new MultilineMessage(new String[] {
+					"Player Name: " + getPlayer(args[1]).getDisplayName(),
+					"Player IP: " + getPlayer(args[1]).getAddress().getHostString()
+				}).setBaseColor(ChatColor.GRAY).setLinePrefix("[ESPionage] ").sendMessage(player);
+			}
+			
 			return true;
 		}
 		

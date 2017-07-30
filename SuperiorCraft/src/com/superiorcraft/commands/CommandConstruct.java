@@ -20,17 +20,20 @@ public class CommandConstruct {
 		if (args.length == pattern.length) {
 			for (int i = 0; i < args.length; i++) {
 				if (pattern[i].equalsIgnoreCase("string")) {
-					try {
+					/*try {
 						Float.valueOf(args[i]);
 						return false;
 					}
 					catch (Exception e) {
 						System.out.println(e);
-					}
+					}*/
+				}
+				else if (pattern[i].equalsIgnoreCase("player") && getPlayer(args[i]) == null) {
+					return false;
 				}
 				
-				if (pattern[i].equalsIgnoreCase("player") && getPlayer(args[i]) == null) {
-					return false;
+				else if (pattern[i].equalsIgnoreCase("player") && getPlayer(args[i]) != null) {
+					
 				}
 				
 				else if (args[i].equalsIgnoreCase(pattern[i])) {

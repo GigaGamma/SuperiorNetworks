@@ -1,21 +1,21 @@
 main: com.superiorcraft.main.Main
 name: SuperiorCraft
 version: 3.4.2
-author: SuperiorCraft Development
-description: SuperiorCraft is a server and an API.
+author: SuperiorCraft Development (Auguste Rame)
+description: SuperiorCraft is a server and an API. Learn more at https://www.github.com/GigaGamma/SuperiorCraft.
 commands:
   cchat:
-    description: Server Announcment
+    description: Server Announcment's made Colorful
     usage: /cchat message
     permission: superiorcraft.cchat
     permission-message: You don't have the superiorcraft.cchat permission.
   nick:
-    description: Nicknaming
+    description: Who's nick?
     usage: /nick <name>
     permission: superiorcraft.nick
     permission-message: You don't have the superiorcraft.nick permission.
   fly:
-    description: Flight
+    description: Take Flight
     usage: /fly
     permission: superiorcraft.fly
     permission-message: You don't have the superiorcraft.fly permission.
@@ -140,7 +140,7 @@ commands:
     permission-message: You don't have the superiorcraft.gui permission.
   addmin:
     description: Admin control made simple
-    usage: /addmin [
+    usage: /addmin
     permission: superiorcraft.addmin
     permission-message: You don't have the superiorcraft.addmin permission.
   police:
@@ -148,3 +148,13 @@ commands:
     usage: /police
     permission: superiorcraft.police
     permission-message: You don't have the superiorcraft.police permission.
+  camera:
+    description: Watch
+    usage: /camera
+    permission: superiorcraft.security
+    permission-message: Only the worthy unlock this prestigious command.
+  spy:
+    description: Stalk your friends
+    usage: /spy
+    permission: superiorcraft.spy
+    permission-message: Don't spy

@@ -222,7 +222,7 @@ public class HoverBike implements CommandExecutor, Listener {
 						}
 					}
 				}
-				else if ((e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.STICK) {
+				else if (e.getAction() != null && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType() == Material.STICK) {
 					for (String tag : ent.getScoreboardTags()) {
 						if (tag.equals("speed:50")) {
 							e.getPlayer().chat("#p");

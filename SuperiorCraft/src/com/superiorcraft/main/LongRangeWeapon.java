@@ -281,6 +281,7 @@ public class LongRangeWeapon implements Listener {
     						p.setKnockbackStrength(knockback);
     						p.setSilent(silent);
     						p.setCustomName(name);
+    						p.setFireTicks(10000000);
     						if (wep.name().contains("DIAMOND")) {
     							p.setVelocity(p.getVelocity().multiply(15));
     							p.setGlowing(true);
