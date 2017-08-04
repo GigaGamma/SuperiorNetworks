@@ -111,10 +111,14 @@ import com.superiorcraft.api.Elevator;
 import com.superiorcraft.api.HealingPads;
 import com.superiorcraft.api.MagicalWood;
 import com.superiorcraft.api.Registry;
+import com.superiorcraft.api.WoodPanel;
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
+import com.superiorcraft.api.blocks.CustomPanel;
+import com.superiorcraft.api.blocks.CustomPanelTexture;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.items.CustomItem;
+import com.superiorcraft.api.map.CustomMap;
 import com.superiorcraft.api.more.PolishedQuartz;
 import com.superiorcraft.api.slabs.Slab;
 import com.superiorcraft.api.more.PolishedGold;
@@ -312,7 +316,7 @@ public class Main extends JavaPlugin implements Listener {
 
 		getServer().getPluginManager().registerEvents(pol, this);
 
-		// Register Forge
+		// Register upAPI
 
 		CustomBlock bload = new CustomBlock("BlockLoader", "BlockLoader");
 		getCommand("getblock").setExecutor(bload);
@@ -332,6 +336,9 @@ public class Main extends JavaPlugin implements Listener {
 		
 		// Slabs
 		Registry.registerBlock(new Slab("Slab", "slab:slab"));
+		
+		Registry.registerPanel(new WoodPanel("Wooden Panel", "superiorcraft:wood_panel", new CustomPanelTexture(CustomPanelTexture.WOOD_PANEL)));
+		Registry.registerPanel(new WoodPanel("Iron Panel", "superiorcraft:iron_panel", new CustomPanelTexture(CustomPanelTexture.IRON_PANEL)));
 		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
@@ -353,7 +360,8 @@ public class Main extends JavaPlugin implements Listener {
 		// Register Main
 
 		getServer().getPluginManager().registerEvents(this, this);
-		BukkitTask task = new MusicPlayer.MusicThread().runTaskTimer(this, 0, 10);
+		Registry.registerListener(new CustomMap());
+		/* Music Loop */ //BukkitTask task = new MusicPlayer.MusicThread().runTaskTimer(this, 0, 10);
 		
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -390,9 +398,15 @@ public class Main extends JavaPlugin implements Listener {
 						l.setYaw(l.getYaw() + 1);
 						p.teleport(l);
 					}
-					/*if (p.isSneaking() && !p.isFlying() && !inStealthMode.contains(p)) {
-	    					p.sendMessage(ChatColor.GRAY + "You are now in stealth mode");
-	    					inStealthMode.add(p);
+					for (int i = 0; i < 11; i++) {
+						if (p.getLocation().add(0, -i, 0).getBlock() != null && p.getLocation().add(0, -i, 0).getBlock().getType() != null && p.getLocation().add(0, -i, 0).getBlock().getType() == Material.NETHER_WART_BLOCK) {
+							p.openInventory(gselect.inv);
+							p.sendMessage("Select a game");
+							//p.teleport(p.getLocation().add(0, 0, -1));
+							//p.
+						}
+					}
+					/*if (p.i/hMode.add(p);
 	    				}
 	    				else if (!p.isSneaking() && inStealthMode.contains(p)) {
 	    					p.sendMessage(ChatColor.GRAY + "You are no longer in stealth mode");
@@ -1384,13 +1398,13 @@ public class Main extends JavaPlugin implements Listener {
 			Player player = (Player) sender;
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
-			/*ItemStack a = new ItemStack(Material.DIAMOND_SWORD);
-        	a.setDurability((short) 2);
+			ItemStack a = new ItemStack(Material.DIAMOND_HOE);
+        	a.setDurability((short) 1);
         	ItemMeta am = a.getItemMeta();
         	am.setUnbreakable(true);
         	a.setItemMeta(am);
         	player.getInventory().addItem(a);
-			return true;*/
+			return true;
 			//CameraUtil.goToNearestCamera(player);
 		}
 
@@ -1714,6 +1728,17 @@ public class Main extends JavaPlugin implements Listener {
 
 				player.openInventory(m.inv);
 			}
+			
+			if (args[0].equalsIgnoreCase("panels")) {
+				Menu m = new Menu("Panels", 27);
+
+				for (CustomPanel pan : CustomPanel.panels) {
+					ItemStack it = pan.getTexture().getTextureItem();
+					m.inv.addItem(it);
+				}
+
+				player.openInventory(m.inv);
+			}
 
 			return true;
 		}
@@ -1752,7 +1777,7 @@ public class Main extends JavaPlugin implements Listener {
 			if (CommandConstruct.match(args, new String[] {"info", "player"})) {
 				new MultilineMessage(new String[] {
 					"Player Name: " + getPlayer(args[1]).getDisplayName(),
-					"Player IP: " + getPlayer(args[1]).getAddress().getHostString()
+					"Player IP: " + getPlayer(args[1]).getAddress().getHostName()
 				}).setBaseColor(ChatColor.GRAY).setLinePrefix("[ESPionage] ").sendMessage(player);
 			}
 			

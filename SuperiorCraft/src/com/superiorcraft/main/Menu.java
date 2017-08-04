@@ -19,8 +19,17 @@ public class Menu implements Listener {
 		Bukkit.getServer().getPluginManager().registerEvents(this, Main.plugin);
 	}
 	
-	public void addItem(ItemStack item, int place) {
+	public Menu setBackground(ItemStack item) {
+		for (int i = 0; i < inv.getSize(); i++) {
+			inv.setItem(i, item);
+		}
+		
+		return this;
+	}
+	
+	public Menu addItem(ItemStack item, int place) {
 		inv.setItem(place, item);
+		return this;
 	}
 	
 	public void show(Player p) {
