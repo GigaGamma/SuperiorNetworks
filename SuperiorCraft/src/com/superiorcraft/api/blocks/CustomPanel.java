@@ -32,6 +32,11 @@ public class CustomPanel implements Listener {
 	}
 	
 	@EventHandler
+	public void onPlayerInteract(PlayerInteractEvent e) {
+		
+	}
+	
+	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
 		if (e.getRightClicked() instanceof ItemFrame) {
 			if (((ItemFrame) e.getRightClicked()).getItem() != null && ((ItemFrame) e.getRightClicked()).getItem().getType() == Material.DIAMOND_HOE && ((ItemFrame) e.getRightClicked()).getItem().getDurability() == getTexture().getTextureItem().getDurability()) {
@@ -45,6 +50,13 @@ public class CustomPanel implements Listener {
 				itm.setDisplayName("");
 				it.setItemMeta(itm);
 				((ItemFrame) e.getRightClicked()).setItem(it);
+				e.setCancelled(true);
+			} else if (e.getPlayer().getEquipment().getItemInMainHand() != null && e.getPlayer().getEquipment().getItemInMainHand().getType() == Material.FLINT_AND_STEEL) {
+				ItemFrame frame = ((ItemFrame) e.getRightClicked());
+				if (frame.getItem() != null && frame.getItem().getType() == Material.RAW_BEEF) {
+					frame.setItem(new ItemStack(Material.COOKED_BEEF));
+					e.getPlayer().sendMessage("Cooked!");
+				}
 				e.setCancelled(true);
 			}
 		}

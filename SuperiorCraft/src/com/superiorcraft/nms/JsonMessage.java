@@ -1,11 +1,11 @@
 package com.superiorcraft.nms;
 
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
-import org.bukkit.entity.Player;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
-import net.minecraft.server.v1_12_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_12_R1.PacketPlayOutChat;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class JsonMessage {
 	
@@ -32,10 +32,32 @@ public class JsonMessage {
 		this.codetext = codetext;
 	}*/
 
-	public static PacketPlayOutChat createPacketPlayOutChat(String s){return new PacketPlayOutChat(ChatSerializer.a(s));}
+	public static Object createPacketPlayOutChat(String s) {
+		Class<?> chatSerial = NMSAdapter.getClass("IChatBaseComponent$ChatSerializer");
+		Class<?> chatComponent = NMSAdapter.getClass("IChatBaseComponent");
+		Class<?> packetClass = NMSAdapter.getClass("PacketPlayOutChat");
+		
+		Constructor constructor = null;
+		Object text = null;
+		Object packetFinal = null;
+		Field field = null;
+		
+		try {
+			constructor = packetClass.getConstructor(chatComponent);
+			text = chatSerial.getMethod("a", String.class).invoke(chatSerial, s);
+			packetFinal = constructor.newInstance(text);
+			field = packetFinal.getClass().getDeclaredField("a");
+			field.setAccessible(true);
+			field.set(packetFinal, text);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return packetFinal;
+	}
 
 	public static void sendJsonMessage(Player p, String s){
-		((CraftPlayer) p).getHandle().playerConnection.sendPacket(createPacketPlayOutChat(s));
+		NMSAdapter.sendPacket(p, createPacketPlayOutChat(s));
 	}
 	
 	public static void sendJsonMessages(Player p, JsonMessage[] s) {
@@ -43,7 +65,8 @@ public class JsonMessage {
 		for (JsonMessage msg : s) {
 			f += "," + msg.toString();
 		}
-		((CraftPlayer) p).getHandle().playerConnection.sendPacket(createPacketPlayOutChat(f + "]"));
+		//((CraftPlayer) p).getHandle().playerConnection.sendPacket(createPacketPlayOutChat(f + "]"));
+		NMSAdapter.sendPacket(p, createPacketPlayOutChat(f + "]"));
 	}
 	
 	public static void broadcastJsonMessage(String s) {

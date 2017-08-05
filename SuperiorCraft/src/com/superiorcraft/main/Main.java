@@ -136,7 +136,7 @@ import com.superiorcraft.commands.CommandConstruct;
 import com.superiorcraft.logicrace.RoomGenerator;
 import com.superiorcraft.music.MusicPlayer;
 import com.superiorcraft.nms.JsonMessage;
-import com.superiorcraft.nms.NMS;
+import com.superiorcraft.nms.NMSAdapter;
 import com.superiorcraft.trollcraft.GhostBlock;
 
 public class Main extends JavaPlugin implements Listener {
@@ -170,9 +170,10 @@ public class Main extends JavaPlugin implements Listener {
             }
             for (final File lib : libs) {
                 if (!lib.exists()) {
-                    getLogger().warning(
-                            "There was a critical error loading My plugin! Could not find lib: "
+                    getLogger().log(Level.SEVERE,
+                            "There was a critical error loading SuperiorCraft! Could not find lib: "
                                     + lib.getName());
+                    JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] There was a critical error loading SuperiorCraft! Could not find lib: " + lib.getName(), "red", "If you are not a developer, you can ignore this", "light_purple", "")});
                     Bukkit.getServer().getPluginManager().disablePlugin(this);
                     return;
                 }
@@ -183,7 +184,7 @@ public class Main extends JavaPlugin implements Listener {
         }
 		
 		plugin = this;
-		Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "[SuperiorCraft] Hello World");
+		//Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "[SuperiorCraft] Hello World");
 		logger.setLevel(Level.ALL);
 		logger.info("\n---\nStarting SuperiorCraft initialization\n---");
 
@@ -392,6 +393,7 @@ public class Main extends JavaPlugin implements Listener {
 				}
 
 				for (Player p : Bukkit.getOnlinePlayers()) {
+					//p.sendBlockChange(p.getLocation(), Material.TORCH, (byte) 0);
 					if (p.getScoreboardTags().contains("viewingCamera")) {
 						p.setGameMode(GameMode.SPECTATOR);
 						Location l = p.getLocation();
@@ -537,7 +539,7 @@ public class Main extends JavaPlugin implements Listener {
 	    	pcrys.setItemMeta(pcrysm);*/
 		
 		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
-		//JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] Hello World", "green", "SuperiorCraft is superior", "light_purple", ""), new JsonMessage("[SuperiorCraft] Hello World", "green", "SuperiorCraft is mlg!", "light_purple", "/cloak")});
+		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] Started using " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
 		getServer().createWorld(new WorldCreator("lobby"));
 		
@@ -561,7 +563,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onDisable() {
-
+		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft is being turned off", "red", "If you are not a developer, you can ignore this", "light_purple", "")});
 	}
 
 	@EventHandler
