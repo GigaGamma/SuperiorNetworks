@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.superiorcraft.api.util.Menu;
+
 public class MYML implements CommandExecutor, Listener {
 	
 	public HashMap<ItemStack, String> onclick = new HashMap<ItemStack, String>();

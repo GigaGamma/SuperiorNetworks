@@ -16,7 +16,7 @@ public class ItemMetaConstruct {
 	}
 	
 	public ItemMetaConstruct setName(String name) {
-		getMeta().setDisplayName(name);
+		getMeta().setDisplayName("&r".replace('&', '§') + name.replace('&', '§'));
 		return this;
 	}
 	

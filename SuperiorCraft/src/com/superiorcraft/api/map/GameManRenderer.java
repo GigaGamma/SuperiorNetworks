@@ -2,6 +2,7 @@ package com.superiorcraft.api.map;
 
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
+import org.bukkit.map.MapCursorCollection;
 import org.bukkit.map.MapFont;
 import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
@@ -14,7 +15,7 @@ public class GameManRenderer extends MapRenderer {
 	@Override
 	public void render(MapView view, MapCanvas canvas, Player player) {
 		for (int i = GameManRenderer.i; i < 100; i++) {
-			canvas.drawText(i, 10, MinecraftFont.Font, "A");
+			canvas.setPixel(10, 10, (byte) 10); 
 			GameManRenderer.i += 30;
 		}
 		

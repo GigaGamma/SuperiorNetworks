@@ -21,8 +21,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
+import com.superiorcraft.api.util.Menu;
 import com.superiorcraft.main.Main;
-import com.superiorcraft.main.Menu;
 
 public class Keycode extends CustomBlock implements Listener {
 

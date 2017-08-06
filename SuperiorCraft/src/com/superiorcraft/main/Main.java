@@ -126,6 +126,7 @@ import com.superiorcraft.api.util.CameraUtil;
 import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.api.util.JarUtils;
+import com.superiorcraft.api.util.Menu;
 import com.superiorcraft.api.util.WebUtil;
 import com.superiorcraft.api.util.json.JsonReader;
 import com.superiorcraft.api.util.json.MultilineMessage;
@@ -527,6 +528,7 @@ public class Main extends JavaPlugin implements Listener {
 		if (!(new File(getDataFolder(), "config.yml")).exists()) {
 			saveDefaultConfig();
 		}
+		
 
 		//System.out.println(MusicPlayer.translateMusicFileToNotes("test"));
 
@@ -541,7 +543,7 @@ public class Main extends JavaPlugin implements Listener {
 		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] Started using " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
-		getServer().createWorld(new WorldCreator("lobby"));
+		getServer().createWorld(new WorldCreator("world"));
 		
 	}
 	

@@ -26,17 +26,11 @@ public class NMSAdapter {
 			Method gh = null;
 			try {
 				gh = player.getClass().getMethod("getHandle");
-			} catch (NoSuchMethodException | SecurityException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			} catch (NoSuchMethodException | SecurityException e1) {e1.printStackTrace();}
 			//System.out.println();
 			return gh.invoke(player).getClass().getField("playerConnection").get(gh.invoke(player));
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException
-				| InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				| InvocationTargetException e) {e.printStackTrace();}
 		return null;
 	}
 	
@@ -45,10 +39,7 @@ public class NMSAdapter {
 		try {
 			sendPacket = getClass("PlayerConnection").getMethod("sendPacket", NMSAdapter.getClass("Packet"));
 			sendPacket.invoke(NMSAdapter.getConnection(player), packet);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	
 }
