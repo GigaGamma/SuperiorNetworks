@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 
-import com.superiorcraft.main.Main;
+import com.superiorcraft.Main;
 
 public class Hologram {
 	

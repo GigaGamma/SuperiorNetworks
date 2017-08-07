@@ -34,12 +34,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.ElevatorInstance;
 import com.superiorcraft.api.Flag;
 import com.superiorcraft.api.more.UraniumFuelRod;
 import com.superiorcraft.api.more.UraniumOre;
 import com.superiorcraft.city.StopBlock;
-import com.superiorcraft.main.Main;
 import com.superiorcraft.trollcraft.BlockBreaker;
 import com.superiorcraft.trollcraft.GhostBlock;
 import com.superiorcraft.trollcraft.Keycode;

@@ -11,7 +11,7 @@
 
  */
 
-package com.superiorcraft.main;
+package com.superiorcraft;
 
 import java.io.File;
 import java.io.IOException;
@@ -118,6 +118,8 @@ import com.superiorcraft.api.blocks.CustomPanel;
 import com.superiorcraft.api.blocks.CustomPanelTexture;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.items.CustomItem;
+import com.superiorcraft.api.items.food.CustomFood;
+import com.superiorcraft.api.items.food.Salad;
 import com.superiorcraft.api.map.CustomMap;
 import com.superiorcraft.api.more.PolishedQuartz;
 import com.superiorcraft.api.slabs.Slab;
@@ -128,6 +130,7 @@ import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.api.util.JarUtils;
 import com.superiorcraft.api.util.Menu;
 import com.superiorcraft.api.util.WebUtil;
+import com.superiorcraft.api.util.item.ItemConstruct;
 import com.superiorcraft.api.util.json.JsonReader;
 import com.superiorcraft.api.util.json.MultilineMessage;
 import com.superiorcraft.city.HoverBike;
@@ -342,6 +345,10 @@ public class Main extends JavaPlugin implements Listener {
 		Registry.registerPanel(new WoodPanel("Wooden Panel", "superiorcraft:wood_panel", new CustomPanelTexture(CustomPanelTexture.WOOD_PANEL)));
 		Registry.registerPanel(new WoodPanel("Iron Panel", "superiorcraft:iron_panel", new CustomPanelTexture(CustomPanelTexture.IRON_PANEL)));
 		
+		// FoodE
+		
+		Registry.registerItem(new Salad(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 1).setUnbreakable(true).setName("&2Salad").removeFlags().getItem(), "foode:salad"));
+		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
 		iload.load();
@@ -424,11 +431,12 @@ public class Main extends JavaPlugin implements Listener {
 					if (p.hasPermission("superiorcraft.cloak")) {
 						//System.out.println(getConfig().getString("players." + p.getName() + ".cloaked"));
 						if (!cloaked.contains(p)) {
-							ActionBarAPI.sendActionBar(p, ChatColor.RED + "Cloak: Disabled");
+							//ActionBarAPI.sendActionBar(p, ChatColor.RED + "Cloak: Disabled");
 						} else {
-							ActionBarAPI.sendActionBar(p, ChatColor.GREEN + "Cloak: Enabled");
+							//ActionBarAPI.sendActionBar(p, ChatColor.GREEN + "Cloak: Enabled");
 						}
 					}
+					ActionBarAPI.sendActionBar(p, (p.getFoodLevel() > 16 ? ChatColor.GREEN : ChatColor.RED) + "Food Level: " + p.getFoodLevel() + " / " + ChatColor.GRAY + "Saturation Level: " + p.getSaturation());
 					if (inBlockWars.containsKey(p)) {
 						if (p.getLocation().getBlock().getType() != Material.STANDING_BANNER) {
 							if (bwfct.containsKey(p)) {
@@ -1402,7 +1410,7 @@ public class Main extends JavaPlugin implements Listener {
 			Player player = (Player) sender;
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
-			ItemStack a = new ItemStack(Material.DIAMOND_HOE);
+			ItemStack a = new ItemStack(Material.DIAMOND_SPADE);
         	a.setDurability((short) 1);
         	ItemMeta am = a.getItemMeta();
         	am.setUnbreakable(true);

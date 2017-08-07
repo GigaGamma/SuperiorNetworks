@@ -14,8 +14,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.util.ServerUtil;
-import com.superiorcraft.main.Main;
 
 public class MusicPlayer {
 	

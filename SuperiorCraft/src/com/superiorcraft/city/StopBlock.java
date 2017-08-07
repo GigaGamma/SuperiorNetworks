@@ -11,8 +11,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.CustomBlock;
-import com.superiorcraft.main.Main;
 
 public class StopBlock extends CustomBlock {
 

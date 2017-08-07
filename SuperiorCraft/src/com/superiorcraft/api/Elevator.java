@@ -20,11 +20,11 @@ import org.bukkit.material.Dye;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.ColorableBlock;
 import com.superiorcraft.api.blocks.CustomBlockInstance;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.blocks.CustomTexturedBlock;
-import com.superiorcraft.main.Main;
 
 public class Elevator extends CustomTexturedBlock {
 	

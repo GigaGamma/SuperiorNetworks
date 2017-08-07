@@ -6,6 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -46,6 +48,10 @@ public class CustomPanel implements Listener {
 						
 						@Override
 						public void onInventoryClick(InventoryClickEvent e) {
+							if (e.getClick() == ClickType.LEFT && e.getCurrentItem().getType() == getTexture().getTextureItem().getType() && e.getCurrentItem().getDurability() == getTexture().getTextureItem().getDurability()) {
+								e.getWhoClicked().closeInventory();
+							}
+							
 							e.setCancelled(true);
 						}
 						

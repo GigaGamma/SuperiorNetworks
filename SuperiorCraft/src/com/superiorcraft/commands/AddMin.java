@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import com.superiorcraft.main.Main;
+import com.superiorcraft.Main;
 
 public class AddMin implements CommandExecutor, TabCompleter {
 	

@@ -9,9 +9,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.blocks.CustomTexturedBlock;
-import com.superiorcraft.main.Main;
 
 public class Slab extends CustomTexturedBlock {
 

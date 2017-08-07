@@ -17,8 +17,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.CustomBlock;
-import com.superiorcraft.main.Main;
 
 public class BlockBreaker extends CustomBlock implements Listener {
 

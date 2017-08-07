@@ -1,4 +1,4 @@
-package com.superiorcraft.main;
+package com.superiorcraft;
 
 import java.util.HashMap;
 

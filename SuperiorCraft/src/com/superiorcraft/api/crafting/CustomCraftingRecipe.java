@@ -1,5 +1,6 @@
 package com.superiorcraft.api.crafting;
 
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
@@ -16,14 +17,15 @@ public class CustomCraftingRecipe {
 	
 	public boolean check(ItemStack[] a) {
 		boolean match = true;
-		
-		for (int i = 0; i < recipe.length; i++) {
-			if (match) {
-				if (recipe[i] != null) {
-					match = recipe[i].equals(a[i]);
-				}
-				else {
-					
+		if (a.length == 9) {
+			for (int i = 0; i < recipe.length; i++) {
+				if (match) {
+					if (recipe[i] != null) {
+						match = recipe[i].equals(a[i]);
+					}
+					else {
+						
+					}
 				}
 			}
 		}
@@ -39,13 +41,13 @@ public class CustomCraftingRecipe {
 		return false;
 	}
 	
-	public void onCraft(InventoryMoveItemEvent e) {
-		if (nCheck(e.getDestination().getName())) {
+	public void onCraft(InventoryClickEvent e) {
+		if (nCheck(e.getInventory().getName())) {
 			craft(e);
 		}
 	}
 	
-	public void craft(InventoryMoveItemEvent e) {
+	public void craft(InventoryClickEvent e) {
 		
 	}
 	

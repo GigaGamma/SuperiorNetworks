@@ -14,8 +14,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.CustomBlock;
-import com.superiorcraft.main.Main;
 
 public class SlickDoor extends CustomBlock implements Listener {
 

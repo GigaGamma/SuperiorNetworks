@@ -27,16 +27,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.PowerCrystal;
 import com.superiorcraft.api.more.UraniumIngot;
-import com.superiorcraft.main.Main;
 
 public class CustomItem implements Listener, CommandExecutor, TabCompleter {
 	
 	public static ArrayList<CustomItem> items = new ArrayList<CustomItem>();
 	
-	public String id;
-	public ItemStack item;
+	private String id;
+	private ItemStack item;
 	
 	public CustomItem(ItemStack item, String id) {
 		super();
@@ -62,6 +62,22 @@ public class CustomItem implements Listener, CommandExecutor, TabCompleter {
 		items.add(this);
 	}
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public ItemStack getItem() {
+		return item;
+	}
+
+	public void setItem(ItemStack item) {
+		this.item = item;
+	}
+
 	public void load() {
 		// Power Crystal
 		

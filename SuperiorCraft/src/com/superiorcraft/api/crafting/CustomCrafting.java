@@ -9,6 +9,7 @@ import org.bukkit.block.Dropper;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,11 +17,11 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.Registry;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.recipes.InOutRecipe;
 import com.superiorcraft.api.recipes.UraniumFuelRodRecipe;
-import com.superiorcraft.main.Main;
 
 public class CustomCrafting implements Listener {
 	
@@ -71,13 +72,15 @@ public class CustomCrafting implements Listener {
 		}*/
 	}
 	
-	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onCraft(InventoryMoveItemEvent e) {
+	@EventHandler
+	public void onCraft(InventoryClickEvent e) {
+		//System.out.println("A");
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
 			@Override
 			public void run() {
 				for (CustomCraftingRecipe r : recipes) {
-					if (r.check(e.getDestination().getContents())) {
+					//System.out.println(r.check(e.getInventory().getContents()));
+					if (r.check(e.getInventory().getContents())) {
 						r.onCraft(e);
 						return;
 					}

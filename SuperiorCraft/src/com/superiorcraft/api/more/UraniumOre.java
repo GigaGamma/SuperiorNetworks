@@ -13,11 +13,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.blocks.CustomTexturedBlock;
 import com.superiorcraft.api.items.CustomItem;
-import com.superiorcraft.main.Main;
 
 public class UraniumOre extends CustomTexturedBlock {
 	

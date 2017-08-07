@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.superiorcraft.main.Main;
+import com.superiorcraft.Main;
 
 public class HoverBike implements CommandExecutor, Listener {
 	

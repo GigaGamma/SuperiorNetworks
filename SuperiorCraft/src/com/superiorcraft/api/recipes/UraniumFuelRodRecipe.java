@@ -2,6 +2,7 @@ package com.superiorcraft.api.recipes;
 
 import org.bukkit.Material;
 import org.bukkit.block.Dropper;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,9 +28,9 @@ public class UraniumFuelRodRecipe extends CustomCraftingRecipe {
 	}
 	
 	@Override
-	public void craft(InventoryMoveItemEvent e) {
-		e.getDestination().clear();
-		e.getDestination().setItem(4, CustomBlock.getBlock("uranium_fuel_rod"));
+	public void craft(InventoryClickEvent e) {
+		e.getInventory().clear();
+		e.getInventory().setItem(4, CustomBlock.getBlock("uranium_fuel_rod"));
 	}
 	
 }

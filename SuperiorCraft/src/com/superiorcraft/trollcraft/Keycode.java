@@ -19,10 +19,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.superiorcraft.Main;
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.util.Menu;
-import com.superiorcraft.main.Main;
 
 public class Keycode extends CustomBlock implements Listener {
 

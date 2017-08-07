@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.main.Main;
+import com.superiorcraft.Main;
 
 public class Menu implements Listener {
 	
