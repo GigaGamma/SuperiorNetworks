@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 
 public class AddMin implements CommandExecutor, TabCompleter {
 	
@@ -53,17 +53,17 @@ public class AddMin implements CommandExecutor, TabCompleter {
 				String name = getPlayer(args[2]).getName();
 				
 		        if (player.isOp()) {
-		        	name = Main.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".name") + Main.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".suffix");
+		        	name = SuperiorCraft.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".name") + SuperiorCraft.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".suffix");
 		        }
 				
-		        Main.plugin.getConfig().set("players." + player.getName() + ".name", Main.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".name"));
-		        Main.plugin.getConfig().set("players." + player.getName() + ".suffix", Main.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".suffix"));
+		        SuperiorCraft.plugin.getConfig().set("players." + player.getName() + ".name", SuperiorCraft.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".name"));
+		        SuperiorCraft.plugin.getConfig().set("players." + player.getName() + ".suffix", SuperiorCraft.plugin.getConfig().getString("players." + getPlayer(args[2]).getName() + ".suffix"));
 				player.sendMessage(("&7You are now fakechatting under " +name + "&r&7's name").replace('&', '§'));
 			}
 			
 			else if (CommandConstruct.match(args, troll_fakechat2)) {
-		        Main.plugin.getConfig().set("players." + player.getName() + ".name", args[2].replace('&', '§'));
-		        Main.plugin.getConfig().set("players." + player.getName() + ".suffix", " ");
+		        SuperiorCraft.plugin.getConfig().set("players." + player.getName() + ".name", args[2].replace('&', '§'));
+		        SuperiorCraft.plugin.getConfig().set("players." + player.getName() + ".suffix", " ");
 				player.sendMessage(("&7You are now fakechatting under " + args[2].replace('&', '§') + "&r&7's name").replace('&', '§'));
 			}
 			

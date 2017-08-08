@@ -17,11 +17,12 @@ public class CustomCrafter extends CustomCraftingRecipe {
 	}
 	
 	@Override
-	public void craft(InventoryClickEvent e) {
-		e.getWhoClicked().closeInventory();
-		e.getWhoClicked().sendMessage(name + "&r created!".replace('&', '§'));
+	public void craft(InventoryCloseEvent e) {
+		//e.getWhoClicked().closeInventory();
+		e.getPlayer().sendMessage(name + "&r created!".replace('&', '§'));
 		Dropper a = (Dropper) e.getInventory().getLocation().getBlock().getState();
 		a.setCustomName(name);
+		a.update();
 		e.getInventory().clear();
 	}
 	

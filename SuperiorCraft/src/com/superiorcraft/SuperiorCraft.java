@@ -120,6 +120,7 @@ import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.items.food.CustomFood;
 import com.superiorcraft.api.items.food.Salad;
+import com.superiorcraft.api.items.food.Sandwich;
 import com.superiorcraft.api.map.CustomMap;
 import com.superiorcraft.api.more.PolishedQuartz;
 import com.superiorcraft.api.slabs.Slab;
@@ -141,13 +142,16 @@ import com.superiorcraft.logicrace.RoomGenerator;
 import com.superiorcraft.music.MusicPlayer;
 import com.superiorcraft.nms.JsonMessage;
 import com.superiorcraft.nms.NMSAdapter;
+import com.superiorcraft.realism.BlockBreakRule;
+import com.superiorcraft.realism.RealBreakBlock;
+import com.superiorcraft.realism.ToolPower;
 import com.superiorcraft.trollcraft.GhostBlock;
 
-public class Main extends JavaPlugin implements Listener {
+public class SuperiorCraft extends JavaPlugin implements Listener {
 
 	private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	public static Main plugin;
+	public static SuperiorCraft plugin;
 	private ArrayList<Player> cloaked = new ArrayList<Player>();
 	static ArrayList<Player> inStealthMode = new ArrayList<Player>();
 
@@ -348,6 +352,7 @@ public class Main extends JavaPlugin implements Listener {
 		// FoodE
 		
 		Registry.registerItem(new Salad(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 1).setUnbreakable(true).setName("&2Salad").removeFlags().getItem(), "foode:salad"));
+		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 2).setUnbreakable(true).setName("&9Sandwich").removeFlags().getItem(), "foode:sandwich"));
 		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
@@ -356,6 +361,11 @@ public class Main extends JavaPlugin implements Listener {
 		CustomCrafting ccraft = new CustomCrafting("&6Custom Crafter".replace('&', '§'));
 		getServer().getPluginManager().registerEvents(ccraft, this);
 		ccraft.load();
+		
+		// Realism Modules
+		Registry.registerListener(new RealBreakBlock());
+		
+		Registry.registerBlockBreakRule(new BlockBreakRule(Material.REDSTONE_BLOCK, ToolPower.IRON));
 
 		// Register Commands
 
@@ -661,7 +671,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onInventoryCloseEvent(InventoryCloseEvent e) {
 		if (e.getPlayer().getGameMode() == GameMode.SPECTATOR) {
 			if (e.getInventory().getName().equalsIgnoreCase(wm1.inv.getName())) {
-				Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+				Bukkit.getScheduler().scheduleSyncDelayedTask(SuperiorCraft.plugin, new Runnable() {
 					@Override
 					public void run() {
 						e.getPlayer().openInventory(wm2.inv);
@@ -672,7 +682,7 @@ public class Main extends JavaPlugin implements Listener {
 
 			else if (e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName())) {
 				if (e.getInventory().getName().equalsIgnoreCase(wm2.inv.getName())) {
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(SuperiorCraft.plugin, new Runnable() {
 						@Override
 						public void run() {
 							e.getPlayer().setGameMode(GameMode.ADVENTURE);
@@ -1411,7 +1421,7 @@ public class Main extends JavaPlugin implements Listener {
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
 			ItemStack a = new ItemStack(Material.DIAMOND_SPADE);
-        	a.setDurability((short) 1);
+        	a.setDurability((short) 2);
         	ItemMeta am = a.getItemMeta();
         	am.setUnbreakable(true);
         	a.setItemMeta(am);

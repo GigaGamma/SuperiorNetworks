@@ -9,7 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.blocks.CustomTexturedBlock;
 
@@ -34,7 +34,7 @@ public class Slab extends CustomTexturedBlock {
 			cs.update();
 		}
 		setLe(e);
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(SuperiorCraft.plugin, new Runnable() {
 			public void run() {
 				e.getLocation().getBlock().setType(Material.STONE_SLAB2);
 				e.getLocation().getBlock().setData((byte) 2);

@@ -223,47 +223,47 @@ public class LongRangeWeapon implements Listener {
 	
 	public void addWep(ItemStack item) {
 		if (this.type.equalsIgnoreCase("side")) {
-			Main.wm2.inv.addItem(item);
+			SuperiorCraft.wm2.inv.addItem(item);
 		}
 		else {
 			if (type.equalsIgnoreCase("assault")) {
 				for (int i = 1; i < 9; i++) {
-					if (Main.wm1.inv.getItem(i) == null) {
-						Main.wm1.inv.setItem(i, item);
+					if (SuperiorCraft.wm1.inv.getItem(i) == null) {
+						SuperiorCraft.wm1.inv.setItem(i, item);
 						return;
 					}
 				}
 			}
 			else if (type.equalsIgnoreCase("sniper")) {
 				for (int i = 1; i < 9; i++) {
-					if (Main.wm1.inv.getItem(i + 9) == null) {
+					if (SuperiorCraft.wm1.inv.getItem(i + 9) == null) {
 						item.setDurability((short) 2);
 			        	ItemMeta im = item.getItemMeta();
 			        	im.setUnbreakable(true);
 			        	item.setItemMeta(im);
-						Main.wm1.inv.setItem(i + 9, item);
+						SuperiorCraft.wm1.inv.setItem(i + 9, item);
 						return;
 					}
 				}
 			}
 			else if (type.equalsIgnoreCase("shotgun")) {
 				for (int i = 1; i < 9; i++) {
-					if (Main.wm1.inv.getItem(i + 9 * 2) == null) {
-						Main.wm1.inv.setItem(i + 9 * 2, item);
+					if (SuperiorCraft.wm1.inv.getItem(i + 9 * 2) == null) {
+						SuperiorCraft.wm1.inv.setItem(i + 9 * 2, item);
 						return;
 					}
 				}
 			}
 			else if (type.equalsIgnoreCase("special")) {
 				for (int i = 1; i < 9; i++) {
-					if (Main.wm1.inv.getItem(i + 9 * 3) == null) {
-						Main.wm1.inv.setItem(i + 9 * 3, item);
+					if (SuperiorCraft.wm1.inv.getItem(i + 9 * 3) == null) {
+						SuperiorCraft.wm1.inv.setItem(i + 9 * 3, item);
 						return;
 					}
 				}
 			}
 			else {
-				Main.wm1.inv.addItem(item);
+				SuperiorCraft.wm1.inv.addItem(item);
 			}
 		}
 	}
@@ -272,7 +272,7 @@ public class LongRangeWeapon implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.RIGHT_CLICK_AIR && e.getItem().getType() == wep && e.getItem().getItemMeta().getDisplayName() != null && e.getItem().getItemMeta().getDisplayName().contains(name) && !cooldown.containsKey(e.getPlayer())) {
     		//Material ammo = ;
-    		if (e.getPlayer().getInventory().contains(ammo) && !Main.inStealthMode.contains(e.getPlayer())) {
+    		if (e.getPlayer().getInventory().contains(ammo) && !SuperiorCraft.inStealthMode.contains(e.getPlayer())) {
     			for (int i = 0; i < shots; i++) {
     				if (e.getPlayer().getInventory().contains(ammo)) {
     					if (proj == "Arrow") {
@@ -335,7 +335,7 @@ public class LongRangeWeapon implements Listener {
     				e.getItem().setItemMeta(meta);
     				if (!AddMin.noreload.containsKey(e.getPlayer().getName()) || !AddMin.noreload.get(e.getPlayer().getName())) {
     					cooldown.put(e.getPlayer(), 1);
-    					Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+    					Bukkit.getScheduler().runTaskLater(SuperiorCraft.plugin, new Runnable() {
     						@Override
     						public void run() {
     							for (Player p : Bukkit.getServer().getOnlinePlayers()) {

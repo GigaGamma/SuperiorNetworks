@@ -27,7 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.PowerCrystal;
 import com.superiorcraft.api.more.UraniumIngot;
 
@@ -92,7 +92,7 @@ public class CustomItem implements Listener, CommandExecutor, TabCompleter {
 		
 		CustomItem pc = new PowerCrystal(pcrys, "superiorcraft:power_crystal");
 		
-		Main.plugin.getServer().getPluginManager().registerEvents(pc, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(pc, SuperiorCraft.plugin);
 		
 		// Uranium Ingot
 		
@@ -106,7 +106,7 @@ public class CustomItem implements Listener, CommandExecutor, TabCompleter {
     	uing.setItemMeta(uingm);
 		
 		CustomItem ui = new UraniumIngot(uing, "more:uranium_ingot");
-		Main.plugin.getServer().getPluginManager().registerEvents(ui, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(ui, SuperiorCraft.plugin);
 	}
 	
 	public static ItemStack getItem(String id) {

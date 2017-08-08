@@ -15,11 +15,15 @@ public class CustomCraftingRecipe {
 		recipe = a;
 	}
 	
-	public boolean check(ItemStack[] a) {
+	public boolean check(ItemStack[] a, Inventory inv) {
 		boolean match = true;
-		if (a.length == 9) {
+		//System.out.println(inv.getName());
+		//System.out.println(ncon);
+		if (inv.getSize() == 9 && nCheck(inv.getName())) {
 			for (int i = 0; i < recipe.length; i++) {
 				if (match) {
+					System.out.println(a[i]);
+					System.out.println(recipe[i]);
 					if (recipe[i] != null) {
 						match = recipe[i].equals(a[i]);
 					}
@@ -28,13 +32,15 @@ public class CustomCraftingRecipe {
 					}
 				}
 			}
+		} else {
+			return false;
 		}
 		
 		return match;
 	}
 	
 	public boolean nCheck(String name) {
-		if (name.contains(ncon)) {
+		if (name.equals(ncon)) {
 			return true;
 		}
 		

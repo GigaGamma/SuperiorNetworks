@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 
 public class Menu implements Listener {
 	
@@ -19,7 +19,7 @@ public class Menu implements Listener {
 	
 	public Menu(String name, int size) {
 		inv = Bukkit.getServer().createInventory(null, size, name);
-		Bukkit.getServer().getPluginManager().registerEvents(this, Main.plugin);
+		Bukkit.getServer().getPluginManager().registerEvents(this, SuperiorCraft.plugin);
 	}
 	
 	public Menu setBackground(ItemStack item) {

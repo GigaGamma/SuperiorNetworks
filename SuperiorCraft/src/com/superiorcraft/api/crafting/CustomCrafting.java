@@ -11,37 +11,44 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.Registry;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.recipes.InOutRecipe;
 import com.superiorcraft.api.recipes.UraniumFuelRodRecipe;
+import com.superiorcraft.api.recipes.food.SaladRecipe;
+import com.superiorcraft.api.recipes.food.SandwichRecipe;
 
 public class CustomCrafting implements Listener {
 	
 	public String name;
 	
 	public ItemStack[] makeCrafter = new ItemStack[9];
-	public CustomCraftingRecipe customCrafter;
 	
 	public static ArrayList<CustomCraftingRecipe> recipes = new ArrayList<CustomCraftingRecipe>();
 	
 	public CustomCrafting(String name) {
 		this.name = name;
 		
-		makeCrafter[4] = CustomItem.getItem("power_crystal");
+		//System.out.println(makeCrafter[0]);
+		
+		makeCrafter[4] = new ItemStack(Material.IRON_INGOT);
 	}
 	
 	public void load() {
-		customCrafter = new CustomCrafter(makeCrafter);
-		Registry.addRecipe(customCrafter);
+		Registry.addRecipe(new CustomCrafter(makeCrafter));
+		Registry.addRecipe(new FoodCrafter(FoodCrafter.recipe));
 		Registry.addRecipe(new UraniumFuelRodRecipe(UraniumFuelRodRecipe.recipe));
+		Registry.addRecipe(new SaladRecipe(SaladRecipe.recipe, CustomItem.getItem("salad")));
+		Registry.addRecipe(new SaladRecipe(SandwichRecipe.recipe, CustomItem.getItem("sandwich")));
 		
 		/*List<Recipe> recipes = new ArrayList<>();
 		Bukkit.recipeIterator().forEachRemaining(recipes::add);
@@ -74,25 +81,25 @@ public class CustomCrafting implements Listener {
 	
 	@EventHandler
 	public void onCraft(InventoryClickEvent e) {
-		//System.out.println("A");
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(SuperiorCraft.plugin, new Runnable() {
 			@Override
 			public void run() {
 				for (CustomCraftingRecipe r : recipes) {
-					//System.out.println(r.check(e.getInventory().getContents()));
-					if (r.check(e.getInventory().getContents())) {
+					if (r.check(e.getInventory().getContents(), e.getInventory())) {
 						r.onCraft(e);
 						return;
 					}
 				}
 			}
-		}, 1);
+		}, 10);
  	}
 	
-	@EventHandler(priority=EventPriority.HIGHEST)
+	@EventHandler
 	public void onCraft(InventoryCloseEvent e) {
+		System.out.println(e.getInventory().getName());
 		for (CustomCraftingRecipe r : recipes) {
-			if (r.check(e.getInventory().getContents())) {
+			if (r.check(e.getInventory().getContents(), e.getInventory())) {
+				//System.out.println();
 				r.onCraft(e);
 				return;
 			}

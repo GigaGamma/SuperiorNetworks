@@ -14,7 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.crafting.CustomCraftingRecipe;
 
 public class DamageIndicator implements Listener {

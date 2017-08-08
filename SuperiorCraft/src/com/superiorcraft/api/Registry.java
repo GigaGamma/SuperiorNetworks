@@ -2,29 +2,34 @@ package com.superiorcraft.api;
 
 import org.bukkit.event.Listener;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomPanel;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.crafting.CustomCraftingRecipe;
 import com.superiorcraft.api.items.CustomItem;
+import com.superiorcraft.realism.BlockBreakRule;
 
 public class Registry {
 	
 	public static void registerListener(Listener l) {
-		Main.plugin.getServer().getPluginManager().registerEvents(l, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(l, SuperiorCraft.plugin);
 	}
 	
 	public static void registerBlock(CustomBlock b) {
-		Main.plugin.getServer().getPluginManager().registerEvents(b, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(b, SuperiorCraft.plugin);
+	}
+	
+	public static void registerBlockBreakRule(BlockBreakRule r) {
+		BlockBreakRule.rules.add(r);
 	}
 	
 	public static void registerPanel(CustomPanel p) {
-		Main.plugin.getServer().getPluginManager().registerEvents(p, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(p, SuperiorCraft.plugin);
 	}
 	
 	public static void registerItem(CustomItem i) {
-		Main.plugin.getServer().getPluginManager().registerEvents(i, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(i, SuperiorCraft.plugin);
 	}
 	
 	public static void addRecipe(CustomCraftingRecipe r) {

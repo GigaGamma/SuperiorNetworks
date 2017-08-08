@@ -14,7 +14,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.util.ServerUtil;
 
 public class MusicPlayer {
@@ -44,7 +44,7 @@ public class MusicPlayer {
 
 	public static List<String> readMusicFile(String file) {
 		try {
-			return Files.readAllLines(Paths.get(Main.plugin.getDataFolder().getAbsolutePath(), file + ".mcmus"));
+			return Files.readAllLines(Paths.get(SuperiorCraft.plugin.getDataFolder().getAbsolutePath(), file + ".mcmus"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

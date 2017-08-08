@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 
 public class HoverBike implements CommandExecutor, Listener {
 	
@@ -78,7 +78,7 @@ public class HoverBike implements CommandExecutor, Listener {
 						if (tag.startsWith("speed:") && value <= 100 && value >= 0) {
 							e.getPlayer().sendMessage(ChatColor.GRAY + "Speed being set to " + e.getMessage().replace("!", "") + " BPH");
 							((Pig) ent).removePotionEffect(PotionEffectType.SPEED);
-							Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+							Bukkit.getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
 								
 								private boolean active = true;
 								
@@ -192,7 +192,7 @@ public class HoverBike implements CommandExecutor, Listener {
 							((Pig) ent).removePotionEffect(PotionEffectType.SPEED);
 							//((Pig) ent).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10000, Integer.valueOf(tag.split(":")[1]) - 1, true, false));
 							//ent.addScoreboardTag("speed:" + String.valueOf(0));
-							Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+							Bukkit.getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
 								
 								private boolean active = true;
 								

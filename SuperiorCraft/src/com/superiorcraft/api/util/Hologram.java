@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 
 public class Hologram {
 	
@@ -55,7 +55,7 @@ public class Hologram {
 	}
 	
 	public void setKillTimer(int time) {
-		Bukkit.getScheduler().runTaskLater(Main.plugin, new Runnable() {
+		Bukkit.getScheduler().runTaskLater(SuperiorCraft.plugin, new Runnable() {
 			@Override
 			public void run() {
 				remove();

@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.blocks.CustomBlock;
 
 public class StopBlock extends CustomBlock {
@@ -19,7 +19,7 @@ public class StopBlock extends CustomBlock {
 	public StopBlock(String name, String id) {
 		super(name, id);
 		
-		Main.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+		SuperiorCraft.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
     		@Override
     		public void run() {
     			loop();

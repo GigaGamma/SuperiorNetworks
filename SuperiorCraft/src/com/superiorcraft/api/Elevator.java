@@ -20,7 +20,7 @@ import org.bukkit.material.Dye;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.blocks.ColorableBlock;
 import com.superiorcraft.api.blocks.CustomBlockInstance;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
@@ -69,7 +69,7 @@ public class Elevator extends CustomTexturedBlock {
 	@Override
 	public CustomBlockInstance getInstance(ArmorStand s) {
 		ElevatorInstance ei = new ElevatorInstance(s, getTextureEntity(s), getTexture());
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
 			@Override
 			public void run() {
 				if (s.getCustomName() != null && s.getCustomName().equals(getName()) && s.getLocation().add(-0.5, 0, -0.5).getBlock().getType() == Material.AIR) {
@@ -78,7 +78,7 @@ public class Elevator extends CustomTexturedBlock {
 				}
 			}
 		}, 0, 0);
-		Main.plugin.getServer().getPluginManager().registerEvents(ei, Main.plugin);
+		SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(ei, SuperiorCraft.plugin);
 		return ei;
 	}
 	

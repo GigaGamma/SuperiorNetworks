@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import com.superiorcraft.Main;
+import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.ElevatorInstance;
 import com.superiorcraft.api.Flag;
 import com.superiorcraft.api.more.UraniumFuelRod;
@@ -82,7 +82,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 					else {
 					//	new CustomBlockInstance(e);
 					}
-					Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+					Bukkit.getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
 						@Override
 						public void run() {
 							if (e.getCustomName() != null && e.getCustomName().equals(getName()) && e.getLocation().add(-0.5, 0, -0.5).getBlock().getType() == Material.AIR) {
@@ -99,7 +99,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 	
 	public CustomBlockInstance getInstance(ArmorStand s) {
 		//System.out.println(s.getLocation().add(-0.5, 0, -0.5).getBlock().getType());
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
 			@Override
 			public void run() {
 				if (s.getCustomName() != null && s.getCustomName().equals(getName()) && s.getLocation().add(-0.5, 0, -0.5).getBlock().getType() == Material.AIR) {
@@ -131,24 +131,24 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 		// Ghost Block
 		
 		CustomBlock gb = new GhostBlock("&f&lGhost Block", "trollcraft:ghost_block");
-    	Main.plugin.getServer().getPluginManager().registerEvents(gb, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(gb, SuperiorCraft.plugin);
     	
 		// Slick Door
 		
 		CustomBlock sd = new SlickDoor("&f&lSlick Door", "trollcraft:slick_door");
-    	Main.plugin.getServer().getPluginManager().registerEvents(sd, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(sd, SuperiorCraft.plugin);
     	
 		// Slick Door Frame
 		
 		CustomBlock sdf = new SlickDoorFrame("&f&lSlick Door Frame", "trollcraft:slick_door_frame");
-    	Main.plugin.getServer().getPluginManager().registerEvents(sdf, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(sdf, SuperiorCraft.plugin);
     	
 		// Block Breaker
     	
-    	Main.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(Main.plugin, new Runnable() {
+    	SuperiorCraft.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(SuperiorCraft.plugin, new Runnable() {
     		@Override
     		public void run() {
-    			for (World world : Main.plugin.getServer().getWorlds()) {
+    			for (World world : SuperiorCraft.plugin.getServer().getWorlds()) {
     				for (Entity en : world.getEntities()) {
     					if (en.getCustomName() != null && en.getCustomName().contains("Block Breaker")) {
     						Location l = en.getLocation();
@@ -165,17 +165,17 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
     	}, 0L, 2L);
 		
 		CustomBlock bb = new BlockBreaker("&f&lBlock Breaker", "trollcraft:block_breaker");
-    	Main.plugin.getServer().getPluginManager().registerEvents(bb, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(bb, SuperiorCraft.plugin);
     	
     	// Keypad
 		
     	CustomBlock kc = new Keycode("&f&lKey Pad", "trollcraft:key_pad");
-    	Main.plugin.getServer().getPluginManager().registerEvents(kc, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(kc, SuperiorCraft.plugin);
     	
     	// Flag
     	
     	CustomBlock flag = new Flag("&f&lFlag", "ctf:flag");
-    	Main.plugin.getServer().getPluginManager().registerEvents(flag, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(flag, SuperiorCraft.plugin);
     	
     	/* MicroBlocks
     	
@@ -185,17 +185,17 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
     	// Uranium Ore
     	
     	CustomBlock urore = new UraniumOre("Uranium Ore", "more:uranium_ore");
-    	Main.plugin.getServer().getPluginManager().registerEvents(urore, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(urore, SuperiorCraft.plugin);
     	
     	// Uranium Fuel Rod
     
     	CustomBlock ufrore = new UraniumFuelRod("Uranium Fuel Rod", "more:uranium_fuel_rod");
-    	Main.plugin.getServer().getPluginManager().registerEvents(ufrore, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(ufrore, SuperiorCraft.plugin);
     	
     	// Stop Block
     	
     	CustomBlock hbsb = new StopBlock("Stop Block", "city:stop_block");
-    	Main.plugin.getServer().getPluginManager().registerEvents(hbsb, Main.plugin);
+    	SuperiorCraft.plugin.getServer().getPluginManager().registerEvents(hbsb, SuperiorCraft.plugin);
 	}
 	
 	public boolean placeBlock(ArmorStand e, Player p) {
