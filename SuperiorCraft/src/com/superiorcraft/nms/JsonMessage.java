@@ -55,9 +55,45 @@ public class JsonMessage {
 		
 		return packetFinal;
 	}
+	
+	public static Object createPacketPlayOutActionBar(String s) {
+		Class<?> chatSerial = NMSAdapter.getClass("IChatBaseComponent$ChatSerializer");
+		Class<?> chatComponent = NMSAdapter.getClass("IChatBaseComponent");
+		Class<?> packetClass = NMSAdapter.getClass("PacketPlayOutChat");
+		
+		Constructor constructor = null;
+		Object text = null;
+		Object packetFinal = null;
+		Field field = null;
+		
+		try {
+			constructor = packetClass.getConstructor(chatComponent, NMSAdapter.getClass("ChatMessageType"));
+			text = chatSerial.getMethod("a", String.class).invoke(chatSerial, s);
+			Class<?> classCMT = NMSAdapter.getClass("ChatMessageType");
+			Object cf = null;
+			for (Object c : classCMT.getEnumConstants()) {
+				if (c.toString().contains("GAME_INFO")) {
+					cf = c;
+					//System.out.println(cf);
+				}
+			}
+			packetFinal = constructor.newInstance(text, cf);
+			field = packetFinal.getClass().getDeclaredField("a");
+			field.setAccessible(true);
+			field.set(packetFinal, text);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return packetFinal;
+	}
 
 	public static void sendJsonMessage(Player p, String s){
 		NMSAdapter.sendPacket(p, createPacketPlayOutChat(s));
+	}
+	
+	public static void sendActionBar(Player p, String s) {
+		NMSAdapter.sendPacket(p, createPacketPlayOutActionBar("{\"text\": \"" + s + "\"}"));
 	}
 	
 	public static void sendJsonMessages(Player p, JsonMessage[] s) {

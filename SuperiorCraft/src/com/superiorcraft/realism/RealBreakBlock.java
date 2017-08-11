@@ -17,7 +17,7 @@ public class RealBreakBlock implements Listener {
 		if (e.getAction().equals(Action.LEFT_CLICK_BLOCK))
 		
 		for (BlockBreakRule r : BlockBreakRule.rules) {
-			if (r.getMaterial().equals(e.getClickedBlock().getType()) && (e.getPlayer().getEquipment().getItemInMainHand() == null || !e.getPlayer().getEquipment().getItemInMainHand().getType().name().contains(r.getLevel().name()))) {
+			if (r.getMaterial().equals(e.getClickedBlock().getType()) && (e.getPlayer().getEquipment().getItemInMainHand() == null || !r.getLevel().canBreakWith(e.getPlayer().getEquipment().getItemInMainHand()))) {
 				e.setCancelled(true);
 				e.getPlayer().sendMessage(ChatColor.RED + "[Info] You need a tool that is made of " + r.getLevel().name() + " or a material that is stronger than " + r.getLevel().name() + " to break this block!");
 			}
@@ -29,7 +29,7 @@ public class RealBreakBlock implements Listener {
 		if (e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
 		
 		for (BlockBreakRule r : BlockBreakRule.rules) {
-			if (r.getMaterial().equals(e.getBlock().getType()) && (e.getPlayer().getEquipment().getItemInMainHand() == null || !e.getPlayer().getEquipment().getItemInMainHand().getType().name().contains(r.getLevel().name()))) {
+			if (r.getMaterial().equals(e.getBlock().getType()) && (e.getPlayer().getEquipment().getItemInMainHand() == null || !r.getLevel().canBreakWith(e.getPlayer().getEquipment().getItemInMainHand()))) {
 				e.setCancelled(true);
 			}
 		}

@@ -105,7 +105,7 @@ import org.bukkit.util.Vector;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.connorlinfoot.actionbarapi.ActionBarAPI;
+import com.superiorcraft.anticheat.AntiCheat;
 import com.superiorcraft.api.ClearGlass;
 import com.superiorcraft.api.Elevator;
 import com.superiorcraft.api.HealingPads;
@@ -119,6 +119,7 @@ import com.superiorcraft.api.blocks.CustomPanelTexture;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.items.food.CustomFood;
+import com.superiorcraft.api.items.food.FoodMessage;
 import com.superiorcraft.api.items.food.Salad;
 import com.superiorcraft.api.items.food.Sandwich;
 import com.superiorcraft.api.map.CustomMap;
@@ -351,8 +352,10 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		
 		// FoodE
 		
+		BukkitTask task = new FoodMessage().runTaskTimer(this, 0, 5);
 		Registry.registerItem(new Salad(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 1).setUnbreakable(true).setName("&2Salad").removeFlags().getItem(), "foode:salad"));
 		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 2).setUnbreakable(true).setName("&9Sandwich").removeFlags().getItem(), "foode:sandwich"));
+		
 		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
@@ -365,6 +368,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		// Realism Modules
 		Registry.registerListener(new RealBreakBlock());
 		
+		Registry.registerBlockBreakRule(new BlockBreakRule(Material.LOG, ToolPower.STONE));
+		Registry.registerBlockBreakRule(new BlockBreakRule(Material.WOOD, ToolPower.STONE));
 		Registry.registerBlockBreakRule(new BlockBreakRule(Material.REDSTONE_BLOCK, ToolPower.IRON));
 
 		// Register Commands
@@ -375,7 +380,10 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		// Register Holograms
 		Hologram.registerHolograms();
 		getServer().getPluginManager().registerEvents(new DamageIndicator(), this);
-
+		
+		// Register AntiCheat
+		Registry.registerListener(new AntiCheat());
+		
 		// Register Main
 
 		getServer().getPluginManager().registerEvents(this, this);
@@ -446,7 +454,6 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 							//ActionBarAPI.sendActionBar(p, ChatColor.GREEN + "Cloak: Enabled");
 						}
 					}
-					ActionBarAPI.sendActionBar(p, (p.getFoodLevel() > 16 ? ChatColor.GREEN : ChatColor.RED) + "Food Level: " + p.getFoodLevel() + " / " + ChatColor.GRAY + "Saturation Level: " + p.getSaturation());
 					if (inBlockWars.containsKey(p)) {
 						if (p.getLocation().getBlock().getType() != Material.STANDING_BANNER) {
 							if (bwfct.containsKey(p)) {
@@ -559,7 +566,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	    	pcrys.setItemMeta(pcrysm);*/
 		
 		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
-		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] Started using " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
+		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
 		getServer().createWorld(new WorldCreator("world"));
 		
