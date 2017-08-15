@@ -95,7 +95,10 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.InvalidDescriptionException;
+import org.bukkit.plugin.InvalidPluginException;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -124,6 +127,7 @@ import com.superiorcraft.api.items.food.Salad;
 import com.superiorcraft.api.items.food.Sandwich;
 import com.superiorcraft.api.map.CustomMap;
 import com.superiorcraft.api.more.PolishedQuartz;
+import com.superiorcraft.api.power.PowerTrailUtil;
 import com.superiorcraft.api.slabs.Slab;
 import com.superiorcraft.api.more.PolishedGold;
 import com.superiorcraft.api.util.CameraUtil;
@@ -131,6 +135,8 @@ import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.api.util.JarUtils;
 import com.superiorcraft.api.util.Menu;
+import com.superiorcraft.api.util.PlayerData;
+import com.superiorcraft.api.util.ServerUtil;
 import com.superiorcraft.api.util.WebUtil;
 import com.superiorcraft.api.util.item.ItemConstruct;
 import com.superiorcraft.api.util.json.JsonReader;
@@ -355,6 +361,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		BukkitTask task = new FoodMessage().runTaskTimer(this, 0, 5);
 		Registry.registerItem(new Salad(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 1).setUnbreakable(true).setName("&2Salad").removeFlags().getItem(), "foode:salad"));
 		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 2).setUnbreakable(true).setName("&9Sandwich").removeFlags().getItem(), "foode:sandwich"));
+		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 3).setUnbreakable(true).setName("&7Chocolate").removeFlags().getItem(), "foode:chocolate"));
 		
 		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
@@ -388,8 +395,20 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 
 		getServer().getPluginManager().registerEvents(this, this);
 		Registry.registerListener(new CustomMap());
-		/* Music Loop */ //BukkitTask task = new MusicPlayer.MusicThread().runTaskTimer(this, 0, 10);
 		
+		//PlayerData.setTagName(getPlayer("Branstein"), "test");
+		
+		/* Music Loop */ //BukkitTask task = new MusicPlayer.MusicThread().runTaskTimer(this, 0, 10);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			@Override
+			public void run() {
+				for (Player player : ServerUtil.getPlayers()) {
+					if (AntiCheat.ftime.containsKey(player)) {
+						AntiCheat.ftime.remove(player);
+					}
+				}
+			}
+		}, 0, 30);
 		
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
@@ -569,7 +588,6 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
 		getServer().createWorld(new WorldCreator("world"));
-		
 	}
 	
 	private void addClassPath(final URL url) throws IOException {
@@ -1053,6 +1071,10 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOW)
 	public void onChat(AsyncPlayerChatEvent event) {
+		if (AddMin.fchat.containsKey(event.getPlayer())) {
+			event.setCancelled(true);
+			SuperiorCraft.plugin.onChat(new AsyncPlayerChatEvent(true, AddMin.fchat.get(event.getPlayer()), event.getMessage(), event.getRecipients()));
+		}
 		if (getConfig().get("players." + event.getPlayer().getName() + ".muted") == "yes") {
 			event.setCancelled(true);
 			return;
@@ -1077,8 +1099,11 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			for (Player pl : event.getRecipients()) {
 				//pl.play
 				pl.playEffect(pl.getLocation(), Effect.CLICK2, 50);
+				pl.sendMessage(event.getFormat());
 			}
 		}
+		
+		event.setCancelled(true);
 	}
 
 	@EventHandler
@@ -1092,6 +1117,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player player = e.getPlayer();
+		player.setPlayerListName(ChatColor.LIGHT_PURPLE + getConfig().getString("players." + player.getName() + ".name") + ChatColor.DARK_AQUA + getConfig().getString("players." + player.getName() + ".suffix"));
+		AntiCheat.data.add(new PlayerData(player));
 
 		//player.kickPlayer("Get out of here!");
 
@@ -1125,7 +1152,12 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
-
+		for (PlayerData data : AntiCheat.data) {
+			if (data.getPlayer().equals(player)) {
+				AntiCheat.data.remove(data);
+			}
+		}
+		
 		if (!getConfig().getString("players." + player.getName() + ".cloaked").equals("yes")) {
 			if (!player.isOp()) {
 				e.setQuitMessage(ChatColor.LIGHT_PURPLE + player.getName() + ChatColor.GREEN + " has left the game");
@@ -1165,7 +1197,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		}, 0, 5);
 	}
 
-	public Player getPlayer(String player) {
+	public static Player getPlayer(String player) {
 		for(Player ps : Bukkit.getOnlinePlayers()){
 			if (ps.getName().equalsIgnoreCase(player)) {
 				return ps;
@@ -1200,6 +1232,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 				}
 			}
 			saveConfig();
+			player.setPlayerListName(ChatColor.LIGHT_PURPLE + getConfig().getString("players." + player.getName() + ".name") + ChatColor.DARK_AQUA + getConfig().getString("players." + player.getName() + ".suffix"));
 			if (args.length == 2) {
 				player.sendMessage("Your nickname is now " + ChatColor.LIGHT_PURPLE + args[0].replaceAll("&", "§") + ChatColor.WHITE + " with a rank of " + ChatColor.DARK_AQUA + args[1].replaceAll("&", "§"));
 			}
@@ -1427,14 +1460,18 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			Player player = (Player) sender;
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
-			ItemStack a = new ItemStack(Material.DIAMOND_SPADE);
+			/*ItemStack a = new ItemStack(Material.DIAMOND_SPADE);
         	a.setDurability((short) 2);
         	ItemMeta am = a.getItemMeta();
         	am.setUnbreakable(true);
         	a.setItemMeta(am);
         	player.getInventory().addItem(a);
 			return true;
-			//CameraUtil.goToNearestCamera(player);
+			//CameraUtil.goToNearestCamera(player);*/
+			
+			//PowerTrailUtil.makePowerGridMap(player.getWorld());
+			player.sendMessage(NMSAdapter.getServer().toString());
+			return true;
 		}
 
 		else if (command.getName().equalsIgnoreCase("kit")) {

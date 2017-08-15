@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class NMSAdapter {
@@ -19,6 +20,41 @@ public class NMSAdapter {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public static Class<?> getCraftBukkitClass(String path) {
+		try {
+			return Class.forName("org.bukkit.craftbukkit." + NMSAdapter.getVersion() + "." + path);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Object getServer() {
+		try {
+			Object bs = getClass("MinecraftServer").getDeclaredMethod("getServer").invoke(getClass("MinecraftServer"));
+			return bs;
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	public static Object getWorld(World world) {
+		try {
+			Object bs = getClass("WorldServer").getDeclaredMethod("getHandle").invoke(world);
+			return bs;
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	public static Object getConnection(Player player) {

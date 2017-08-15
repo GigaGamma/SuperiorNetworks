@@ -1,5 +1,6 @@
 package com.superiorcraft.api.crafting;
 
+import org.bukkit.Material;
 import org.bukkit.block.Dropper;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -12,7 +13,7 @@ public class CustomCrafter extends CustomCraftingRecipe {
 	public static String name = "&6Custom Crafter".replace('&', '§');
 	
 	public CustomCrafter(ItemStack[] a) {
-		super(a);
+		super(a, new ItemStack(Material.DROPPER));
 		ncon = "container.dropper";
 	}
 	

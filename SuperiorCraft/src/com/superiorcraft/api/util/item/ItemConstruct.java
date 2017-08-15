@@ -10,7 +10,7 @@ public class ItemConstruct extends ItemStack {
 	
 	public ItemConstruct(Material mat) {
 		super(mat);
-		setMeta(new ItemMetaConstruct(this, "&r".replace('&', '§')));
+		setMeta(new ItemMetaConstruct(this));
 	}
 	
 	public ItemConstruct setMeta(ItemMetaConstruct meta) {

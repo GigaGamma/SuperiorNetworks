@@ -10,6 +10,11 @@ public class ItemMetaConstruct {
 	private ItemConstruct item;
 	private ItemMeta meta;
 	
+	public ItemMetaConstruct(ItemConstruct item) {
+		this.item = item;
+		setMeta(item.getItemMeta());
+	}
+	
 	public ItemMetaConstruct(ItemConstruct item, String itemName) {
 		this.item = item;
 		setMeta(item.getItemMeta());

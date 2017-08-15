@@ -10,9 +10,17 @@ public class CustomCraftingRecipe {
 	
 	public ItemStack[] recipe = new ItemStack[9];
 	public String ncon = CustomCrafter.name;
+	public ItemStack out;
 	
-	public CustomCraftingRecipe(ItemStack[] a) {
+	public CustomCraftingRecipe(ItemStack[] a, ItemStack out) {
 		recipe = a;
+		this.out = out;
+	}
+	
+	public CustomCraftingRecipe(ItemStack[] a, ItemStack out, String ncon) {
+		recipe = a;
+		this.out = out;
+		this.ncon = ncon;
 	}
 	
 	public boolean check(ItemStack[] a, Inventory inv) {
@@ -64,6 +72,16 @@ public class CustomCraftingRecipe {
 	}
 	
 	public void craft(InventoryCloseEvent e) {
+		
+	}
+	
+	public void onCraft(InventoryMoveItemEvent e) {
+		if (nCheck(e.getDestination().getName())) {
+			craft(e);
+		}
+	}
+	
+	public void craft(InventoryMoveItemEvent e) {
 		
 	}
 	

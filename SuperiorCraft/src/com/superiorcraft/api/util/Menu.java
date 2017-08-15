@@ -1,5 +1,6 @@
 package com.superiorcraft.api.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import com.superiorcraft.SuperiorCraft;
 
 public class Menu implements Listener {
 	
+	private ArrayList<Button> buttons = new ArrayList<Button>();
 	public Inventory inv;
 	
 	public Menu(String name, int size) {
@@ -27,6 +29,11 @@ public class Menu implements Listener {
 			inv.setItem(i, item);
 		}
 		
+		return this;
+	}
+	
+	public Menu addItem(ItemStack item) {
+		inv.addItem(item);
 		return this;
 	}
 	
@@ -45,10 +52,29 @@ public class Menu implements Listener {
 		p.openInventory(inv);
 	}
 	
+	public ArrayList<Button> getButtons() {
+		return buttons;
+	}
+
+	public void setButtons(ArrayList<Button> buttons) {
+		this.buttons = buttons;
+	}
+	
+	public Menu addButton(Button button) {
+		getButtons().add(button);
+		return this;
+	}
+
 	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent e) {
 		if (e.getInventory().getName().equals(inv.getName())) {
 			onInventoryClick(e);
+		}
+		for (Button b : getButtons()) {
+			if (b.getItem().equals(e.getCurrentItem()) && e.getInventory().equals(inv)) {
+				b.onClick((Player) e.getWhoClicked(), e.getInventory());
+				e.setCancelled(true);
+			}
 		}
 	}
 	

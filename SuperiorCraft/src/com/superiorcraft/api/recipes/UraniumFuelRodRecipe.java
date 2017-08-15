@@ -18,7 +18,7 @@ public class UraniumFuelRodRecipe extends CustomCraftingRecipe {
 	public static ItemStack[] recipe = {CustomItem.getItem("uranium_ingot"), new ItemStack(Material.IRON_BLOCK)};
 	
 	public UraniumFuelRodRecipe(ItemStack[] a) {
-		super(a);
+		super(a, CustomBlock.getBlock("uranium_fuel_rod"));
 	}
 	
 	@Override
