@@ -87,6 +87,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -119,8 +120,13 @@ import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
 import com.superiorcraft.api.blocks.CustomPanel;
 import com.superiorcraft.api.blocks.CustomPanelTexture;
+import com.superiorcraft.api.crafting.CraftingGui;
 import com.superiorcraft.api.crafting.CustomCrafting;
+import com.superiorcraft.api.crafting.FoodCrafter;
 import com.superiorcraft.api.items.CustomItem;
+import com.superiorcraft.api.items.CustomTool;
+import com.superiorcraft.api.items.food.Chocolate;
+import com.superiorcraft.api.items.food.ChocolateMilk;
 import com.superiorcraft.api.items.food.CustomFood;
 import com.superiorcraft.api.items.food.FoodMessage;
 import com.superiorcraft.api.items.food.Salad;
@@ -361,8 +367,35 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		BukkitTask task = new FoodMessage().runTaskTimer(this, 0, 5);
 		Registry.registerItem(new Salad(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 1).setUnbreakable(true).setName("&2Salad").removeFlags().getItem(), "foode:salad"));
 		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 2).setUnbreakable(true).setName("&9Sandwich").removeFlags().getItem(), "foode:sandwich"));
-		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 3).setUnbreakable(true).setName("&7Chocolate").removeFlags().getItem(), "foode:chocolate"));
+		Registry.registerItem(new Chocolate(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 3).setUnbreakable(true).setName("&7Chocolate").removeFlags().getItem(), "foode:chocolate"));
+		Registry.registerItem(new ChocolateMilk(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 4).setUnbreakable(true).setName("&7Chocolate Milk").removeFlags().getItem(), "foode:chocolate_milk"));
 		
+		// Realz
+		Registry.registerItem(new CustomTool(new ItemConstruct(Material.WOOD_AXE).getMeta().setName("Flint Axe").getItem(), "realz:flint_axe", ToolPower.STONE, 20));
+		ShapedRecipe frecipe = new ShapedRecipe(CustomItem.getItem("flint_axe"));
+		
+		frecipe.shape(
+				"FF",
+				"FS",
+				" S"
+				);
+		
+		frecipe.setIngredient('F', Material.FLINT);
+		frecipe.setIngredient('S', Material.STICK);
+		
+		Bukkit.addRecipe(frecipe);
+		
+		ShapelessRecipe stickr = new ShapelessRecipe(new ItemStack(Material.STICK));
+		stickr.addIngredient(Material.SAPLING);
+		Bukkit.addRecipe(stickr);
+		
+		ShapelessRecipe stickr2 = new ShapelessRecipe(new ItemStack(Material.STICK));
+		stickr2.addIngredient(Material.LEAVES);
+		Bukkit.addRecipe(stickr2);
+		
+		ShapelessRecipe ctable = new ShapelessRecipe(new ItemStack(Material.WOOD));
+		ctable.addIngredient(4, Material.STICK);
+		Bukkit.addRecipe(ctable);
 		
 		CustomItem iload = new CustomItem(null, "ItemLoader");
 		getCommand("getitem").setExecutor(iload);
@@ -375,8 +408,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		// Realism Modules
 		Registry.registerListener(new RealBreakBlock());
 		
-		Registry.registerBlockBreakRule(new BlockBreakRule(Material.LOG, ToolPower.STONE));
-		Registry.registerBlockBreakRule(new BlockBreakRule(Material.WOOD, ToolPower.STONE));
+		Registry.registerBlockBreakRule(new BlockBreakRule(Material.LOG, ToolPower.FLINT));
+		Registry.registerBlockBreakRule(new BlockBreakRule(Material.WOOD, ToolPower.FLINT));
 		Registry.registerBlockBreakRule(new BlockBreakRule(Material.REDSTONE_BLOCK, ToolPower.IRON));
 
 		// Register Commands
@@ -588,6 +621,10 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
 		getServer().createWorld(new WorldCreator("world"));
+		
+		for (Player player : ServerUtil.getPlayers()) {
+			AntiCheat.data.add(new PlayerData(player));
+		}
 	}
 	
 	private void addClassPath(final URL url) throws IOException {
@@ -1470,7 +1507,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			//CameraUtil.goToNearestCamera(player);*/
 			
 			//PowerTrailUtil.makePowerGridMap(player.getWorld());
-			player.sendMessage(NMSAdapter.getServer().toString());
+			/*player.sendMessage(NMSAdapter.getServer().toString());*/
+			new CraftingGui(FoodCrafter.name).show(player);
 			return true;
 		}
 

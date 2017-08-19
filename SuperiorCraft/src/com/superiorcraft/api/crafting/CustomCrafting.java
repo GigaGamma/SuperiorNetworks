@@ -8,16 +8,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Dropper;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -134,7 +138,8 @@ public class CustomCrafting implements Listener {
 				m.addItem(r.out);
 			}
 		}
-		return m;
+		//return m;
+		return new CraftingGui(cat);
 	}
 	
 	public void load() {
@@ -148,6 +153,7 @@ public class CustomCrafting implements Listener {
 		Registry.addRecipe(new SaladRecipe(SandwichRecipe.recipe, CustomItem.getItem("sandwich")));
 		Registry.addRecipe(new InOutRecipe(new ItemStack[] {new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.APPLE), new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.GOLD_BLOCK), new ItemStack(Material.GOLD_BLOCK)}, new ItemConstruct(Material.GOLDEN_APPLE).getMeta().setName(ChatColor.LIGHT_PURPLE + "Notch Apple").setData((short) 1).getItem(), FoodCrafter.name));
 		Registry.addRecipe(new InOutRecipe(new ItemStack[] {null, null, null, null, new ItemConstruct(Material.INK_SACK).getMeta().setData((short) 3).getItem()}, CustomItem.getItem("chocolate"), FoodCrafter.name));
+		Registry.addRecipe(new InOutRecipe(new ItemStack[] {null, null, null, null, CustomItem.getItem("chocolate"), null, null, new ItemStack(Material.MILK_BUCKET)}, CustomItem.getItem("chocolate_milk"), FoodCrafter.name));
 		/*List<Recipe> recipes = new ArrayList<>();
 		Bukkit.recipeIterator().forEachRemaining(recipes::add);
 		for (Recipe r : recipes) {
@@ -262,6 +268,23 @@ public class CustomCrafting implements Listener {
 				}
 			}
 		}, 10);
+	}
+	
+	@EventHandler
+	public void onCraft(PlayerDropItemEvent e) {
+		//e.getPlayer().sendMessage(e.getItemDrop().getItemStack().toString());
+		/*for (CustomCraftingRecipe r : recipes) {
+			//if (r.ncon.equals("ground")) {
+				ArrayList<Item> items = new ArrayList<Item>();
+				items.add(e.getItemDrop());
+				for (Entity it : e.getItemDrop().getNearbyEntities(5, 5, 5)) {
+					if (it instanceof Item) {
+						items.add((Item) it);
+					}
+				}
+				e.getPlayer().sendMessage(String.valueOf(items.size()));
+			//}
+		}*/
 	}
 	
 }

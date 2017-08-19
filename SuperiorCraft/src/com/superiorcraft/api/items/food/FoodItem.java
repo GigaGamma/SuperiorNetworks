@@ -7,5 +7,6 @@ public interface FoodItem {
 	public void onEat(Player player);
 	public int getNutritionLevel();
 	public int getSaturationLevel();
+	public default boolean hasToBeHungry() {return true;};
 	
 }

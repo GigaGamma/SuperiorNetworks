@@ -2,6 +2,8 @@ package com.superiorcraft.api.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,6 +20,9 @@ public class Menu implements Listener {
 	
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 	public Inventory inv;
+	
+	private ArrayList<Button> abuttons = new ArrayList<Button>();
+	private ArrayList<Button> rbuttons = new ArrayList<Button>();
 	
 	public Menu(String name, int size) {
 		inv = Bukkit.getServer().createInventory(null, size, name);
@@ -61,7 +66,12 @@ public class Menu implements Listener {
 	}
 	
 	public Menu addButton(Button button) {
-		getButtons().add(button);
+		abuttons.add(button);
+		return this;
+	}
+	
+	public Menu removeButton(Button button) {
+		rbuttons.add(button);
 		return this;
 	}
 
@@ -70,7 +80,16 @@ public class Menu implements Listener {
 		if (e.getInventory().getName().equals(inv.getName())) {
 			onInventoryClick(e);
 		}
-		for (Button b : getButtons()) {
+		ListIterator<Button> badd = abuttons.listIterator();
+		while (badd.hasNext()) {
+			getButtons().add(badd.next());
+		}
+		ListIterator<Button> it = getButtons().listIterator();
+		while (it.hasNext()) {
+			Button b = it.next();
+			if (rbuttons.contains(b)) {
+				it.remove();
+			}
 			if (b.getItem().equals(e.getCurrentItem()) && e.getInventory().equals(inv)) {
 				b.onClick((Player) e.getWhoClicked(), e.getInventory());
 				e.setCancelled(true);

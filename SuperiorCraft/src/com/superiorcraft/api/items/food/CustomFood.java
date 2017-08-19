@@ -17,7 +17,7 @@ public abstract class CustomFood extends CustomItem implements FoodItem {
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if (e.getAction() == Action.RIGHT_CLICK_AIR && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType() == getItem().getType() && e.getItem().getDurability() == getItem().getDurability() && e.getPlayer().getFoodLevel() < 20) {
+		if (e.getAction() == Action.RIGHT_CLICK_AIR && e.getItem() != null && e.getItem().getType() != null && e.getItem().getType() == getItem().getType() && e.getItem().getDurability() == getItem().getDurability() && ((e.getPlayer().getFoodLevel() < 20 && hasToBeHungry()) || (!hasToBeHungry())) ) {
 			if (e.getItem().getAmount() - 1 != 0) {
 				ItemStack it = e.getItem();
 				it.setAmount(e.getItem().getAmount() - 1);
