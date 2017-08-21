@@ -1,5 +1,5 @@
 /*
- 	Copyright (c) 2017 SuperiorCraft Team (Brian Zhou, Auguste Rame, Brandon Reed, and Jayden Johnson)
+ 	Copyright (c) 2017 Auguste Rame
 
  	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -159,6 +159,8 @@ import com.superiorcraft.realism.BlockBreakRule;
 import com.superiorcraft.realism.RealBreakBlock;
 import com.superiorcraft.realism.ToolPower;
 import com.superiorcraft.trollcraft.GhostBlock;
+import com.superiorcraft.web.SuperiorWeb;
+
 
 public class SuperiorCraft extends JavaPlugin implements Listener {
 
@@ -181,7 +183,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	public void onEnable() {
 		try {
             final File[] libs = new File[] {
-                    new File(getDataFolder(), "jsoup.jar"),
+                    /*new File(getDataFolder(), "jsoup.jar"),
+                    new File(getDataFolder(), "spark.jar")*/
                      };
             for (final File lib : libs) {
                 if (!lib.exists()) {
@@ -619,12 +622,14 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		
 		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
-		logger.info("\n---\nFinished SuperiorCraft initialization\n---");
+		logger.info("\n---\nFinished SuperiorCraft initialization (Hopefully It Works!)\n---");
 		getServer().createWorld(new WorldCreator("world"));
 		
 		for (Player player : ServerUtil.getPlayers()) {
 			AntiCheat.data.add(new PlayerData(player));
 		}
+		
+		SuperiorWeb.startServer();
 	}
 	
 	private void addClassPath(final URL url) throws IOException {
@@ -645,6 +650,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 
 	@Override
 	public void onDisable() {
+		SuperiorWeb.stopServer();
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft is being turned off", "red", "If you are not a developer, you can ignore this", "light_purple", "")});
 	}
 
@@ -1494,7 +1500,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		}
 
 		else if (command.getName().equalsIgnoreCase("holo")) {
-			Player player = (Player) sender;
+			//Player player = (Player) sender;
 			//createHologram(player.getLocation(), String.join(" ", args));
 			//new Hologram(String.join(" ", args), player.getLocation());
 			/*ItemStack a = new ItemStack(Material.DIAMOND_SPADE);
@@ -1508,7 +1514,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			
 			//PowerTrailUtil.makePowerGridMap(player.getWorld());
 			/*player.sendMessage(NMSAdapter.getServer().toString());*/
-			new CraftingGui(FoodCrafter.name).show(player);
+			//new CraftingGui(FoodCrafter.name).show(player);
+			sender.sendMessage("It Works!");
 			return true;
 		}
 
