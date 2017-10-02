@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.superiorcraft.api.util.Menu;
+import com.superiorcraft.api.gui.Menu;
 import com.superiorcraft.api.util.item.ItemConstruct;
 import com.superiorcraft.api.util.item.ItemMetaConstruct;
 

@@ -1,4 +1,4 @@
-package com.superiorcraft.api.util;
+package com.superiorcraft.api.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;

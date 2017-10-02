@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Dropper;
 import org.bukkit.entity.Entity;
@@ -16,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ItemSpawnEvent;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
@@ -32,13 +34,13 @@ import org.bukkit.inventory.meta.BookMeta;
 
 import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.Registry;
+import com.superiorcraft.api.gui.Button;
+import com.superiorcraft.api.gui.Menu;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.recipes.InOutRecipe;
 import com.superiorcraft.api.recipes.UraniumFuelRodRecipe;
 import com.superiorcraft.api.recipes.food.SaladRecipe;
 import com.superiorcraft.api.recipes.food.SandwichRecipe;
-import com.superiorcraft.api.util.Button;
-import com.superiorcraft.api.util.Menu;
 import com.superiorcraft.api.util.ServerUtil;
 import com.superiorcraft.api.util.item.ItemConstruct;
 
@@ -119,25 +121,6 @@ public class CustomCrafting implements Listener {
 	}
 	
 	public Menu getCraftCatMenu(String cat) {
-		Menu m = new Menu(ChatColor.GOLD + "Crafting Guide", 45);
-		Button crafting = new Button(new ItemConstruct(Material.WORKBENCH).getMeta().setName("Back").getItem()) {
-			
-			@Override
-			public void onClick(Player p, Inventory i) {
-				p.openInventory(getCraftMainMenu().inv);
-			}
-			
-		};
-		m.addButton(crafting);
-		m.addItem(crafting.getItem(), 0);
-		for (int i = 1; i < 9; i++) {
-			m.addItem(new ItemConstruct(Material.STAINED_GLASS_PANE).getMeta().setName("").setData((byte) 7).getItem(), i);
-		}
-		for (CustomCraftingRecipe r : recipes) {
-			if (r.ncon == cat) {
-				m.addItem(r.out);
-			}
-		}
 		//return m;
 		return new CraftingGui(cat);
 	}
@@ -187,9 +170,16 @@ public class CustomCrafting implements Listener {
 	public void onCraft(InventoryClickEvent e) {
 		if (e.getInventory().getName().contains("Crafting Guide")) {
 			Menu m = null;
+			/*if (e.getAction().equals(InventoryAction.PLACE_ONE) && e.getRawSlot() < 27) {
+				e.setCancelled(true);
+				return;
+			}*/
 			for (CustomCraftingRecipe r : recipes) {
 				if (r.out.equals(e.getCurrentItem())) {
 					m = new Menu("Crafting Guide > " + e.getCurrentItem().getItemMeta().getDisplayName(), 27).setBackground(new ItemConstruct(Material.STAINED_GLASS_PANE).getMeta().setName("Make in " + r.ncon).setData((byte) 7).getItem());
+					if (e.getAction().equals(InventoryAction.CLONE_STACK) && e.getWhoClicked().getGameMode().equals(GameMode.CREATIVE)) {
+						return;
+					}
 					for (int i = 0; i < 9; i++) {
 						HashMap<Integer, Integer> id = new HashMap<Integer, Integer>();
 						id.put(0, 2);
@@ -210,21 +200,22 @@ public class CustomCrafting implements Listener {
 						} else {
 							m.addItem(new ItemStack(Material.AIR), id.get(i));
 						}
-						m.addItem(r.out, 15);
-						Button crafting = new Button(new ItemConstruct(Material.WORKBENCH).getMeta().setName("Back to Recipes").getItem()) {
-							
-							@Override
-							public void onClick(Player p, Inventory i) {
-								p.openInventory(getCraftMainMenu().inv);
-							}
-							
-						};
-						m.addButton(crafting);
-						m.addItem(crafting.getItem(), 0);
+						
 					}
+					m.addItem(r.out, 15);
+					Button crafting = new Button(new ItemConstruct(Material.WORKBENCH).getMeta().setName("Back to Recipes").getItem()) {
+						
+						@Override
+						public void onClick(Player p, Inventory i) {
+							p.openInventory(getCraftMainMenu().inv);
+						}
+						
+					};
+					m.addButton(crafting);
+					m.addItem(crafting.getItem(), 0);
 				}
 			}
-			if (m != null) {
+			if (m != null && e.getAction() != InventoryAction.CLONE_STACK) {
 				e.getWhoClicked().openInventory(m.inv);
 			}
 			e.setCancelled(true);

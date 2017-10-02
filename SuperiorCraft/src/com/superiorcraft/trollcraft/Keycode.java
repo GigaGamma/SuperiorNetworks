@@ -22,7 +22,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.superiorcraft.SuperiorCraft;
 import com.superiorcraft.api.blocks.CustomBlock;
 import com.superiorcraft.api.blocks.CustomBlockTexture;
-import com.superiorcraft.api.util.Menu;
+import com.superiorcraft.api.gui.Menu;
 
 public class Keycode extends CustomBlock implements Listener {
 

@@ -123,6 +123,7 @@ import com.superiorcraft.api.blocks.CustomPanelTexture;
 import com.superiorcraft.api.crafting.CraftingGui;
 import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.crafting.FoodCrafter;
+import com.superiorcraft.api.gui.Menu;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.api.items.CustomTool;
 import com.superiorcraft.api.items.food.Chocolate;
@@ -140,7 +141,7 @@ import com.superiorcraft.api.util.CameraUtil;
 import com.superiorcraft.api.util.DamageIndicator;
 import com.superiorcraft.api.util.Hologram;
 import com.superiorcraft.api.util.JarUtils;
-import com.superiorcraft.api.util.Menu;
+import com.superiorcraft.api.util.OutListener;
 import com.superiorcraft.api.util.PlayerData;
 import com.superiorcraft.api.util.ServerUtil;
 import com.superiorcraft.api.util.WebUtil;
@@ -178,7 +179,9 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	public static Menu gselect;
 
 	public static Menu gmode1s;
-
+	
+	//public OutListener outl;
+	
 	@Override
 	public void onEnable() {
 		try {
@@ -367,7 +370,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		
 		// FoodE
 		
-		BukkitTask task = new FoodMessage().runTaskTimer(this, 0, 5);
+		//BukkitTask task = new FoodMessage().runTaskTimer(this, 0, 5);
 		Registry.registerItem(new Salad(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 1).setUnbreakable(true).setName("&2Salad").removeFlags().getItem(), "foode:salad"));
 		Registry.registerItem(new Sandwich(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 2).setUnbreakable(true).setName("&9Sandwich").removeFlags().getItem(), "foode:sandwich"));
 		Registry.registerItem(new Chocolate(new ItemConstruct(Material.DIAMOND_SPADE).getMeta().setData((short) 3).setUnbreakable(true).setName("&7Chocolate").removeFlags().getItem(), "foode:chocolate"));
@@ -438,11 +441,11 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
-				for (Player player : ServerUtil.getPlayers()) {
+				/*for (Player player : ServerUtil.getPlayers()) {
 					if (AntiCheat.ftime.containsKey(player)) {
-						AntiCheat.ftime.remove(player);
+						//AntiCheat.ftime.remove(player);
 					}
-				}
+				}*/
 			}
 		}, 0, 30);
 		
@@ -621,7 +624,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	    	pcrys.setItemMeta(pcrysm);*/
 		
 		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
-		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
+		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft " + getDescription().getVersion() + " initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization (Hopefully It Works!)\n---");
 		getServer().createWorld(new WorldCreator("world"));
 		
@@ -629,28 +632,25 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			AntiCheat.data.add(new PlayerData(player));
 		}
 		
-		SuperiorWeb.startServer();
+		//SuperiorWeb.startServer(); Uncomment Later
 	}
 	
 	private void addClassPath(final URL url) throws IOException {
-        final URLClassLoader sysloader = (URLClassLoader) ClassLoader
-                .getSystemClassLoader();
-        final Class<URLClassLoader> sysclass = URLClassLoader.class;
-        try {
-            final Method method = sysclass.getDeclaredMethod("addURL",
-                    new Class[] { URL.class });
-            method.setAccessible(true);
-            method.invoke(sysloader, new Object[] { url });
-        } catch (final Throwable t) {
-            t.printStackTrace();
-            throw new IOException("Error adding " + url
-                    + " to system classloader");
+		final URLClassLoader sysloader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+		final Class<URLClassLoader> sysclass = URLClassLoader.class;
+		try {
+			final Method method = sysclass.getDeclaredMethod("addURL", new Class[] { URL.class });
+			method.setAccessible(true);
+			method.invoke(sysloader, new Object[] { url });
+		} catch (final Throwable t) {
+			t.printStackTrace();
+			throw new IOException("Error adding " + url + " to system classloader");
         }
     }
 
 	@Override
 	public void onDisable() {
-		SuperiorWeb.stopServer();
+		//SuperiorWeb.stopServer();
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft is being turned off", "red", "If you are not a developer, you can ignore this", "light_purple", "")});
 	}
 

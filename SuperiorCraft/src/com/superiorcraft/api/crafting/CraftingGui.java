@@ -5,10 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.superiorcraft.api.gui.Button;
 import com.superiorcraft.api.gui.GuiCategory;
 import com.superiorcraft.api.gui.GuiPage;
 import com.superiorcraft.api.gui.PagePosition;
-import com.superiorcraft.api.util.Button;
 import com.superiorcraft.api.util.item.ItemConstruct;
 
 public class CraftingGui extends GuiPage {

@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.superiorcraft.api.util.Button;
-import com.superiorcraft.api.util.Menu;
 import com.superiorcraft.api.util.item.ItemConstruct;
 
 public abstract class GuiPage extends Menu implements Gui {

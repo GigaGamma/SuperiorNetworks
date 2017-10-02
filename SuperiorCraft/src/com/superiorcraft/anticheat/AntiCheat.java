@@ -75,7 +75,7 @@ public class AntiCheat implements Listener {
 		}
 		for (PlayerData d : AntiCheat.data) {
 			if (d.getPlayer().equals(e.getPlayer())) {
-				d.addBlock(e.getTo().getBlock());
+				//d.addBlock(e.getTo().getBlock());
 				//System.out.println(d.getBlocks().get(d.getBlocks().size() - 2).getLocation().distance(d.getBlocks().get(d.getBlocks().size() - 1).getLocation()));
 				if (d.getPlayer().isOnGround() && d.getBlocks().size() > 3 && d.getBlocks().get(d.getBlocks().size() - 2).getLocation().distance(d.getBlocks().get(d.getBlocks().size() - 1).getLocation()) > 2 && !e.getPlayer().isOp()) {
 					AntiCheat.kickPlayer(d.getPlayer(), Reason.SPEED_HACKING, (String) ListUtil.getRandomItem(AntiCheat.config.getStringList("messages.speed")));

@@ -1,14 +1,21 @@
 package com.superiorcraft.web;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.bukkit.Bukkit;
 
 import com.superiorcraft.SuperiorCraft;
+import com.superiorcraft.api.util.DatabaseUtil;
 import com.superiorcraft.api.util.ServerUtil;
 import com.superiorcraft.api.util.json.JsonGroup;
+import com.superiorcraft.web.views.Login;
 
 import spark.Spark;
 
 public class SuperiorWeb {
+	
+	public static DatabaseUtil db;
 	
 	public static void main(String[] args) {
 		//stopServer();
@@ -16,15 +23,14 @@ public class SuperiorWeb {
 	}
 	
 	public static void startServer() {
+		db = new DatabaseUtil("C:/Users/augus/git/SuperiorCraft/SuperiorCraft/resources/sweb.db");
 		System.out.println("Starting...");
 		Spark.setPort(9382);
 		Spark.staticFileLocation("/assets");
 		
-		/*Spark.get("", (req, res) -> {
-			return res.body();
-		});*/
-		
-		Spark.get("/webconsole", WebConsole.request());
+		Spark.get(Path.INDEX, Login.request());
+		Spark.post(Path.INDEX, Login.form());
+		Spark.get(Path.CONSOLE, WebConsole.request());
 		
 		Spark.get("/api/status", (req, res) -> {
 			res.type("application/json");

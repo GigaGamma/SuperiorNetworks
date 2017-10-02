@@ -9,6 +9,8 @@ import com.superiorcraft.api.crafting.CustomCrafting;
 import com.superiorcraft.api.crafting.CustomCraftingRecipe;
 import com.superiorcraft.api.items.CustomItem;
 import com.superiorcraft.realism.BlockBreakRule;
+import com.superiorcraft.server.Server;
+import com.superiorcraft.server.ServerSelector;
 
 public class Registry {
 	
@@ -34,6 +36,10 @@ public class Registry {
 	
 	public static void addRecipe(CustomCraftingRecipe r) {
 		CustomCrafting.recipes.add(r);
+	}
+	
+	public static void addServer(Server s) {
+		ServerSelector.getServers().add(s);
 	}
 	
 }

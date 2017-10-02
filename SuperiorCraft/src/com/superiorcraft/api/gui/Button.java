@@ -1,4 +1,4 @@
-package com.superiorcraft.api.util;
+package com.superiorcraft.api.gui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
