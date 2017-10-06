@@ -19,59 +19,59 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
 **WIP-Beta Games**
 > *Note: SuperiorCraft Server is not responsible for glitches on minigames listed here.*
  - Survival Galaxy:
-  Modded 
-    Kave Fac
-    Sky Automation
-    Oceanic Automation
-    Ultimate Warfare
-  Non-Modded
-    Regular Survival
-    ***CUSTOM SURVIVAL***
+   - Modded 
+     - Kave Fac
+     - Sky Automation
+     - Oceanic Automation
+     - Ultimate Warfare
+   - Non-Modded
+     - Regular Survival
+     - ***CUSTOM SURVIVAL***
   
 **Priority Queue**
  - Break Dat Block:
-  Egg Wars
-  Bed Wars
-  Banner Wars
-  Parkour Wars
-  Head Wars
+   - Egg Wars
+   - Bed Wars
+   - Banner Wars
+   - Parkour Wars
+   - Head Wars
 
 **Queued Games**
  - Factions:
-  Faction Server Alpha
-  Faction Server Beta
-  Faction Server Delta
-  Faction Server Gamma
-  Faction Server Omega
+   - Faction Server Alpha
+   - Faction Server Beta
+   - Faction Server Delta
+   - Faction Server Gamma
+   - Faction Server Omega
  - Skywars:
-  EXP OVA 9000!!!
-  Speed 10 OP
-  Parkour
-  Every Hit is a Crit
-  Super Saiyan
-  No Need 4 Mid
-  Disco
-  Lava's yer best friend, mayetys.
-  Sorry, spleef only
-  Crumble
+   - EXP OVA 9000!!!
+   - Speed 10 OP
+   - Parkour
+   - Every Hit is a Crit
+   - Super Saiyan
+   - No Need 4 Mid
+   - Disco
+   - Lava's yer best friend, mayetys.
+   - Sorry, spleef only
+   - Crumble
  - Spleef:
-  Snow Spleef
-  The Floor is Lava
-  Spleef Fall
+   - Snow Spleef
+   - The Floor is Lava
+   - Spleef Fall
  - Gravity:
-  *no gamemodes as of the moment*
+   - *no gamemodes as of the moment*
  - Prison:
-  Prison Lunar
-  Prison Solar
+   - Prison Lunar
+   - Prison Solar
  - Skyblock:
-  Coal
-  Iron
-  Lapiz
-  Redstone
-  Diamond
-  Beacon
+   - Coal
+   - Iron
+   - Lapiz
+   - Redstone
+   - Diamond
+   - Beacon
   
 **Wait-List Games**
  - Creative
-  Yellow
-  Purple
+   - Yellow
+   - Purple
