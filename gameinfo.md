@@ -20,13 +20,13 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
 > *Note: SuperiorCraft Server is not responsible for glitches on minigames listed here.*
  - Survival Galaxy:
    - Modded 
-     - Kave Fac
-     - Sky Automation
-     - Oceanic Automation
-     - Ultimate Warfare
+     - [ ] Kave Fac
+     - [ ] Sky Automation
+     - [ ] Oceanic Automation
+     - [ ] Ultimate Warfare
    - Non-Modded
-     - Regular Survival
-     - ***CUSTOM SURVIVAL***
+     - [ ] Regular Survival
+     - [ ] ***CUSTOM SURVIVAL***
   
 **Priority Queue**
 > *Note: Priority Queue is just the top of what we are starting next.*
@@ -74,7 +74,7 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
    - Beacon
   
 **Wait-List Games**
-> *Note: Theese probably won't hapen.*
+> *Note: Theese probably won't happen for a while.*
  - Creative
    - Yellow
    - Purple
