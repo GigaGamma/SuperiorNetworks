@@ -12,12 +12,12 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
 
 ### The Higly Anticipated List (drumroll please)
 **Released Games**
-*Note: Theese Minigames are only as of October 5th, 2017.*
+> *Note: Theese Minigames are only as of October 5th, 2017.*
 CTF:
   *no gamemodes as of the moment*
   
 **WIP-Beta Games**
-*Note: SuperiorCraft Server is not responsible for glitches on minigames listed here.*
+> *Note: SuperiorCraft Server is not responsible for glitches on minigames listed here.*
 Survival Galaxy:
   Modded 
     Kave Fac
