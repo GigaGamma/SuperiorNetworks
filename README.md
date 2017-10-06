@@ -20,11 +20,9 @@ The majority of the CustomBlock textures in the 'Customz' pack was created by Co
 > Brandon Read, CIO: naw, ya dont have ta if u dont wanna.
 
 
-> Old Man Closing Speech
-```
+
 As [@thepenguingamerzgithub] says,
 Don't forget to be awesome.
-```
 
 -From **ALL** of the SuperiorCraft Team.
 
