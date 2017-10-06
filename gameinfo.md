@@ -29,6 +29,7 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
      - ***CUSTOM SURVIVAL***
   
 **Priority Queue**
+> *Note: Priority Queue is just the top of what we are starting next.*
  - Break Dat Block:
    - Egg Wars
    - Bed Wars
@@ -37,6 +38,7 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
    - Head Wars
 
 **Queued Games**
+> *Note: Queued Games will probably only be started 6 months after it is queued.*
  - Factions:
    - Faction Server Alpha
    - Faction Server Beta
@@ -72,6 +74,7 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
    - Beacon
   
 **Wait-List Games**
+> *Note: Theese probably won't hapen.*
  - Creative
    - Yellow
    - Purple
