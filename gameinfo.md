@@ -13,12 +13,12 @@ Great question! We offer a wide variety, simply skip down to section 1 of Miniga
 ### The Higly Anticipated List (drumroll please)
 **Released Games**
 > *Note: Theese Minigames are only as of October 5th, 2017.*
-CTF:
+ - CTF:
   *no gamemodes as of the moment*
   
 **WIP-Beta Games**
 > *Note: SuperiorCraft Server is not responsible for glitches on minigames listed here.*
-Survival Galaxy:
+ - Survival Galaxy:
   Modded 
     Kave Fac
     Sky Automation
@@ -29,7 +29,7 @@ Survival Galaxy:
     ***CUSTOM SURVIVAL***
   
 **Priority Queue**
-Break Dat Block:
+ - Break Dat Block:
   Egg Wars
   Bed Wars
   Banner Wars
@@ -37,13 +37,13 @@ Break Dat Block:
   Head Wars
 
 **Queued Games**
-Factions:
+ - Factions:
   Faction Server Alpha
   Faction Server Beta
   Faction Server Delta
   Faction Server Gamma
   Faction Server Omega
-Skywars:
+ - Skywars:
   EXP OVA 9000!!!
   Speed 10 OP
   Parkour
@@ -54,16 +54,16 @@ Skywars:
   Lava's yer best friend, mayetys.
   Sorry, spleef only
   Crumble
-Spleef:
+ - Spleef:
   Snow Spleef
   The Floor is Lava
   Spleef Fall
-Gravity:
+ - Gravity:
   *no gamemodes as of the moment*
-Prison:
+ - Prison:
   Prison Lunar
   Prison Solar
-Skyblock:
+ - Skyblock:
   Coal
   Iron
   Lapiz
@@ -72,6 +72,6 @@ Skyblock:
   Beacon
   
 **Wait-List Games**
-Creative
+ - Creative
   Yellow
   Purple
