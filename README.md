@@ -18,6 +18,13 @@ The majority of the CustomBlock textures in the 'Customz' pack was created by Co
 > Auguste Rame, CTO: It really is.
 
 > Brandon Read, CIO: naw, ya dont have ta if u dont wanna.
+
+```
+As @thepenguingamerzgithub says,
+Don't forget to be awesome.
+
+-From ***ALL** of the SuperiorCraft Team.
+```
 ## Games
 
 ### What are minigames?
