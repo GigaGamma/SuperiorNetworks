@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -132,6 +133,8 @@ import com.superiorcraft.api.items.food.CustomFood;
 import com.superiorcraft.api.items.food.FoodMessage;
 import com.superiorcraft.api.items.food.Salad;
 import com.superiorcraft.api.items.food.Sandwich;
+import com.superiorcraft.api.items.weapons.RangedWeaponList;
+import com.superiorcraft.api.items.weapons.ranged.ShoeShiner;
 import com.superiorcraft.api.map.CustomMap;
 import com.superiorcraft.api.more.PolishedQuartz;
 import com.superiorcraft.api.power.PowerTrailUtil;
@@ -144,6 +147,7 @@ import com.superiorcraft.api.util.JarUtils;
 import com.superiorcraft.api.util.OutListener;
 import com.superiorcraft.api.util.PlayerData;
 import com.superiorcraft.api.util.ServerUtil;
+import com.superiorcraft.api.util.StringUtil;
 import com.superiorcraft.api.util.WebUtil;
 import com.superiorcraft.api.util.item.ItemConstruct;
 import com.superiorcraft.api.util.json.JsonReader;
@@ -159,6 +163,8 @@ import com.superiorcraft.nms.NMSAdapter;
 import com.superiorcraft.realism.BlockBreakRule;
 import com.superiorcraft.realism.RealBreakBlock;
 import com.superiorcraft.realism.ToolPower;
+import com.superiorcraft.server.Minigame;
+import com.superiorcraft.server.MinigameCommand;
 import com.superiorcraft.trollcraft.GhostBlock;
 import com.superiorcraft.web.SuperiorWeb;
 
@@ -309,7 +315,7 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		wpl4.setItemMeta(wpl4m);
 		wm1.inv.setItem(27, wpl4);
 
-		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "\"Woody\"", Material.FIREWORK_CHARGE, "The \"Wood Pecker\"", "Sniper", 0, 4, true, 1, false, 1, "Arrow", new PotionEffect(PotionEffectType.POISON, 300, 0, true, false)), this);
+		/*getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "\"Woody\"", Material.FIREWORK_CHARGE, "The \"Wood Pecker\"", "Sniper", 0, 4, true, 1, false, 1, "Arrow", new PotionEffect(PotionEffectType.POISON, 300, 0, true, false)), this);
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.DIAMOND_SWORD, "Shoe Shiner", Material.FIREWORK_CHARGE, "Dirty with DOOM", "Sniper", 20, 2, true), this);
 
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_AXE, "AttackMe 1", Material.FIREWORK_CHARGE, "Actually please don't attack me...", "Assault", 2, 0, false), this);
@@ -319,8 +325,10 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "Sprocket", Material.FIREWORK_CHARGE, "Flaming Balls of fire", "Special", 20, 5, false, 1, false, 1, "Rocket"), this);
 		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "Snowboom", Material.FIREWORK_CHARGE, "Flaming Balls of ice", "Special", 5, 3, false, 1, false, 1, "Snowball"), this);
 		
-		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "6-Coup", Material.GHAST_TEAR, "A little old...", "Side", -3.2, 0, false, 1, false, 1), this);
-
+		getServer().getPluginManager().registerEvents(new LongRangeWeapon(Material.WOOD_SWORD, "6-Coup", Material.GHAST_TEAR, "A little old...", "Side", -3.2, 0, false, 1, false, 1), this);*/
+		
+		Registry.registerListener(new ShoeShiner());
+		
 		// Register MYML
 
 		MYML myml = new MYML();
@@ -626,7 +634,12 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 		//JsonMessage.broadcastJsonMessage("{\"text\":\"[SuperiorCraft] Hello World\",\"color\":\"green\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/say hello\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"test\",\"color\":\"light_purple\"}]}}}");
 		JsonMessage.broadcastJsonMessages(new JsonMessage[] {new JsonMessage("[SuperiorCraft] SuperiorCraft " + getDescription().getVersion() + " initialized " + NMSAdapter.getVersion(), "green", "If you are not a developer, you can ignore this", "light_purple", "")});
 		logger.info("\n---\nFinished SuperiorCraft initialization (Hopefully It Works!)\n---");
+		
 		getServer().createWorld(new WorldCreator("world"));
+		Minigame bw = new Minigame();
+		bw.setName("BlockWarz");
+		bw.setLocation(new Location(new WorldCreator("builds").createWorld(), 0, 100, 0));
+		SuperiorCraft.plugin.getCommand("mg").setExecutor(new MinigameCommand());
 		
 		for (Player player : ServerUtil.getPlayers()) {
 			AntiCheat.data.add(new PlayerData(player));
@@ -1118,14 +1131,14 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			event.setCancelled(true);
 			SuperiorCraft.plugin.onChat(new AsyncPlayerChatEvent(true, AddMin.fchat.get(event.getPlayer()), event.getMessage(), event.getRecipients()));
 		}
-		if (getConfig().get("players." + event.getPlayer().getName() + ".muted") == "yes") {
+		/*if (getConfig().get("players." + event.getPlayer().getName() + ".muted") == "yes") {
 			event.setCancelled(true);
 			return;
 		}
 		if (!event.getPlayer().isOp()) {
 			event.setFormat(ChatColor.LIGHT_PURPLE + "%s" + ChatColor.DARK_AQUA + " > " + ChatColor.GREEN + "%s");
 		}
-		else if (event.getPlayer().isOp()) {
+		else */if (event.getPlayer().isOp()) {
 			//System.out.println();
 			
 			for (String url : WebUtil.extractUrls(event.getMessage())) {
@@ -1133,11 +1146,21 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 				event.setMessage(event.getMessage().replace(url, WebUtil.getPageTitle(url) + " [ " + url + " ]"));
 			}
 			
-			event.setFormat(ChatColor.LIGHT_PURPLE + getConfig().getString("players." + event.getPlayer().getName() + ".name") + ChatColor.DARK_AQUA + getConfig().getString("players." + event.getPlayer().getName() + ".suffix") + "> " + ChatColor.GREEN + event.getMessage());
+			//event.setFormat(ChatColor.LIGHT_PURPLE + getConfig().getString("players." + event.getPlayer().getName() + ".name") + ChatColor.DARK_AQUA + getConfig().getString("players." + event.getPlayer().getName() + ".suffix") + "> " + ChatColor.GREEN + event.getMessage());
 		
 			//event.setCancelled(true);
 			//return;
 		}
+		
+		for (PlayerData data : AntiCheat.data) {
+			if (data.getPlayer().equals(event.getPlayer())) {
+				HashMap<String, String> replacements = new HashMap<String, String>();
+				replacements.put("%playername%", event.getPlayer().getDisplayName());
+				replacements.put("%rankname%", data.getRank().getRankName());
+				event.setFormat(StringUtil.replaceAll(replacements, ChatColor.translateAlternateColorCodes('&', data.getRank().getPlayerPrefix())) + " " + StringUtil.replaceAll(replacements, ChatColor.translateAlternateColorCodes('&', data.getRank().getPlayerName())) + "§r" + ChatColor.AQUA + " > " + event.getMessage());
+			}
+		}
+		
 		if (!event.isCancelled()) {
 			for (Player pl : event.getRecipients()) {
 				//pl.play
@@ -1195,7 +1218,9 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		Player player = e.getPlayer();
-		for (PlayerData data : AntiCheat.data) {
+		ListIterator<PlayerData> li = AntiCheat.data.listIterator();
+		while (li.hasNext()) {
+			PlayerData data = li.next();
 			if (data.getPlayer().equals(player)) {
 				AntiCheat.data.remove(data);
 			}
@@ -1515,7 +1540,8 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			//PowerTrailUtil.makePowerGridMap(player.getWorld());
 			/*player.sendMessage(NMSAdapter.getServer().toString());*/
 			//new CraftingGui(FoodCrafter.name).show(player);
-			sender.sendMessage("It Works!");
+			//sender.sendMessage("It Works!");
+			new RangedWeaponList().show((Player) sender);
 			return true;
 		}
 

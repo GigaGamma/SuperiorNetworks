@@ -51,7 +51,7 @@ public class AntiCheat implements Listener {
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if (!e.getPlayer().isOnGround()) {
+		/*if (!e.getPlayer().isOnGround()) {
 			Location moved = e.getTo().clone().subtract(e.getFrom());
 			Block b = e.getPlayer().getWorld().getHighestBlockAt(e.getPlayer().getLocation());
 			//e.getPlayer().sendMessage(String.valueOf(e.getPlayer().getLocation().getBlockY() - b.getY()));
@@ -75,13 +75,13 @@ public class AntiCheat implements Listener {
 		}
 		for (PlayerData d : AntiCheat.data) {
 			if (d.getPlayer().equals(e.getPlayer())) {
-				//d.addBlock(e.getTo().getBlock());
-				//System.out.println(d.getBlocks().get(d.getBlocks().size() - 2).getLocation().distance(d.getBlocks().get(d.getBlocks().size() - 1).getLocation()));
+				d.addBlock(e.getTo().getBlock());
+				System.out.println(d.getBlocks().get(d.getBlocks().size() - 2).getLocation().distance(d.getBlocks().get(d.getBlocks().size() - 1).getLocation()));
 				if (d.getPlayer().isOnGround() && d.getBlocks().size() > 3 && d.getBlocks().get(d.getBlocks().size() - 2).getLocation().distance(d.getBlocks().get(d.getBlocks().size() - 1).getLocation()) > 2 && !e.getPlayer().isOp()) {
 					AntiCheat.kickPlayer(d.getPlayer(), Reason.SPEED_HACKING, (String) ListUtil.getRandomItem(AntiCheat.config.getStringList("messages.speed")));
 				}
 			}
-		}
+		}*/
 	}
 	
 	@EventHandler

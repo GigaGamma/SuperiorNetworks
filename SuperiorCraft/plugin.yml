@@ -158,3 +158,6 @@ commands:
     usage: /spy
     permission: superiorcraft.spy
     permission-message: Don't spy
+  mg:
+    description: Minigames
+    usage: /mg

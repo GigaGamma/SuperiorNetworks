@@ -71,34 +71,40 @@ public abstract class GuiPage extends Menu implements Gui {
 				}
 			}
 		}
-		Button next = new Button(new ItemConstruct(Material.WOOL).getMeta().setName("Next").getItem()) {
+		if (getCategory().equals(GuiCategory.PAGE_LIST)) {
+			Button next = new Button(new ItemConstruct(Material.WOOL).getMeta().setName("Next").getItem()) {
+				
+				@Override
+				public void onClick(Player p, Inventory i) {
+					loadPage(page + 1);
+					removeButton(this);
+				}
+				
+			};
+			addButton(next);
+			addItem(next.getItem(), this.inv.getSize() - 8);
 			
-			@Override
-			public void onClick(Player p, Inventory i) {
-				loadPage(page + 1);
-				removeButton(this);
-			}
-			
-		};
-		addButton(next);
-		addItem(next.getItem(), this.inv.getSize() - 8);
-		
-		Button back = new Button(new ItemConstruct(Material.WOOL).getMeta().setName("Back").getItem()) {
-			
-			@Override
-			public void onClick(Player p, Inventory i) {
-				loadPage(page - 1);
-				removeButton(this);
-			}
-			
-		};
-		addButton(back);
-		addItem(back.getItem(), this.inv.getSize() - 9);
+			Button back = new Button(new ItemConstruct(Material.WOOL).getMeta().setName("Back").getItem()) {
+				
+				@Override
+				public void onClick(Player p, Inventory i) {
+					loadPage(page - 1);
+					removeButton(this);
+				}
+				
+			};
+			addButton(back);
+			addItem(back.getItem(), this.inv.getSize() - 9);
+		}
 		this.page = page;
 	}
 	
 	public int getPage() {
-		return page;
+		if (getCategory().equals(GuiCategory.PAGE_LIST)) {
+			return page;
+		} else {
+			return 0;
+		}
 	}
 
 	public GuiCategory getCategory() {

@@ -26,6 +26,7 @@ import org.bukkit.potion.PotionEffect;
 
 import com.superiorcraft.commands.AddMin;
 
+@Deprecated
 public class LongRangeWeapon implements Listener {
 	
 	private HashMap<Player, Integer> cooldown = new HashMap<Player, Integer>();
