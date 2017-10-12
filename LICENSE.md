@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2017 SuperiorCraft Team (Brian Zhou, Auguste Rame, Brandon Reed, and Jayden Johnson)
+Copyright (c) 2017 SuperiorCraft Team (Brian Zhou, Auguste Rame, Brandon Reed, Cole Wise, and Jayden Johnson)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
