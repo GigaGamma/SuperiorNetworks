@@ -1,2 +1,5 @@
-# Issue Template
-Just type up your issue and that's it!
+# Title of Issue
+
+What version of SuperiorCraft are you using: 
+What other plugins are you using: 
+

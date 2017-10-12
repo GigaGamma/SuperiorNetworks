@@ -11,7 +11,7 @@ If you are going to use SuperiorCraft on your server, I strongly recommend __bui
 ### Credits
 The majority of the CustomBlock textures in the 'Customz' pack was created by CodeCrafted and can be found in their [Block Designer](https://codecrafted.net/blockdesigner) and the the custom items were created by [@superauguste](httpd://github.com/SuperAuguste).
 
-### Closing Notes
+[//]: # (### Closing Notes
 > Brian Zhou, CEO: If you do decide to read the rest of you, I can promise you that it's not useless crud.
 
 > Auguste Rame, CTO: It really is.
@@ -99,4 +99,4 @@ Great question! We offer a wide variety, simply skip down to 'The Higly Anticipa
 > *Note: Theese probably won't happen for a while.*
  - Creative
    - Yellow
-   - Purple
+   - Purple)
