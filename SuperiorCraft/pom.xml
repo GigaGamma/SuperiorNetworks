@@ -31,6 +31,18 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/jsoup-1.10.3.jar</systemPath>
 		</dependency>
+		<!--<dependency>
+			<groupId>com.jplug</groupId>
+			<artifactId>JSPlug</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/jsplug-1.0.0.jar</systemPath>
+		</dependency>-->
+		<dependency>
+			<groupId>com.jsplug</groupId>
+			<artifactId>jsplug</artifactId>
+			<version>LATEST</version>
+		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
@@ -45,6 +57,13 @@
 			<!--<scope>system</scope>
 			<systemPath>${project.basedir}/slf4j.jar</systemPath>-->
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.2</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -64,6 +83,7 @@
 				<directory>${basedir}</directory>
 				<includes>
 					<include>plugin.yml</include>
+					<include>libs/jsplug-1.0.0.jar</include>
 				</includes>
 			</resource>
 		</resources>
@@ -82,6 +102,9 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
             <version>2.4.3</version>
+            <configuration>
+          	  <createDependencyReducedPom>false</createDependencyReducedPom>
+            </configuration>
             <executions>
                 <execution>
                     <phase>package</phase>
@@ -97,6 +120,28 @@
                 </execution>
             </executions>
         </plugin>
+        <plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-install-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>install-external</id>
+      <phase>clean</phase>
+      <configuration>
+        <file>${basedir}/libs/jsplug-1.0.0.jar</file>
+        <repositoryLayout>default</repositoryLayout>
+        <groupId>com.jsplug</groupId>
+        <artifactId>jsplug</artifactId>
+        <version>1.0.0</version>
+        <packaging>jar</packaging>
+        <generatePom>true</generatePom>
+      </configuration>
+      <goals>
+        <goal>install-file</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
 		</plugins>
 	</build>
 </project>

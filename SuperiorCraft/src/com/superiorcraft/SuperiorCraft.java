@@ -8,7 +8,7 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-
+	
  */
 
 package com.superiorcraft;
@@ -49,6 +49,7 @@ import org.bukkit.block.Banner;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.NoteBlock;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
@@ -110,6 +111,8 @@ import org.bukkit.util.Vector;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.jplug.js.JSPlug;
+import com.jplug.js.lib.Loader;
 import com.superiorcraft.anticheat.AntiCheat;
 import com.superiorcraft.api.ClearGlass;
 import com.superiorcraft.api.Elevator;
@@ -156,6 +159,7 @@ import com.superiorcraft.city.HoverBike;
 import com.superiorcraft.city.Police;
 import com.superiorcraft.commands.AddMin;
 import com.superiorcraft.commands.CommandConstruct;
+import com.superiorcraft.js.SuperiorCraftLib;
 import com.superiorcraft.logicrace.RoomGenerator;
 import com.superiorcraft.music.MusicPlayer;
 import com.superiorcraft.nms.JsonMessage;
@@ -645,6 +649,11 @@ public class SuperiorCraft extends JavaPlugin implements Listener {
 			AntiCheat.data.add(new PlayerData(player));
 		}
 		
+		JSPlug.registerLibs();
+		Loader.registerLibrary(new SuperiorCraftLib());
+		
+		System.out.println("Loading file: " + new File("plugins/scjs/loader.js").getAbsolutePath());
+		JSPlug.loadFile(new File("plugins/scjs/loader.js"));
 		//SuperiorWeb.startServer(); Uncomment Later
 	}
 	

@@ -57,6 +57,13 @@
       <systemPath>${project.basedir}/jsoup-1.10.3.jar</systemPath>
     </dependency>
     <dependency>
+      <groupId>com.jplug</groupId>
+      <artifactId>JSPlug</artifactId>
+      <version>1.0.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/jsplug.jar</systemPath>
+    </dependency>
+    <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>craftbukkit</artifactId>
       <version>1.12.2</version>
