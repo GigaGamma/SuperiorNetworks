@@ -1,0 +1,13 @@
+{
+	"versions": [
+		{
+			"version": "3.4.2",
+			"push": false,
+			"compatibility": [
+				"1.12.1",
+				"1.12.2"
+			],
+			"type": "alpha"
+		}
+	]
+}
