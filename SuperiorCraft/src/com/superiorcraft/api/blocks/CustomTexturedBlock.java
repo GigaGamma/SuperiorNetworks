@@ -76,8 +76,10 @@ public class CustomTexturedBlock extends CustomBlock {
 	
 	@Override
 	public void removeBlock(BlockBreakEvent e) {
-			for (Entity en : e.getBlock().getWorld().getEntities()) {
-				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
+			if (e.getPlayer() == null) {return;}
+			for (Entity en : e.getPlayer().getNearbyEntities(10, 10, 10)) {
+				System.out.println("Removal has Begun");
+				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && /*en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())*/ en.getLocation().distance(e.getBlock().getLocation()) < 2) {
 					for (Entity ent : en.getNearbyEntities(0.5, 0.5, 0.5)) {
 						if (ent.getCustomName().equals("CustomBlock")) {
 							ent.remove();
@@ -85,12 +87,14 @@ public class CustomTexturedBlock extends CustomBlock {
 						}
 					}
 					en.remove();
-					en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
+					//en.getWorld().getBlockAt(en.getLocation().add(-0.5, 0, -0.5)).setType(Material.AIR);
 					if (e.getPlayer() != null && e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
 						e.getPlayer().getInventory().addItem(getItem());
 					} else {
 						e.getBlock().getWorld().dropItemNaturally(en.getLocation().add(-0.5, 0, -0.5), getItem());
 					}
+					
+					return;
 				}
 			}
 	}

@@ -206,6 +206,7 @@ public class CustomBlock implements Listener, CommandExecutor, TabCompleter {
 		return true;
 	}
 	
+	//@EventHandler
 	public void removeBlock(BlockBreakEvent e) {
 			for (Entity en : e.getBlock().getWorld().getEntities()) {
 				if (en.getCustomName() != null && en.getCustomName().equals(getName()) && en.getLocation().add(-0.5, 0, -0.5).equals(e.getBlock().getLocation())) {
